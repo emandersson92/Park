@@ -2,6 +2,9 @@
 
 Background::Background()
 {
+  //This is the constructor
+  
+
 }
 
 
