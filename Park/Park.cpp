@@ -56,10 +56,10 @@ int main()
     return 0;
 }
 
-void imgAqu(const Mat& raw, string input) {
+void imgAqu(Mat* raw, string input) {
 	
 	try {
-		raw = imread(input);
+	  raw* = imread(input); 
 		//Läs detta imorgon
 	https://stackoverflow.com/questions/23468537/differences-of-using-const-cvmat-cvmat-cvmat-or-const-cvmat
 
