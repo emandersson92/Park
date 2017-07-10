@@ -1,2 +1,5 @@
 ** findcontours()
 ** drawcontours()
+** Understand how to send Mat objects to functions in a proper way
+
+   

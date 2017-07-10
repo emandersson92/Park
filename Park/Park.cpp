@@ -8,33 +8,34 @@
 #include <sys/stat.h>
 #include "tools.h"
 
-void test(const char *);
 
 using namespace cv;
 using namespace std;
 using namespace tl;
 
+
+void test(const char *);
+void imgDis(Mat out);
+void imgAqu(Mat raw, string input);
+
 int main()
 {
-	//namedWindow("win");
-	try {
-		Mat img = imread("img\\bin_dot_1.png");
-		//imshow("win", img);
-	}
-	catch(exception e){
-		cout << "could not load image" << endl;
-	}
 
-	test("img");
-	test("doc");
-	test("c:\\");
-	test("c:\\workspace");
-	test("c:\\workspaceasdfasdf");
+	//Definitions
+	Mat raw;
+	string input = "img\\bin_dot_1.png";
 
-	Mat a = imread("img\\bin_dot_1.png");
-	imshow("win", a);
-	waitKey(0);
 
+
+
+	//Image aquistion
+	imgAqu(raw&, input);
+
+
+
+	//Image display
+	imgDis(raw);
+	
 	getchar();
 
 
@@ -48,12 +49,45 @@ int main()
 	//findContours(canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
 
 
+
+
+	
+
     return 0;
 }
+
+void imgAqu(const Mat& raw, string input) {
+	
+	try {
+		raw = imread(input);
+		//Läs detta imorgon
+	https://stackoverflow.com/questions/23468537/differences-of-using-const-cvmat-cvmat-cvmat-or-const-cvmat
+
+	}
+	catch (exception e) {
+		cout << "could not load image" << endl;
+		cout << "Push any character to exit" << endl;
+		getchar();
+		exit(-1);
+	}
+}
+
+
+//Image Display
+void imgDis(Mat out) {
+	namedWindow("win");
+	imshow("win", out);
+	cvMoveWindow("win", 0, 0);
+	waitKey(0);
+
+}
+
+
 
 void test(const char* test) {
 	printf(test);
 
+	//does not work yet
 	if (tools::file_exists(test)) {
 		cout << " exists" << endl;
 	}
