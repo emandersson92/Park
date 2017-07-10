@@ -15,5 +15,6 @@ public:
 
 	int calcHist(char* img);
 	//testing
+	//test 2
 };
 
