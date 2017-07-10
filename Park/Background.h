@@ -14,5 +14,6 @@ public:
 	~Background();
 
 	int calcHist(char* img);
+	//testing
 };
 
