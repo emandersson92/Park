@@ -31,6 +31,9 @@ int main()
 	test("c:\\workspace");
 	test("c:\\workspaceasdfasdf");
 
+	Mat a = imread("img\\bin_dot_1.png");
+	imshow("win", a);
+	waitKey(0);
 
 	getchar();
 
