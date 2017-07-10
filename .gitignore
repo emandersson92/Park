@@ -269,4 +269,4 @@ ReadMe.txt
 stdafx.cpp
 stdafx.h
 targetver.h
-
+*.sln
