@@ -6,7 +6,6 @@
 #include "opencv2/highgui/highgui.hpp"
 
 
-
 class Background
 {
 public:
@@ -14,12 +13,6 @@ public:
 	~Background();
 
 	int calcHist(char* img);
-	//testing
-	//test 2
 
-
-
-	//Emil
-	//Gustav
 };
 

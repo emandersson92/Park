@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Background.h"
 
 Background::Background()
@@ -42,12 +43,17 @@ int Background::calcHist(char* img)
 	// we compute the histogram from the 0-th and 1-st channels
 	int channels[] = { 0, 1 };
 
-	calcHist(&hsv, 1, channels, Mat(), // do not use mask
+	/*calcHist(&hsv, 1, channels, Mat(), // do not use mask
 		hist, 2, histSize, ranges,
 		true, // the histogram is uniform
 		false);
+
+	*/
+
 	double maxVal = 0;
 	minMaxLoc(hist, 0, &maxVal, 0, 0);
+
+	
 
 	int scale = 10;
 	Mat histImg = Mat::zeros(sbins*scale, hbins * 10, CV_8UC3);

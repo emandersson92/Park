@@ -29,7 +29,7 @@ int main()
 	test("doc");
 	test("c:\\");
 	test("c:\\workspace");
-
+	test("c:\\workspaceasdfasdf");
 
 
 	getchar();
