@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "opencv2\opencv.hpp"
+#include "opencv2\video\tracking.hpp"
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -15,26 +16,33 @@ using namespace tl;
 
 
 void test(const char *);
-void imgDis(Mat out);
-void imgAqu(Mat raw, string input);
+void imgDis(Mat& out);
+void imgProc(Mat& raw, Mat& drawn);
+void imgAqu(string input, Mat& out);
+void drawcont(Mat& in, Mat& drawn);
+
 
 int main()
 {
 
 	//Definitions
 	Mat raw;
+	Mat drawn;
 	string input = "img\\bin_dot_1.png";
 
 
 
 
 	//Image aquistion
-	imgAqu(raw&, input);
+	imgAqu(input, raw);
 
+
+	//Image processing
+	imgProc(raw, drawn);
 
 
 	//Image display
-	imgDis(raw);
+	imgDis(drawn);
 	
 	getchar();
 
@@ -56,12 +64,12 @@ int main()
     return 0;
 }
 
-void imgAqu(Mat* raw, string input) {
+void imgAqu(string input, Mat& raw) {
 	
 	try {
-	  raw* = imread(input); 
+	  raw = imread(input); 
 		//Läs detta imorgon
-	https://stackoverflow.com/questions/23468537/differences-of-using-const-cvmat-cvmat-cvmat-or-const-cvmat
+	//https://stackoverflow.com/questions/23468537/differences-of-using-const-cvmat-cvmat-cvmat-or-const-cvmat
 
 	}
 	catch (exception e) {
@@ -73,8 +81,51 @@ void imgAqu(Mat* raw, string input) {
 }
 
 
+void imgProc(Mat& in, Mat& drawn) {
+  //----------------------------------------
+  //Find and Draw contours
+  //
+  //........................................
+
+ 
+
+  drawcont(in, drawn);
+
+
+
+
+}
+
+void drawcont(Mat& in, Mat& drawn){
+
+  Mat gray;
+  vector<vector<Point> > contours;
+  vector<Vec4i> hierarchy;
+
+  cvtColor(in, gray, CV_BGR2GRAY);
+
+  findContours( gray, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
+
+  /// Draw contours
+  //  drawn = Mat::zeros( gray.size(), CV_8UC3 );
+  drawn = gray;
+  RNG rng;
+  for( int i = 0; i< contours.size(); i++ )
+     {
+       Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+       drawContours( drawn, contours, i, color, 2, 8, hierarchy, 0, Point() );
+     }
+
+
+}
+
+
+
+
+
+
 //Image Display
-void imgDis(Mat out) {
+void imgDis(Mat& out) {
 	namedWindow("win");
 	imshow("win", out);
 	cvMoveWindow("win", 0, 0);
