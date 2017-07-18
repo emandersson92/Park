@@ -270,3 +270,4 @@ stdafx.cpp
 stdafx.h
 targetver.h
 *.sln
+*#
