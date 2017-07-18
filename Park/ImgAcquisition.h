@@ -1,3 +1,13 @@
+/********************************
+Info:
+Class to acquisition an image from an image or a video source
+Image path's is integrated in the class
+
+
+Author:
+Emil Andersson 2017-07-18
+********************************/
+
 #pragma once
 #include "opencvIncludes.h"
 
@@ -7,9 +17,9 @@ public:
 	ImgAcquisition(int pathNmb);
 	~ImgAcquisition();
 
-	void apply(string path, Mat& out);
+	void apply(Mat& out);
 
-	static int BIN_DOT_IMG = 1;
+	const static int BIN_DOT_IMG = 1;
 	int OTHER_IMG = 2;
 
 private:
@@ -20,7 +30,7 @@ private:
 	// ...
 
 
-	void getImg(string& path, Mat& out);
+	void getBinDot(string& path, Mat& out);
 	void setPath(int pathNmb, string& path);
 
 	string path;							//Path to be used
