@@ -47,6 +47,9 @@ int main()
 	imgAqu(input, raw);
 
 
+	imgProc simpleBinTrack;
+
+
 	//Image processing
 	imgProc(raw, drawn);
 

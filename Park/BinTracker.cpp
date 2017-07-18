@@ -1,19 +1,19 @@
 #include "stdafx.h"
-#include "myTracker.h"
+#include "BinTracker.h"
 
 #include "draw.h"
 
-myTracker::myTracker()
+BinTracker::BinTracker()
 {
 }
 
 
-myTracker::~myTracker()
+BinTracker::~BinTracker()
 {
 }
 
 //Binary tracker
-void myImgProc::binTrack() {
+void BinTracker::binTrack() {
 	draw d;
 
 

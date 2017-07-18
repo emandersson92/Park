@@ -1,22 +1,28 @@
 #include "stdafx.h"
-#include "myAdaptiveFilter.h"
+#include "Filter.h"
 
 
-myAdaptiveFilter::myAdaptiveFilter()
+Filter::Filter()
 {
 }
 
 
-myAdaptiveFilter::~myAdaptiveFilter()
+Filter::~Filter()
 {
 }
 
-void myAdaptiveFilter::openFilter(Mat& img) {
+void Filter::apply() {
+	//implement so constructor defines which function to call
+
+}
+
+void Filter::openFilter(Mat& img) {
 	Mat tmp;
 	erode(img, tmp);
 	dilate();
+
 }
-void myAdaptiveFilter::closeFilter(Mat& img) {
+void Filter::closeFilter(Mat& img) {
 	dilate();
 	erode();
 }

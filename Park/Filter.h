@@ -1,8 +1,8 @@
 #pragma once
-class myAdaptiveFilter
+class Filter
 {
 public:
-	myAdaptiveFilter();
-	~myAdaptiveFilter();
+	Filter();
+	~Filter();
 };
 
