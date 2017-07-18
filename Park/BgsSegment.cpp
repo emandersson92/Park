@@ -1,27 +1,28 @@
 #include "stdafx.h"
 #include "BgsSegment.h"
 
-BgsSegment::BgsSegment(void (*f) (int))
-{
+BgsSegment::BgsSegment(){
 	//Choose BGS function to use when apply() is called. 
-	(*f)();
-	
+	//(*f)();
+
+
+	///todo move this to a BgsMog2_init() function
+	b = createBackgroundSubtractorMOG2(); //MOG2 approach
 }
 
-BgsSegment::~BgsSegment()
-{
-	
+BgsSegment::~BgsSegment() {
+	delete(b);
 }
 
-void BgsSegment::apply() {
 
+
+void BgsSegment::apply(Mat& in, Mat& out) {
+	//implement so constructor defines which function to call
+	BgsMog2(in, out);
 }
 
-void BgsSegment::BGS() {
-
-	BackgroundSubtractorMOG2 b();
-	b.apply(img, tmp);
-	img = tmp;
+void BgsSegment::BgsMog2(Mat& in, Mat& out) {
+	b->apply(in, out);
 }
 
 
