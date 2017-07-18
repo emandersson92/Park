@@ -20,8 +20,9 @@ public:
 
 	void apply(Mat& img);			//run function defined in constructor
 
-	//functions
-	void findCont(Mat& img);
+
+private:
+	void findCont(Mat& img);		//functions
 
 };
 
