@@ -100,7 +100,6 @@ int main()
 
 
 
-
 		//add new vehicles to the first list.
 		//...
 		//...
