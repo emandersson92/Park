@@ -1,0 +1,5 @@
+Todolist. For each todo-object, make one commit
+
+
+*Access the list from the vehicle object when the vehicles is forwarded/deleted.
+*Add code in Park.cpp for this
