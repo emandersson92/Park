@@ -13,8 +13,6 @@ public:
 
 	void getVehicle();
 
-	VehicleList list;					//the list the tracker is connected to
-
 private:
 
 	Vehicle vehicle;
