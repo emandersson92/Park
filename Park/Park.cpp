@@ -65,13 +65,6 @@ int main()
 	//
 	//................................................
 	
-	VehicleList lists;
-	lists.add(movList);
-	list.add(stillList);
-	//...
-	//...
-	//...
-
 
 
 
