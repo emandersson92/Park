@@ -2,11 +2,11 @@
 #include "vehicleList.h"
 
 
-vehicleList::vehicleList()
+VehicleList::VehicleList()
 {
 }
 
 
-vehicleList::~vehicleList()
+VehicleList::~VehicleList()
 {
 }

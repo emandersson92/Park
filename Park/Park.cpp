@@ -2,24 +2,21 @@
 //
 
 #include "stdafx.h"
-#include "opencv2\opencv.hpp"
-#include "opencv2\video\tracking.hpp"
+#include "opencvIncludes.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
 #include "tools.h"
 
-
-//tracker
-#include <opencv2/core/utility.hpp>
-
-#include <opencv2/tracking.hpp>
-#include <opencv2/videoio.hpp>
-#include <opencv2/highgui.hpp>
-#include <iostream>
 #include <cstring>
 
+#include "VehicleDetector.h"
+#include "BinDetect.h"
+#include "ImgAcquisition.h"
 
+#include "Moving_VehicleList.h"
+#include "Still_VehicleList.h"
+#include "VehicleList.h"
 
 
 using namespace cv;
@@ -29,82 +26,102 @@ using namespace tl;
 
 void test(const char *);
 void imgDis(Mat& out);
-void imgProc(Mat& raw, Mat& drawn);
-void imgAqu(string input, Mat& out);
 void drawcont(Mat& in, Mat& drawn);
 
 
 int main()
 {
 
-	//Definitions
-	Mat raw;
-	Mat drawn;
-	string input = "img\\bin_dot_1.png";
+
+	MyTracker simpleTracker = new Bin_MovingObj_MyTracker;;
+	//still tracker
+	//...
+	//...
+	//...
+
+	vector<MyTracker> trackers;
+
+	trackers.push_back(simpleTracker);
+	//trackers.push_back(still tracker);
+	//...
+	//...
+	//...
 
 
-	//Image aquistion
-	imgAqu(input, raw);
 
 
-	imgProc simpleBinTrack;
 
+	VehicleList movList = Moving_VehicleList();
+	VehicleList stillList = Still_VehicleList();
+	VehicleList alarmList = Still_VehicleList();
 
-	//Image processing
-	imgProc(raw, drawn);
-
-
-	//Image display
-	imgDis(drawn);
+	//************************************************
+	//vehicle lifecycle:
+	//
+	//   [movlist] --> [stillList] --> [alarmList]
+	//
+	movList.connectTo(stillList);
+	stillList.connectTo(alarmList);
+	//
+	//................................................
 	
-	getchar();
-
-
-	//Mat canny_output;
-	vector<vector<Point> > contours;
-	vector<Vec4i> hierarchy;
-
-	/// Detect edges using canny
-	//Canny(src_gray, canny_output, thresh, thresh * 2, 3);
-	/// Find contours
-	//findContours(canny_output, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0));
+	VehicleList lists;
+	lists.add(movList);
+	list.add(stillList);
+	//...
+	//...
+	//...
 
 
 
+	//Iterate the lists and forward trackers to the next list
+	while (true) {
+		//update detect object and feed to tracker??
 
-	
+		for (VehicleList l : lists) {
+			///Update all trackers in the list
+			for (MyTracker t : l.trackers) {
+				t.track();						//grab a new vehicleFrame to each vehicle
+			}
+		}
+
+		//Think about this structure...
+		for (MyTracker t : trackers) {
+			Vehicle v = t.getVehicle();
+
+			if (!movList.belongCheck(v)) {
+				if (movList.belongInNextList())
+					movlist.forward(v);
+				else
+					v.toss;//delete vehilce...
+			}
+		}
+
+
+
+
+
+		//add new vehicles to the first list.
+		//...
+		//...
+		//...
+
+		//Forward vehicles to next lists if condition is ok
+		for (MyTracker t : trackers) {
+			Vehicle v = t.getVehicle();
+			
+			if (v.list.nextList->belongCheck(v)) {
+				v.list.forwVehicle();
+			}
+			else if (t.list.belongCheck(v)) {
+				toss vehicle and tracker();
+			}
+		}
+
+	}
+
 
     return 0;
-}
-
-void imgAqu(string input, Mat& raw) {
-	
-	try {
-	  raw = imread(input); 
-		//Läs detta imorgon
-	//https://stackoverflow.com/questions/23468537/differences-of-using-const-cvmat-cvmat-cvmat-or-const-cvmat
-
-	}
-	catch (exception e) {
-		cout << "could not load image" << endl;
-		cout << "Push any character to exit" << endl;
-		getchar();
-		exit(-1);
-	}
-}
-
-
-void imgProc(Mat& in, Mat& drawn) {
-  //----------------------------------------
-  //Find and Draw contours
-  //
-  //........................................
-
- 
-
-  drawcont(in, drawn);
-
-
 }
 
 void drawcont(Mat& in, Mat& drawn){
@@ -126,64 +143,7 @@ void drawcont(Mat& in, Mat& drawn){
        Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
        drawContours( drawn, contours, i, color, 2, 8, hierarchy, 0, Point() );
      }
-
-
 }
-
-
-void tracker(){
-
-int main( int argc, char** argv ){
-  // show help
-  if(argc<2){
-    cout<<
-      " Usage: tracker <video_name>\n"
-      " examples:\n"
-      " example_tracking_kcf Bolt/img/%04d.jpg\n"
-      " example_tracking_kcf faceocc2.webm\n"
-      << endl;
-    return 0;
-  }
-  // declares all required variables
-  Rect2d roi;
-  Mat frame;
-
-  // create a tracker object
-  Ptr<Tracker> tracker = Tracker::create( "KCF" );
-  // set input video
-  string video = argv[1];
-  VideoCapture cap(video);
-  // get bounding box
-  cap >> frame;
-  roi=selectROI("tracker",frame);
-  //quit if ROI was not selected
-  if(roi.width==0 || roi.height==0)
-    return 0;
-  // initialize the tracker
-  tracker->init(frame,roi);
-  // perform the tracking process
-  printf("Start the tracking process, press ESC to quit.\n");
-  for ( ;; ){
-    // get frame from the video
-    cap >> frame;
-    // stop the program if no more images
-    if(frame.rows==0 || frame.cols==0)
-      break;
-    // update the tracking result
-    tracker->update(frame,roi);
-    // draw the tracked object
-    rectangle( frame, roi, Scalar( 255, 0, 0 ), 2, 1 );
-    // show image with the tracked object
-    imshow("tracker",frame);
-    //quit on ESC button
-    if(waitKey(1)==27)break;
-  }
-  return 0;
-}
-
-}
-
-
 
 
 
@@ -195,8 +155,6 @@ void imgDis(Mat& out) {
 	waitKey(0);
 
 }
-
-
 
 void test(const char* test) {
 	printf(test);
