@@ -74,51 +74,26 @@ int main()
 
 
 
-	//Iterate the lists and forward trackers to the next list
-	while (true) {
-		//update detect object and feed to tracker??
 
-		for (VehicleList l : lists) {
-			///Update all trackers in the list
-			for (MyTracker t : l.trackers) {
-				t.track();						//grab a new vehicleFrame to each vehicle
-			}
+	//Forward vehicles to next lists if condition is ok
+	for (MyTracker t : trackers) {
+		Vehicle v = t.getVehicle();
+
+		if (v.list.nextList->belongCheck(v)) {
+			v.list.forwVehicle();
 		}
-
-		//Think about this structure...
-		for (MyTracker t : trackers) {
-			Vehicle v = t.getVehicle();
-
-			if (!movList.belongCheck(v)) {
-				if (movList.belongInNextList())
-					movlist.forward(v);
-				else
-					v.toss;//delete vehilce...
-			}
+		else if (t.list.belongCheck(v)) {
+			toss vehicle and tracker();
 		}
-
-
-
-
-		//add new vehicles to the first list.
-		//...
-		//...
-		//...
-
-		//Forward vehicles to next lists if condition is ok
-		for (MyTracker t : trackers) {
-			Vehicle v = t.getVehicle();
-			
-			if (v.list.nextList->belongCheck(v)) {
-				v.list.forwVehicle();
-			}
-			else if (t.list.belongCheck(v)) {
-				toss vehicle and tracker();
-			}
-		}
-
 	}
 
+
+	//add new vehicles to the first list.
+	//...
+	//...
+	//...
+
+	}
 
     return 0;
 }
