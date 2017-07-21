@@ -76,12 +76,18 @@ int main()
 	for (MyTracker* t : trackers) {
 		Vehicle* v = t->getVehicle();
 
-		if (v->list.nextList.belongCheck(v)) {
+		/*
+		v->list.nextList.belongCheck(v);
+
+		if (v->list.nextList.belongCheck(*v)) {
+
 			v->list.forwVehicle();
 		}
 		else if (t.list.belongCheck(v)) {
 			//toss vehicle and tracker();
 		}
+
+		*/
 	}
 
 

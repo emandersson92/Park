@@ -10,7 +10,8 @@ public:
 	void forwardVehicle(Vehicle* v);			//send the vehicle to the next list
 	void connectTo(VehicleList* l);
 	void checkListConditions();
-	bool belongCheck(Vehicle& v);
+	bool belongCheck(Vehicle* v);
+
 
 };
 

@@ -1,5 +1,4 @@
 #pragma once
-
 #include "opencvIncludes.h"
 
 /********************************
@@ -18,14 +17,14 @@ public:
 	BgsSegment();
 	~BgsSegment();
 
-	void apply(Mat& in, Mat& out);
+	void apply(cv::Mat& in, cv::Mat& out);
 
 
 private: 
 	//void(*f)(int);
-	void BgsMog2(Mat& in, Mat& out);
+	void BgsMog2(cv::Mat& in, cv::Mat& out);
 	
-	Ptr<BackgroundSubtractor> b; //MOG2 Background subtractor
+	cv::Ptr<cv::BackgroundSubtractor> b; //MOG2 Background subtractor
 
 
 };

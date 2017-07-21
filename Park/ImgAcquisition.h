@@ -7,7 +7,6 @@ Image path's is integrated in the class
 Author:
 Emil Andersson 2017-07-18
 ********************************/
-
 #pragma once
 #include "opencvIncludes.h"
 
@@ -24,7 +23,7 @@ public:
 
 private:
 
-	string bin_dot_img_path = "img\\bin_dot_1.png";
+	std::string bin_dot_img_path = "img\\bin_dot_1.png";
 	// ...
 	// ...
 	// ...
@@ -33,7 +32,7 @@ private:
 	void getBinDot(std::string& path, cv::Mat& out);
 	void setPath(int pathNmb, std::string& path);
 
-	string path;							//Path to be used
+	std::string path;							//Path to be used
 
 
 };

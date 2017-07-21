@@ -13,7 +13,7 @@ public:
 
 private:
 	VehicleDetector* detector;
-	vector<Mat> cars;
+	std::vector<cv::Mat> cars;
 
 
 };

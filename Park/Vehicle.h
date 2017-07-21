@@ -13,8 +13,8 @@ public:
 	~Vehicle();
 
 	//Functions used by lists to determine if they belong
-	void getSpeed();
-	void getPosition();
+	double getSpeed();
+	cv::Point2d getPosition();
 	//...
 	//...
 	//...

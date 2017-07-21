@@ -30,20 +30,20 @@ void ImgAcquisition::setPath(int pathNmb, std::string& path) {
 
 
 
-void ImgAcquisition::apply(Mat& out) {
+void ImgAcquisition::apply(cv::Mat& out) {
 	getBinDot(path, out);
 }
 
 
-void ImgAcquisition::getBinDot(string& path, Mat& out) {
+void ImgAcquisition::getBinDot(std::string& path, cv::Mat& out) {
 	try {
-		out = imread(path);
+		out = cv::imread(path);
 	}
-	catch (exception e) {
-		cout << "Could not load image from path:" << endl;
-		cout << path << endl;
-		cout << "" << endl;
-		cout << "Push any character to exit" << endl;
+	catch (std::exception e) {
+		std::cout << "Could not load image from path:" << std::endl;
+		std::cout << path << std::endl;
+		std::cout << "" << std::endl;
+		std::cout << "Push any character to exit" << std::endl;
 		getchar();
 		exit(-1);
 	}

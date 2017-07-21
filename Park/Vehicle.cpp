@@ -12,10 +12,10 @@ Vehicle::~Vehicle()
 
 
 
-void Vehicle::getSpeed() {
-
+double Vehicle::getSpeed() {
+	return 0.0;
 }
 
-void Vehicle::getPosition() {
-
+cv::Point2d Vehicle::getPosition() {
+	return cv::Point2d(0, 0);
 }

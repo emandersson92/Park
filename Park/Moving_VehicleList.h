@@ -12,7 +12,7 @@ public:
 	void forwardVehicle(Vehicle* v);			//send the vehicle to the next list
 	void connectTo(VehicleList* l);
 	void checkListConditions();
-	bool belongCheck(Vehicle& v);
+	bool belongCheck(Vehicle* v);
 	
 	
 
@@ -21,7 +21,7 @@ private:
 	
 	//Conditions vehicles need to pass in order to belong to the list
 	double maxSpeed;
-	Rect2d okArea;
+	cv::Rect2d okArea;
 
 
 };
