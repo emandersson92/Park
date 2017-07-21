@@ -13,8 +13,8 @@ public:
 	void addKeyInfoText();
 
 	//Park application functions
-	void addTimeText(Mat& img, MyTracker& t);
-	void drawContours(Mat& img, MyTracker& t);
+	void addTimeText(cv::Mat& img, MyTracker& t);
+	void drawContours(cv::Mat& img, MyTracker& t);
 
 
 };

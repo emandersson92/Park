@@ -7,7 +7,6 @@ The class uses simple biary image classification
 Author:
 Emil Andersson 2017-07-19
 ********************************/
-
 #pragma once
 
 #include "opencvIncludes.h"
@@ -18,8 +17,6 @@ Emil Andersson 2017-07-19
 #include "Filter.h"
 #include "BinClassify.h"
 
-using namespace std;
-using namespace cv;
 
 class BinDetect : public VehicleDetector
 {
@@ -28,20 +25,20 @@ public:
 	BinDetect();
 	~BinDetect();
 
-	void apply(Mat& out);
+	void apply(cv::Mat& out);
 
 	
 
 private:
 
 	
-	void imgAquist(Mat& in, Mat& out);
-	void segment(Mat& in, Mat& out);
-	void filter(Mat& in, Mat& out);
-	void classify(Mat& in, Mat& out);
+	void imgAquist(cv::Mat& in, cv::Mat& out);
+	void segment(cv::Mat& in, cv::Mat& out);
+	void filter(cv::Mat& in, cv::Mat& out);
+	void classify(cv::Mat& in, cv::Mat& out);
 	
 
-	Mat in;
+	cv::Mat in;
 
 
 	//Application specific choices:

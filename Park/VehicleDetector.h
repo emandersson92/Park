@@ -9,8 +9,6 @@ Emil Andersson 2017-07-DATE
 #pragma once
 #include "opencvIncludes.h"
 
-using namespace cv;
-
 class VehicleDetector
 {
 public:
@@ -19,14 +17,14 @@ public:
 	
 	//The parts that must be included in a VehicleDetector-abstraction 
 
-	virtual void apply(Mat& out) = 0;
+	virtual void apply(cv::Mat& out) = 0;
 
 private:
 
-	virtual void imgAquist(Mat& in, Mat& out) = 0;
-	virtual void segment(Mat& in, Mat& out) = 0;
-	virtual void filter(Mat& in, Mat& out) = 0;
-	virtual void classify(Mat& in, Mat& out) = 0;
+	virtual void imgAquist(cv::Mat& in, cv::Mat& out) = 0;
+	virtual void segment(cv::Mat& in, cv::Mat& out) = 0;
+	virtual void filter(cv::Mat& in, cv::Mat& out) = 0;
+	virtual void classify(cv::Mat& in, cv::Mat& out) = 0;
 	
 
 };

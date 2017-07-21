@@ -18,11 +18,11 @@ public:
 	BinClassify();
 	~BinClassify();
 
-	void apply(Mat& img);			//run function defined in constructor
+	void apply(cv::Mat& img);			//run function defined in constructor
 
 
 private:
-	void findCont(Mat& img);		//functions
+	void findCont(cv::Mat& img);		//functions
 
 };
 

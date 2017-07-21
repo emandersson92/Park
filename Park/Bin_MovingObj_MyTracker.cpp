@@ -13,7 +13,7 @@ Bin_MovingObj_MyTracker::~Bin_MovingObj_MyTracker(){
 }
 
 void Bin_MovingObj_MyTracker::track() {
-	Mat out;
+	cv::Mat out;
 	detector->apply(out);
 
 	//compare and match existing vehicle with the new VehicleFrame

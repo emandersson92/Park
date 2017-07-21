@@ -12,16 +12,16 @@ ImgAcquisition::~ImgAcquisition()
 }
 
 //Called from constructor
-void ImgAcquisition::setPath(int pathNmb, string& path) {
+void ImgAcquisition::setPath(int pathNmb, std::string& path) {
 	switch (pathNmb) {
 	case BIN_DOT_IMG:
 		path = "img\\bin_dot_1.png";
 		break;
 
 	default:
-		cout << "could not set image path" << endl;
-		cout << "" << endl;
-		cout << "press any key to quit" << endl;
+		std::cout << "could not set image path" << std::endl;
+		std::cout << "" << std::endl;
+		std::cout << "press any key to quit" << std::endl;
 		getchar();
 		exit(-1);
 	}

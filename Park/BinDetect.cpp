@@ -11,7 +11,7 @@ BinDetect::~BinDetect()
 {
 }
 
-void BinDetect::apply(Mat& out) {
+void BinDetect::apply(cv::Mat& out) {
 	
 	imgAquist(in, out);
 	segment(in, out);
@@ -20,23 +20,23 @@ void BinDetect::apply(Mat& out) {
 
 }
 
-void BinDetect::imgAquist(Mat& in, Mat& out) {
+void BinDetect::imgAquist(cv::Mat& in, cv::Mat& out) {
 	ImgAcquisition a(Path);
 	a.apply(out);
 }
 
-void BinDetect::segment(Mat& in, Mat& out) {
+void BinDetect::segment(cv::Mat& in, cv::Mat& out) {
 	BgsSegment s;
 	s.apply(in, out);
-	Mat tmp;
+	cv::Mat tmp;
 }
 
-void BinDetect::filter(Mat& in, Mat& out) {
+void BinDetect::filter(cv::Mat& in, cv::Mat& out) {
 	Filter f;
 	f.apply(in, out);
 }
 
-void BinDetect::classify(Mat& in, Mat& out) {
+void BinDetect::classify(cv::Mat& in, cv::Mat& out) {
 	BinClassify d;
 	d.apply(in);
 }

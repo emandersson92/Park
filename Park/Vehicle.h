@@ -4,6 +4,8 @@
 #include "VehicleFrame.h"
 #include "VehicleList.h"
 
+class VehicleList;
+
 class Vehicle
 {
 public:

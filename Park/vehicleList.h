@@ -5,6 +5,7 @@
 #include "Vehicle.h"
 
 class Vehicle;			//Declaration needed because of nested includes
+class MyTracker;
 
 class VehicleList
 {
