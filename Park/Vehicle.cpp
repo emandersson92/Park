@@ -10,3 +10,13 @@ Vehicle::Vehicle()
 Vehicle::~Vehicle()
 {
 }
+
+
+
+void Vehicle::getSpeed() {
+
+}
+
+void Vehicle::getPosition() {
+
+}

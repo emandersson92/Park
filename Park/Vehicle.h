@@ -16,7 +16,7 @@ public:
 	//...
 	//...
 
-	VehicleList list;
+	VehicleList* list;
 
 private:
 	vector<VehicleFrame> vehFrames;

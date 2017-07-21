@@ -4,6 +4,10 @@ Todolist. For each todo-object, make one commit
 *Access the list from the vehicle object when the vehicles is forwarded/deleted.
 *Add code in Park.cpp for this
 
+
+*change to list from vector structures where there is need to remove objects in the middle. i.e. Vehicle-class
+
+
 *first success compilation
 
 *compile with simple detection

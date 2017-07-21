@@ -8,7 +8,6 @@ MovingObj_MyTracker::MovingObj_MyTracker()
 }
 
 
-
 MovingObj_MyTracker::~MovingObj_MyTracker()
 {
 }

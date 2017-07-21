@@ -2,6 +2,7 @@
 #include "opencvIncludes.h"
 #include "MyTracker.h"
 #include "VehicleList.h"
+#include "Vehicle.h"
 
 
 class VehicleList
@@ -17,7 +18,7 @@ public:
 
 
 	vector<MyTracker*> trackers;
-	vector<Vehicle*> vehicles;
+	list<Vehicle*> vehicles;
 
 	VehicleList* nextList;
 

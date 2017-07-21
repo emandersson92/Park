@@ -18,6 +18,8 @@
 #include "Still_VehicleList.h"
 #include "VehicleList.h"
 
+#include "Bin_MovingObj_MyTracker.h"
+
 
 using namespace cv;
 using namespace std;
@@ -33,7 +35,9 @@ int main()
 {
 
 
-	MyTracker simpleTracker = new Bin_MovingObj_MyTracker;
+	MyTracker simpleTracker = new Bin_MovingObj_MyTracker();
+
+
 	//still tracker
 	//...
 	//...

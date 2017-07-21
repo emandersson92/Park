@@ -34,10 +34,12 @@ public:
 
 private:
 
+	
 	void imgAquist(Mat& in, Mat& out);
 	void segment(Mat& in, Mat& out);
 	void filter(Mat& in, Mat& out);
 	void classify(Mat& in, Mat& out);
+	
 
 	Mat in;
 

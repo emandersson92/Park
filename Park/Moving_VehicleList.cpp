@@ -17,6 +17,17 @@ void Moving_VehicleList::forwardVehicle(Vehicle* v) {
 	nextList->vehicles.push_back(v);
 
 	//delete vehicle from vector
+	
+	 i = vehicles(v);
+
+
+	list<Vehicle*>::iterator i = vehicles_Make_iter(v);
+
+	vehicles.erase(vehicles.get_allocator(v));
+	vehicles.c
+
+
+	vehicles.erase();
 	vehicles.erase(vehicles.get_allocator());
 
 
