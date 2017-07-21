@@ -12,9 +12,9 @@ draw::~draw()
 
 
 //General functions
-void addText(){}
-void addKeyInfoText(){}
+void draw::addText(){}
+void draw::addKeyInfoText(){}
 
 //Park application functions
-void addTimeText(Mat& img, myTracker& t){}
-void drawContours(Mat& img, myTracker& t){}
+void draw::addTimeText(Mat& img, MyTracker& t){}
+void draw::drawContours(Mat& img, MyTracker& t){}

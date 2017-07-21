@@ -18,6 +18,9 @@ void Moving_VehicleList::forwardVehicle(Vehicle* v) {
 
 	//delete vehicle from vector
 	
+
+	/*
+	
 	 i = vehicles(v);
 
 
@@ -29,23 +32,23 @@ void Moving_VehicleList::forwardVehicle(Vehicle* v) {
 
 	vehicles.erase();
 	vehicles.erase(vehicles.get_allocator());
+	*/
 
+
+
+void Moving_VehicleList::connectTo(VehicleList* l) {
 
 }
-
 
 
 void Moving_VehicleList::checkListConditions() {
 	//
-	for (Vehicle v : vehicles) {
-		v.
+	for (Vehicle* v : vehicles) {
+		
 	}
 }
 
-
-
-
-bool Moving_VehicleList::belongCheck(Vehicle v) {
+bool Moving_VehicleList::belongCheck(Vehicle& v) {
 	
 	
 
@@ -54,13 +57,13 @@ bool Moving_VehicleList::belongCheck(Vehicle v) {
 		return false;
 	
 
+	return true;
+	/*
 	//postition ok?
 	Rect2d a;
 	if(!a.contains(okArea.x))
 		return false
-
-
 	return true;
-
+	*/
 }
 

@@ -1,7 +1,6 @@
 #pragma once
-
 #include "opencvIncludes.h"
-
+#include "MyTracker.h"
 
 class draw
 {
@@ -14,8 +13,8 @@ public:
 	void addKeyInfoText();
 
 	//Park application functions
-	void addTimeText(Mat& img, myTracker& t);
-	void drawContours(Mat& img, myTracker& t);
+	void addTimeText(Mat& img, MyTracker& t);
+	void drawContours(Mat& img, MyTracker& t);
 
 
 };

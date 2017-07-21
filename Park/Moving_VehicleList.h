@@ -10,10 +10,8 @@ public:
 	~Moving_VehicleList();
 
 	void forwardVehicle(Vehicle* v);			//send the vehicle to the next list
-	void connectTo(VehicleList l);
-
+	void connectTo(VehicleList* l);
 	void checkListConditions();
-
 	bool belongCheck(Vehicle& v);
 	
 	

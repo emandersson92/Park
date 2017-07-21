@@ -35,7 +35,7 @@ int main()
 {
 
 
-	MyTracker simpleTracker = new Bin_MovingObj_MyTracker();
+	MyTracker* simpleTracker = new Bin_MovingObj_MyTracker();
 
 
 	//still tracker
@@ -43,7 +43,7 @@ int main()
 	//...
 	//...
 
-	vector<MyTracker> trackers;
+	vector<MyTracker*> trackers;
 
 	trackers.push_back(simpleTracker);
 	//trackers.push_back(still tracker);
@@ -55,17 +55,17 @@ int main()
 
 
 
-	VehicleList movList = Moving_VehicleList();
-	VehicleList stillList = Still_VehicleList();
-	VehicleList alarmList = Still_VehicleList();
+	VehicleList* movList = new Moving_VehicleList();
+	VehicleList* stillList = new Still_VehicleList();
+	VehicleList* alarmList = new Still_VehicleList();
 
 	//************************************************
 	//vehicle lifecycle:
 	//
 	//   [movlist] --> [stillList] --> [alarmList]
 	//
-	movList.connectTo(stillList);
-	stillList.connectTo(alarmList);
+	movList->connectTo(stillList);
+	stillList->connectTo(alarmList);
 	//
 	//................................................
 	
@@ -73,14 +73,14 @@ int main()
 
 
 	//Forward vehicles to next lists if condition is ok
-	for (MyTracker t : trackers) {
-		Vehicle v = t.getVehicle();
+	for (MyTracker* t : trackers) {
+		Vehicle* v = t->getVehicle();
 
-		if (v.list.nextList->belongCheck(v)) {
-			v.list.forwVehicle();
+		if (v->list.nextList.belongCheck(v)) {
+			v->list.forwVehicle();
 		}
 		else if (t.list.belongCheck(v)) {
-			toss vehicle and tracker();
+			//toss vehicle and tracker();
 		}
 	}
 
