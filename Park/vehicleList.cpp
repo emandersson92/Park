@@ -2,6 +2,8 @@
 #include "vehicleList.h"
 
 
+using namespace std;
+
 VehicleList::VehicleList()
 {
 }

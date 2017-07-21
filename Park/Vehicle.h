@@ -1,5 +1,6 @@
 #pragma once
 #include "opencvIncludes.h"
+
 #include "VehicleFrame.h"
 #include "VehicleList.h"
 
@@ -19,7 +20,7 @@ public:
 	VehicleList* list;
 
 private:
-	vector<VehicleFrame> vehFrames;
+	std::vector<VehicleFrame> vehFrames;
 
 };
 

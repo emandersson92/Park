@@ -6,7 +6,6 @@ Vehicle::Vehicle()
 {
 }
 
-
 Vehicle::~Vehicle()
 {
 }

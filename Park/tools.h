@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <fstream>
-#include "stdafx.h"
 #include "Vehicle.h"
 
 

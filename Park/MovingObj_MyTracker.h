@@ -10,6 +10,7 @@ Emil Andersson 2017-07-21
 #include "MyTracker.h"
 #include "VehicleDetector.h"
 
+
 class MovingObj_MyTracker : public MyTracker
 {
 public:

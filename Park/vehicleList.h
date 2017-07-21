@@ -1,9 +1,10 @@
 #pragma once
 #include "opencvIncludes.h"
+
 #include "MyTracker.h"
-#include "VehicleList.h"
 #include "Vehicle.h"
 
+class Vehicle;			//Declaration needed because of nested includes
 
 class VehicleList
 {
@@ -17,8 +18,8 @@ public:
 	virtual bool belongCheck(Vehicle& v) = 0;
 
 
-	vector<MyTracker*> trackers;
-	list<Vehicle*> vehicles;
+	std::vector<MyTracker*> trackers;
+	std::list<Vehicle*> vehicles;
 
 	VehicleList* nextList;
 

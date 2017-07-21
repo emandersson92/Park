@@ -3,6 +3,8 @@
 #include "Vehicle.h"
 #include "VehicleList.h"
 
+class Vehicle;
+
 class MyTracker
 {
 public:

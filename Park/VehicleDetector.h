@@ -9,6 +9,8 @@ Emil Andersson 2017-07-DATE
 #pragma once
 #include "opencvIncludes.h"
 
+using namespace cv;
+
 class VehicleDetector
 {
 public:
