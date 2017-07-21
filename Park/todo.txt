@@ -3,3 +3,15 @@ Todolist. For each todo-object, make one commit
 
 *Access the list from the vehicle object when the vehicles is forwarded/deleted.
 *Add code in Park.cpp for this
+
+*first success compilation
+
+*compile with simple detection
+
+
+
+*implement working opencv-tracker
+
+
+
+*make list forwarding work

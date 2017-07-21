@@ -3,9 +3,8 @@
 
 
 
-MovingObj_MyTracker::MovingObj_MyTracker(VehicleDetector& d)
+MovingObj_MyTracker::MovingObj_MyTracker()
 {
-	detector = d;
 }
 
 

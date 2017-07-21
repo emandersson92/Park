@@ -16,7 +16,7 @@ public:
 private:
 
 	Vehicle vehicle;
-	VehicleDetector vehDetector;		//
-
+	VehicleDetector vehDetector;		//a detector the tracker uses to assign the vehicle frame to the vehicle
+	
 
 };

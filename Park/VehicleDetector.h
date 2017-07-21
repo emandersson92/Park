@@ -16,7 +16,7 @@ public:
 	~VehicleDetector();
 	
 	//The parts that must be included in a VehicleDetector-abstraction 
-
+	void test();
 
 private:
 

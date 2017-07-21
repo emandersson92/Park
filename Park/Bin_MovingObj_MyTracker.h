@@ -1,5 +1,6 @@
 #pragma once
 #include "MovingObj_MyTracker.h"
+#include "BinDetect.h"
 
 class Bin_MovingObj_MyTracker : public MovingObj_MyTracker
 {
@@ -11,7 +12,7 @@ public:
 
 
 private:
-	VehicleDetector detector;
+	VehicleDetector* detector;
 	vector<Mat> cars;
 
 

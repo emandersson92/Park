@@ -10,3 +10,4 @@ VehicleDetector::VehicleDetector()
 VehicleDetector::~VehicleDetector()
 {
 }
+

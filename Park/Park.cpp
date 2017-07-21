@@ -33,7 +33,7 @@ int main()
 {
 
 
-	MyTracker simpleTracker = new Bin_MovingObj_MyTracker;;
+	MyTracker simpleTracker = new Bin_MovingObj_MyTracker;
 	//still tracker
 	//...
 	//...

@@ -20,6 +20,6 @@ MyTracker::~MyTracker()
 {
 }
 
-void MyTracker::getVehicle() {
+Vehicle* MyTracker::getVehicle() {
 	return vehicle;
 }
