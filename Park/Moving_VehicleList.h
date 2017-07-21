@@ -9,7 +9,7 @@ public:
 	Moving_VehicleList();
 	~Moving_VehicleList();
 
-	void forwardVehicle();			//send the vehicle to the next list
+	void forwardVehicle(Vehicle* v);			//send the vehicle to the next list
 	void connectTo(VehicleList l);
 
 	void checkListConditions();
@@ -20,9 +20,7 @@ public:
 
 
 private:
-	vector<Vehicle*> vehicles;
 	
-
 	//Conditions vehicles need to pass in order to belong to the list
 	double maxSpeed;
 	Rect2d okArea;

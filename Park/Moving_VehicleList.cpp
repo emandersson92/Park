@@ -11,10 +11,18 @@ Moving_VehicleList::~Moving_VehicleList()
 {
 }
 
-void Moving_VehicleList::forwVehicle() {
-	
+
+void Moving_VehicleList::forwardVehicle(Vehicle* v) {
+
+	nextList->vehicles.push_back(v);
+
+	//delete vehicle from vector
+	vehicles.erase(vehicles.get_allocator());
+
 
 }
+
+
 
 void Moving_VehicleList::checkListConditions() {
 	//
@@ -22,9 +30,6 @@ void Moving_VehicleList::checkListConditions() {
 		v.
 	}
 }
-
-
-
 
 
 
@@ -48,13 +53,3 @@ bool Moving_VehicleList::belongCheck(Vehicle v) {
 
 }
 
-void Moving_VehicleList::forwardVehicle(Vehicle& v) {
-	
-	nextList->trackers.push_back(v);
-	
-	//delete vehicle from vector
-	vehicles.erase(vehicles.get_allocator());
-
-
-
-}
