@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\ImgProc">
+      <UniqueIdentifier>{632ca8e4-2927-42ed-8d08-2e88c8355b11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lists">
+      <UniqueIdentifier>{68ac9e0c-e7ef-494a-b904-e414d145b718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImgProc">
+      <UniqueIdentifier>{5afc833a-91b6-476d-b27d-31c0a8d245be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImgProc\ImgProc-Packages">
+      <UniqueIdentifier>{21e4b8ba-e2cf-4ddf-94ac-02659f97d27d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lists">
+      <UniqueIdentifier>{83bd22bd-05bc-4de2-82a1-5df204c93a8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImgProc\ImgProc-Packages">
+      <UniqueIdentifier>{70e18039-7738-406a-b9b7-93113514d520}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImgProc\ImgProc-Functions">
+      <UniqueIdentifier>{992c7404-5b80-4306-8767-dd079977cd74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImgProc\Trackers">
+      <UniqueIdentifier>{62e92152-c2af-44af-85ef-2a700f4825ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImgProc\ImgProc-Subroutines">
+      <UniqueIdentifier>{4653cf30-5caa-49e9-b95b-14ec65eea2b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Vehicle">
+      <UniqueIdentifier>{5172899d-c0b9-4016-bd54-b811d5e6feda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lists\Sub">
+      <UniqueIdentifier>{d30ddcd4-3fed-4dca-b909-7fd9ab6b7c02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImgProc\Trackers\Sub">
+      <UniqueIdentifier>{59127a86-2ca8-45fc-90c0-feb0c9c0b0d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImgProc\Trackers\Sub\Sub">
+      <UniqueIdentifier>{bc436343-737b-4609-947b-ecd7a1a8e40d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+    <Text Include="classintro.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Filter.h">
+      <Filter>Header Files\ImgProc\ImgProc-Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="draw.h">
+      <Filter>Header Files\ImgProc\ImgProc-Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="BgsSegment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BinClassify.h">
+      <Filter>Header Files\ImgProc\ImgProc-Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="opencvIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgAcquisition.h">
+      <Filter>Header Files\ImgProc\ImgProc-Functions</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleList.h">
+      <Filter>Header Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="Moving_VehicleList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Still_VehicleList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingObj_MyTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StillObj_MyTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTrackerKCF.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BinDetect.h">
+      <Filter>Header Files\ImgProc\ImgProc-Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleDetector.h">
+      <Filter>Header Files\ImgProc\ImgProc-Packages</Filter>
+    </ClInclude>
+    <ClInclude Include="Vehicle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VehicleFrame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bin_MovingObj_MyTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Park.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="draw.cpp">
+      <Filter>Source Files\ImgProc\ImgProc-Subroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="Filter.cpp">
+      <Filter>Source Files\ImgProc\ImgProc-Subroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="BgsSegment.cpp">
+      <Filter>Source Files\ImgProc\ImgProc-Subroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="BinClassify.cpp">
+      <Filter>Source Files\ImgProc\ImgProc-Subroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgAcquisition.cpp">
+      <Filter>Source Files\ImgProc\ImgProc-Subroutines</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleList.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTracker.cpp">
+      <Filter>Source Files\ImgProc\Trackers</Filter>
+    </ClCompile>
+    <ClCompile Include="BinDetect.cpp">
+      <Filter>Source Files\ImgProc\ImgProc-Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleDetector.cpp">
+      <Filter>Source Files\ImgProc\ImgProc-Packages</Filter>
+    </ClCompile>
+    <ClCompile Include="Vehicle.cpp">
+      <Filter>Source Files\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="VehicleFrame.cpp">
+      <Filter>Source Files\Vehicle</Filter>
+    </ClCompile>
+    <ClCompile Include="Still_VehicleList.cpp">
+      <Filter>Source Files\Lists\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="Moving_VehicleList.cpp">
+      <Filter>Source Files\Lists\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingObj_MyTracker.cpp">
+      <Filter>Source Files\ImgProc\Trackers\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="Bin_MovingObj_MyTracker.cpp">
+      <Filter>Source Files\ImgProc\Trackers\Sub\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="MyTrackerKCF.cpp">
+      <Filter>Source Files\ImgProc\Trackers\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="StillObj_MyTracker.cpp">
+      <Filter>Source Files\ImgProc\Trackers\Sub</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
