@@ -20,23 +20,43 @@
 
 #include "Bin_MovingObj_MyTracker.h"
 
-
 using namespace cv;
 using namespace std;
 using namespace tl;
-
+ 
 
 void test(const char *);
 void imgDis(Mat& out);
-void drawcont(Mat& in, Mat& drawn);
+static void help();
 
 
-int main()
+
+static const char* keys =
+{ "{@tracker_algorithm | | tracker algorithm }"
+"{@video_name        | | video name        }" };
+
+  
+int main(int argc, char** argv)
 {
+	
+	CommandLineParser parser(argc, argv, keys);
+
+	String tracker_algorithm = parser.get<String>(0);
+	String video_name = parser.get<String>(1);
+
+	if (tracker_algorithm.empty() || video_name.empty())
+	{
+		help();
+		getchar();
+		return -1;
+	}
 
 
-	MyTracker* simpleTracker = new Bin_MovingObj_MyTracker();
 
+
+
+	MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
+	
 
 	//still tracker
 	//...
@@ -50,8 +70,6 @@ int main()
 	//...
 	//...
 	//...
-
-
 
 
 
@@ -75,50 +93,42 @@ int main()
 	//Forward vehicles to next lists if condition is ok
 	for (MyTracker* t : trackers) {
 		Vehicle* v = t->getVehicle();
-
+		
 		/*
-		v->list.nextList.belongCheck(v);
+		v->list->nextList.belongCheck(v);
+
 
 		if (v->list.nextList.belongCheck(*v)) {
 
 			v->list.forwVehicle();
 		}
 		else if (t.list.belongCheck(v)) {
+
 			//toss vehicle and tracker();
 		}
 
 		*/
 	}
+	
 
+	//Alt 1: Add vehicles only to the first list
+	//Alt 2: Add vehicles in all lists
+	//
+	//Using Alt ?:
 
-	//add new vehicles to the first list.
-	//...
-	//...
-	//...
-
+	for each (MyTracker* t in trackers)
+	{
+		t->track();
+	}
 
     return 0;
 }
 
-void drawcont(Mat& in, Mat& drawn){
 
-  Mat gray;
-  vector<vector<Point> > contours;
-  vector<Vec4i> hierarchy;
+static void help()
+{
+	cout << "blablabla" << endl;
 
-  cvtColor(in, gray, CV_BGR2GRAY);
-
-  findContours( gray, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0, 0) );
-
-  /// Draw contours
-  //  drawn = Mat::zeros( gray.size(), CV_8UC3 );
-  drawn = gray;
-  RNG rng;
-  for( int i = 0; i< contours.size(); i++ )
-     {
-       Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-       drawContours( drawn, contours, i, color, 2, 8, hierarchy, 0, Point() );
-     }
 }
 
 
