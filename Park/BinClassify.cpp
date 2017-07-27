@@ -9,14 +9,13 @@ BinClassify::~BinClassify()
 {
 }
 
-void BinClassify::apply(cv::Mat& img){
+void BinClassify::apply(cv::Mat& img, std::vector<std::vector<cv::Point>>& contours){
 	//implement so constructor defines which function to call
-	findCont(img);
+	findCont(img, contours);
 
 }			
 
-void BinClassify::findCont(cv::Mat& img){
-	std::vector<std::vector<cv::Point> > contours;
+void BinClassify::findCont(cv::Mat& img, std::vector<std::vector<cv::Point>>& contours){
 	std::vector<cv::Vec4i> hierarchy;
 
 	findContours(img, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
