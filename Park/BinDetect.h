@@ -2,14 +2,18 @@
 Info:
 This is a simple homebrewed vehicle detection application
 The class uses simple biary image classification
+BinDetect is a collection of imgAquist, segment, filter and classify.
+If the application program will only use parts of these, they have to be called individually
+All Mat objects are created in this class. There shall be getters and setters for these. TODO
+The contours given as argument to apply() will be altered in this object.
 
 
 Author:
 Emil Andersson 2017-07-19
 ********************************/
 #pragma once
+#include "opencv2\core.hpp"
 
-#include "opencvIncludes.h"
 #include "VehicleDetector.h"
 
 #include "ImgAcquisition.h"
@@ -25,20 +29,23 @@ public:
 	BinDetect();
 	~BinDetect();
 
-	void apply(cv::Mat& out);
+	void apply(std::vector<std::vector<cv::Point>>& contours);
 
 	
 
 private:
 
 	
-	void imgAquist(cv::Mat& in, cv::Mat& out);
+	void imgAquist(cv::Mat& out);
 	void segment(cv::Mat& in, cv::Mat& out);
 	void filter(cv::Mat& in, cv::Mat& out);
-	void classify(cv::Mat& in, cv::Mat& out);
+	void classify(cv::Mat& in, std::vector<std::vector<cv::Point>>& contours);
 	
 
-	cv::Mat in;
+	cv::Mat raw;
+	cv::Mat segmented;
+	cv::Mat filtered;
+	cv::Mat classified;
 
 
 	//Application specific choices:
