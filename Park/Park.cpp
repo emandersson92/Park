@@ -149,6 +149,7 @@ int main(int argc, char** argv)
 								return -1;
 							}
 							initialized = true;
+							isTracking = true;
 						}
 						///tracker is initialized
 						else {
@@ -162,7 +163,7 @@ int main(int argc, char** argv)
 					//*****************************************
 					// 2/2 --> track object detected by movement
 					//*****************************************
-					detector->imgAquist(img);
+					detector->imgAquist(img); //catches new frame again. Wrong boundingBox image, todo
 
 					if (tracker->update(img, boundingBox))
 					{
@@ -175,10 +176,10 @@ int main(int argc, char** argv)
 						//tracker->clear(); nessesarry?? todo
 					}
 				}
+
+				///"img" is collected even though "isTracking" is false or true
+				imshow("tracking window", img);
 			}
-
-
-			imshow("tracking window", img);
 
 			char c = (char)waitKey(2);
 			if (c == 'q')	//quit
