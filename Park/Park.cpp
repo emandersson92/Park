@@ -2,7 +2,6 @@
 //
 
 #include "stdafx.h"
-#include "opencvIncludes.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -19,6 +18,8 @@
 #include "VehicleList.h"
 
 #include "Bin_MovingObj_MyTracker.h"
+
+
 
 using namespace cv;
 using namespace std;
@@ -62,19 +63,51 @@ int main(int argc, char** argv)
 	}
 
 
+	/*
+	int thresh = 100;
 
+	Mat out;
+	Mat img = imread("img\\bin_dot_1.png");
+	namedWindow("Contours", CV_WINDOW_AUTOSIZE);
+
+	vector<vector<Point> > contours;
+	vector<Vec4i> hierarchy;
+	RNG rng(12345);
+
+	Canny(img, out, thresh, thresh * 2, 3);
+
+	imshow("Contours", out);
+	waitKey();
+	findContours(out, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
+
+	/// Draw contours
+	Mat drawing = Mat::zeros(out.size(), CV_8UC3);
+	for (int i = 0; i< contours.size(); i++)
+	{
+		Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
+		drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, Point());
+	}
+
+	/// Show in a window
+	
+	imshow("Contours", drawing);
+
+
+	waitKey();
+	*/
 
 	// using CV_TRACKER
 	if (CV_TRACKER == true) {
 		cout << "CV_TRACKER IS DEFINED" << endl;
 
-		Mat raw;	/// raw from BinDetect
 		Mat img;
 		bool paused = true;
+		bool isTracking = false;
 
 		///Prepare Bindetect
-		VehicleDetector* d = new BinDetect();
-		vector<vector<Point>> contours;
+		VehicleDetector* detector = new BinDetect();
+		std::vector<std::vector<cv::Point>> contours;
+		Rect2d boundingBox;
 
 		///Prepare TrackerKCF
 		Ptr<TrackerKCF> tracker = TrackerKCF::create();
@@ -82,42 +115,70 @@ int main(int argc, char** argv)
 
 		namedWindow("tracking window");
 
+
+		//*****************************************
+		// PARTS IN while(true)
+		//
+		// 1/2 --> detect object from movement
+		// 2/2 --> track object detected by movement
+		//*****************************************
 		while (true)
 		{
-			// 1/2 --> detect object from movement
-			//*****************************************
-			d->apply(contours);
-			d->getRaw(raw);
-			img = raw.clone();		///dont alter BinDetect object
-
-			///get just one rect to validate the program with TrackerKCF
-			Rect2d boundingBox = boundingRect(contours);
-
-			// 2/2 --> track object detected by movement
-			//*****************************************
 			if (!paused)
 			{
-				if (!initialized)
+				//*****************************************
+				// 1/2 --> detect object from movement
+				//*****************************************
+				if (!isTracking)
 				{
-					//initializes the tracker
-					if (!tracker->init(img, boundingBox))
+					detector->apply(contours);
+					///if no object is found, wait for next frame
+					if (contours.size() > 0)
 					{
-						cout << "***Could not initialize tracker...***\n";
-						getchar();
-						return -1;
+						detector->getRaw(img);
+						///get one initiating rect to define boundingBox region
+						boundingBox = boundingRect(contours.back());
+
+						if (!initialized)
+						{
+							//initializes the tracker
+							if (!tracker->init(img, boundingBox))
+							{
+								std::cout << "***Could not initialize tracker...***\n";
+								getchar();
+								return -1;
+							}
+							initialized = true;
+						}
+						///tracker is initialized
+						else {
+							isTracking = true;
+						}
 					}
-					initialized = true;
 				}
-				else if (initialized)
+				///the tracker is tracking
+				if (isTracking)
 				{
-					//updates the tracker
+					//*****************************************
+					// 2/2 --> track object detected by movement
+					//*****************************************
+					detector->imgAquist(img);
+
 					if (tracker->update(img, boundingBox))
 					{
 						rectangle(img, boundingBox, Scalar(255, 0, 0), 2, 1);
 					}
+					else {
+						//tracker lost?? todo check if you come here when tracker is lost
+						initialized = false;
+						isTracking = false;
+						//tracker->clear(); nessesarry?? todo
+					}
 				}
-				imshow("tracking window", img);
 			}
+
+
+			imshow("tracking window", img);
 
 			char c = (char)waitKey(2);
 			if (c == 'q')	//quit
