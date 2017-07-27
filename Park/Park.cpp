@@ -101,6 +101,7 @@ int main(int argc, char** argv)
 		cout << "CV_TRACKER IS DEFINED" << endl;
 
 		Mat img;
+		Mat raw, segmented, filtered, classified;
 		bool paused = true;
 		bool isTracking = false;
 
@@ -126,23 +127,27 @@ int main(int argc, char** argv)
 		{
 			if (!paused)
 			{
+				detector->imgAquist(raw);
+
 				//*****************************************
 				// 1/2 --> detect object from movement
 				//*****************************************
 				if (!isTracking)
 				{
-					detector->apply(contours);
+					detector->segment(raw, segmented); //wrong background subtraction second time? todo
+					detector->filter(segmented, filtered);
+					detector->classify(filtered, contours);
+
 					///if no object is found, wait for next frame
 					if (contours.size() > 0)
 					{
-						detector->getRaw(img);
 						///get one initiating rect to define boundingBox region
 						boundingBox = boundingRect(contours.back());
 
 						if (!initialized)
 						{
 							//initializes the tracker
-							if (!tracker->init(img, boundingBox))
+							if (!tracker->init(raw, boundingBox))
 							{
 								std::cout << "***Could not initialize tracker...***\n";
 								getchar();
@@ -163,11 +168,10 @@ int main(int argc, char** argv)
 					//*****************************************
 					// 2/2 --> track object detected by movement
 					//*****************************************
-					detector->imgAquist(img); //catches new frame again. Wrong boundingBox image, todo
 
-					if (tracker->update(img, boundingBox))
+					if (tracker->update(raw, boundingBox))
 					{
-						rectangle(img, boundingBox, Scalar(255, 0, 0), 2, 1);
+						rectangle(raw, boundingBox, Scalar(255, 0, 0), 2, 1);
 					}
 					else {
 						//tracker lost?? todo check if you come here when tracker is lost
@@ -177,8 +181,7 @@ int main(int argc, char** argv)
 					}
 				}
 
-				///"img" is collected even though "isTracking" is false or true
-				imshow("tracking window", img);
+				imshow("tracking window", raw);
 			}
 
 			char c = (char)waitKey(2);
