@@ -2,6 +2,8 @@
 #include "ImgAcquisition.h"
 
 
+ImgAcquisition::ImgAcquisition(){}
+
 ImgAcquisition::ImgAcquisition(int pathNmb)
 {
 	setPath(pathNmb, path);

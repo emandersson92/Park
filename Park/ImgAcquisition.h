@@ -14,6 +14,7 @@ class ImgAcquisition
 {
 public:
 	ImgAcquisition(int pathNmb);
+	ImgAcquisition();
 	~ImgAcquisition();
 
 	void apply(cv::Mat& out);
