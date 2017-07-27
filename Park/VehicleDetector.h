@@ -17,14 +17,15 @@ public:
 	
 	//The parts that must be included in a VehicleDetector-abstraction 
 
-	virtual void apply(cv::Mat& out) = 0;
+	virtual void apply(std::vector<std::vector<cv::Point>>& c) = 0;
+	virtual void getRaw(cv::Mat& m) = 0;
 
-private:
-
-	virtual void imgAquist(cv::Mat& in, cv::Mat& out) = 0;
+	virtual void imgAquist(cv::Mat& raw) = 0;
 	virtual void segment(cv::Mat& in, cv::Mat& out) = 0;
 	virtual void filter(cv::Mat& in, cv::Mat& out) = 0;
-	virtual void classify(cv::Mat& in, cv::Mat& out) = 0;
+	virtual void classify(cv::Mat& classified, std::vector<std::vector<cv::Point>>& c) = 0;
+
+private:
 	
 
 };
