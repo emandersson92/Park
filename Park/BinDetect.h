@@ -31,21 +31,27 @@ public:
 
 	void apply(std::vector<std::vector<cv::Point>>& contours);
 
-	
-
-private:
-
-	
 	void imgAquist(cv::Mat& out);
 	void segment(cv::Mat& in, cv::Mat& out);
 	void filter(cv::Mat& in, cv::Mat& out);
 	void classify(cv::Mat& in, std::vector<std::vector<cv::Point>>& contours);
+
+
+private:
 	
+	
+	void getRaw(cv::Mat& m);
+
 
 	cv::Mat raw;
 	cv::Mat segmented;
 	cv::Mat filtered;
 	cv::Mat classified;
+
+	ImgAcquisition* a;
+	BgsSegment* s;
+	Filter* f;
+	BinClassify* d;
 
 
 	//Application specific choices:
