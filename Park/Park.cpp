@@ -29,7 +29,7 @@ void test(const char *);
 void imgDis(Mat& out);
 static void help();
 
-
+bool CV_TRACKER;
 
 static const char* keys =
 { "{@tracker_algorithm | | tracker algorithm }"
@@ -44,82 +44,160 @@ int main(int argc, char** argv)
 	String tracker_algorithm = parser.get<String>(0);
 	String video_name = parser.get<String>(1);
 
-	if (tracker_algorithm.empty() || video_name.empty())
+	if (tracker_algorithm.empty())
 	{
 		help();
 		getchar();
 		return -1;
 	}
 
+	if (tracker_algorithm == "opencv_tracker")
+	{ 
+		cout << "using opencv_tracker" << endl;
+		CV_TRACKER = true;
+
+	}
+	else { 
+		CV_TRACKER = false;
+	}
 
 
 
 
-	MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
-	
+	// using CV_TRACKER
+	if (CV_TRACKER == true) {
+		cout << "CV_TRACKER IS DEFINED" << endl;
 
-	//still tracker
-	//...
-	//...
-	//...
+		Mat raw;	/// raw from BinDetect
+		Mat img;
+		bool paused = true;
 
-	vector<MyTracker*> trackers;
+		///Prepare Bindetect
+		VehicleDetector* d = new BinDetect();
+		vector<vector<Point>> contours;
 
-	trackers.push_back(simpleTracker);
-	//trackers.push_back(still tracker);
-	//...
-	//...
-	//...
+		///Prepare TrackerKCF
+		Ptr<TrackerKCF> tracker = TrackerKCF::create();
+		bool initialized = false;
+
+		namedWindow("tracking window");
+
+		while (true)
+		{
+			// 1/2 --> detect object from movement
+			//*****************************************
+			d->apply(contours);
+			d->getRaw(raw);
+			img = raw.clone();		///dont alter BinDetect object
+
+			///get just one rect to validate the program with TrackerKCF
+			Rect2d boundingBox = boundingRect(contours);
+
+			// 2/2 --> track object detected by movement
+			//*****************************************
+			if (!paused)
+			{
+				if (!initialized)
+				{
+					//initializes the tracker
+					if (!tracker->init(img, boundingBox))
+					{
+						cout << "***Could not initialize tracker...***\n";
+						getchar();
+						return -1;
+					}
+					initialized = true;
+				}
+				else if (initialized)
+				{
+					//updates the tracker
+					if (tracker->update(img, boundingBox))
+					{
+						rectangle(img, boundingBox, Scalar(255, 0, 0), 2, 1);
+					}
+				}
+				imshow("tracking window", img);
+			}
+
+			char c = (char)waitKey(2);
+			if (c == 'q')	//quit
+				break;
+			if (c == 'p')
+				paused = !paused;
+
+		}
+
+	}
+
+	else {
+		MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
+
+
+		//still tracker
+		//...
+		//...
+		//...
+
+		vector<MyTracker*> trackers;
+
+		trackers.push_back(simpleTracker);
+		//trackers.push_back(still tracker);
+		//...
+		//...
+		//...
 
 
 
-	VehicleList* movList = new Moving_VehicleList();
-	VehicleList* stillList = new Still_VehicleList();
-	VehicleList* alarmList = new Still_VehicleList();
+		VehicleList* movList = new Moving_VehicleList();
+		VehicleList* stillList = new Still_VehicleList();
+		VehicleList* alarmList = new Still_VehicleList();
 
-	//************************************************
-	//vehicle lifecycle:
-	//
-	//   [movlist] --> [stillList] --> [alarmList]
-	//
-	movList->connectTo(stillList);
-	stillList->connectTo(alarmList);
-	//
-	//................................................
-	
-
+		//************************************************
+		//vehicle lifecycle:
+		//
+		//   [movlist] --> [stillList] --> [alarmList]
+		//
+		movList->connectTo(stillList);
+		stillList->connectTo(alarmList);
+		//
+		//................................................
 
 
-	//Forward vehicles to next lists if condition is ok
-	for (MyTracker* t : trackers) {
-		Vehicle* v = t->getVehicle();
-		
-		/*
-		v->list->nextList.belongCheck(v);
 
 
-		if (v->list.nextList.belongCheck(*v)) {
+		//Forward vehicles to next lists if condition is ok
+		for (MyTracker* t : trackers) {
+			Vehicle* v = t->getVehicle();
+
+			/*
+			v->list->nextList.belongCheck(v);
+
+
+			if (v->list.nextList.belongCheck(*v)) {
 
 			v->list.forwVehicle();
-		}
-		else if (t.list.belongCheck(v)) {
+			}
+			else if (t.list.belongCheck(v)) {
 
 			//toss vehicle and tracker();
+			}
+
+			*/
 		}
 
-		*/
-	}
-	
 
-	//Alt 1: Add vehicles only to the first list
-	//Alt 2: Add vehicles in all lists
-	//
-	//Using Alt ?:
+		//Alt 1: Add vehicles only to the first list
+		//Alt 2: Add vehicles in all lists
+		//
+		//Using Alt ?:
 
-	for each (MyTracker* t in trackers)
-	{
-		t->track();
+		for each (MyTracker* t in trackers)
+		{
+			t->track();
+		}
+
 	}
+
 
     return 0;
 }
