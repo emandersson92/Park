@@ -17,8 +17,13 @@ ImgAcquisition::~ImgAcquisition()
 void ImgAcquisition::setPath(int pathNmb, std::string& path) {
 	switch (pathNmb) {
 	case BIN_DOT_IMG:
-		path = "img\\bin_dot_1.png";
+		path = bin_dot_img_path;
 		break;
+		
+	case PED_CROSS_VID:
+		path = pedest_cross_vid_path;
+		break;
+		
 
 	default:
 		std::cout << "could not set image path" << std::endl;
