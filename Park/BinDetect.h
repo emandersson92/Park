@@ -55,7 +55,8 @@ private:
 
 
 	//Application specific choices:
-	const int Path = ImgAcquisition::BIN_DOT_IMG;
+	const int Path = ImgAcquisition::PED_CROSS_VID;
+	//const int Path = ImgAcquisition::BIN_DOT_IMG;
 
 
 
