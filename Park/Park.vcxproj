@@ -153,6 +153,7 @@
     <ClInclude Include="MyTracker.h" />
     <ClInclude Include="MyTrackerKCF.h" />
     <ClInclude Include="opencvIncludes.h" />
+    <ClInclude Include="Show.h" />
     <ClInclude Include="Vehicle.h" />
     <ClInclude Include="VehicleDetector.h" />
     <ClInclude Include="BinDetect.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="Filter.cpp" />
     <ClCompile Include="ImgAcquisition.cpp" />
+    <ClCompile Include="Show.cpp" />
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="VehicleDetector.cpp" />
     <ClCompile Include="BinDetect.cpp" />

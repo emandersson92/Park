@@ -20,11 +20,15 @@ void Filter::apply(cv::Mat& in, cv::Mat& out) {
 
 void Filter::openFilter(cv::Mat& in, cv::Mat& out) {
 	cv::Mat tmp;
+
 	erode(in, tmp, erElem);
+	Show::add(tmp, "erode");
+
 	imshow("erode", tmp);
 
 	dilate(tmp, out, diElem);
-	imshow("dilate", out);
+	Show::add(out, "dilate");
+	//imshow("dilate", out);
 
 }
 void Filter::closeFilter(cv::Mat& in, cv::Mat& out) {

@@ -124,6 +124,9 @@
     <ClInclude Include="Bin_MovingObj_MyTracker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Show.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -185,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="StillObj_MyTracker.cpp">
       <Filter>Source Files\ImgProc\Trackers\Sub</Filter>
+    </ClCompile>
+    <ClCompile Include="Show.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

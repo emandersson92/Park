@@ -21,6 +21,7 @@
 
 #include "opencv2\highgui.hpp"
 
+#include "Show.h"
 
 using namespace cv;
 using namespace std;
@@ -127,8 +128,6 @@ int main(int argc, char** argv)
 		bool initialized = false;
 
 		namedWindow("tracking window");
-		namedWindow("erode");
-		namedWindow("dilate");
 
 
 		//*****************************************
@@ -178,7 +177,7 @@ int main(int argc, char** argv)
 							if (!intersect) {
 								///no intersection. Create new tracker
 								Ptr<TrackerKCF> t = TrackerKCF::create();
-
+								
 								///initialize the tracker
 								if (!t->init(raw, boundingBox))
 								{
@@ -206,6 +205,8 @@ int main(int argc, char** argv)
 				//quit on ESC button
 				if (waitKey(1) == 27)break;
 			}
+
+			Show::showImg();
 
 			char c = (char)waitKey(2);
 			if (c == 'q')	//quit

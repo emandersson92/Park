@@ -1,6 +1,6 @@
 #pragma once
 #include "opencvIncludes.h"
-
+#include "Show.h"
 
 class Filter
 {
@@ -20,6 +20,8 @@ private:
 
 	cv::Mat erElem;								//Erode element
 	cv::Mat diElem;								//Dilate element
+
+	Show* show;
 
 };
 
