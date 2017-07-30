@@ -14,7 +14,6 @@ public:
 	void checkListConditions();
 	bool belongCheck(Vehicle* v);
 	
-	
 
 
 private:
