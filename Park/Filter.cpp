@@ -25,7 +25,7 @@ void Filter::openFilter(cv::Mat& in, cv::Mat& out) {
 }
 void Filter::closeFilter(cv::Mat& in, cv::Mat& out) {
 	dilate(in, out, diElem);
-	erode(in, out, erElem);
+	erode(in, out, erElem); 
 }
 
 
@@ -35,12 +35,12 @@ void Filter::init() {
 	int diShape = cv::MORPH_RECT;
 
 	int erosion_elem = 0;
-	int erosion_size = 5;			//shall be adaptive in the future
+	int erosion_size = 20;			//shall be adaptive in the future
 	int dilation_elem = 0;
 	int dilation_size = 5;			//shall be adaptive in the future
 
 
-	erElem = getStructuringElement(erShape,
+	erElem = getStructuringElement(erShape, 
 		cv::Size(2 * erosion_size + 1, 2 * erosion_size + 1),
 		cv::Point(erosion_size, erosion_size));
 
