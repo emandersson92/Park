@@ -31,11 +31,19 @@ private:
 	// ...
 
 
-	void getBinDot(std::string& path, cv::Mat& out);
+	void getImg(std::string& path, cv::Mat& out);
 	void setPath(int pathNmb, std::string& path);
+
+	void error(std::string& path);
+
+
+
+	cv::VideoCapture cap;
 
 	std::string path;							//Path to be used
 
+	bool vidPath = false;
+	bool imgPath = false;
 
 };
 
