@@ -19,6 +19,7 @@
 
 #include "Bin_MovingObj_MyTracker.h"
 
+#include "opencv2\highgui.hpp"
 
 
 using namespace cv;
@@ -96,6 +97,18 @@ int main(int argc, char** argv)
 	waitKey();
 	*/
 
+	
+
+	//TEMPORARILY PUT HERE
+
+	namedWindow("filtered");
+	namedWindow("segmented");
+
+	int widMax = 200;
+	int widMin = 10;
+	int heiMax = 200;
+	int heiMin = 10;
+
 	// using CV_TRACKER
 	if (CV_TRACKER == true) {
 		cout << "CV_TRACKER IS DEFINED" << endl;
@@ -138,27 +151,41 @@ int main(int argc, char** argv)
 					detector->filter(segmented, filtered);
 					detector->classify(filtered, contours);
 
+
+					cv::imshow("filtered", filtered);
+					cv::imshow("segmented", segmented);
+
+					char ch = waitKey(0);
+					
+
+
 					///if no object is found, wait for next frame
 					if (contours.size() > 0)
 					{
 						///get one initiating rect to define boundingBox region
+
 						boundingBox = boundingRect(contours.back());
 
-						if (!initialized)
+						if (boundingBox.width <= widMax && boundingBox.width >= widMin && boundingBox.height <= heiMax && boundingBox.height >= heiMin)
 						{
-							//initializes the tracker
-							if (!tracker->init(raw, boundingBox))
+
+							if (!initialized)
 							{
-								std::cout << "***Could not initialize tracker...***\n";
-								getchar();
-								return -1;
+								//initializes the tracker
+								if (!tracker->init(raw, boundingBox))
+								{
+									//cannot initialyze new tracker secont time. TODO
+									std::cout << "***Could not initialize tracker...***\n";
+									getchar();
+									return -1;
+								}
+								initialized = true;
+								isTracking = true;
 							}
-							initialized = true;
-							isTracking = true;
-						}
-						///tracker is initialized
-						else {
-							isTracking = true;
+							///tracker is initialized
+							else {
+								isTracking = true;
+							}
 						}
 					}
 				}
@@ -177,7 +204,11 @@ int main(int argc, char** argv)
 						//tracker lost?? todo check if you come here when tracker is lost
 						initialized = false;
 						isTracking = false;
-						//tracker->clear(); nessesarry?? todo
+						//tracker->clear(); //nessesarry?? todo
+						//Todo memory leakage?
+						tracker = TrackerKCF::create();
+						
+						
 					}
 				}
 
