@@ -22,7 +22,7 @@ public:
 	VehicleList* list;
 
 private:
-	std::vector<VehicleFrame> vehFrames;
+	std::vector<VehicleFrame*> vehFrames;
 
 };
 
