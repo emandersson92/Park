@@ -24,5 +24,12 @@ public:
 private:
 	void findCont(cv::Mat& img, std::vector<std::vector<cv::Point>>& contours);		//functions
 
+	void checkArea(std::vector<std::vector<cv::Point>>& contours);
+
+	int widMax = 200;
+	int widMin = 5;
+	int heiMax = 200;
+	int heiMin = 5;
+
 };
 
