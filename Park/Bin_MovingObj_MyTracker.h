@@ -5,7 +5,7 @@
 class Bin_MovingObj_MyTracker : public MovingObj_MyTracker
 {
 public:
-	Bin_MovingObj_MyTracker();
+	Bin_MovingObj_MyTracker(std::vector<std::vector<cv::Point>>* c);
 	~Bin_MovingObj_MyTracker();
 
 	void track();
@@ -14,7 +14,8 @@ public:
 private:
 	VehicleDetector* detector;
 	std::vector<cv::Mat> cars;
-
+	
+	std::vector<std::vector<cv::Point>>* contours;		//contours is updated from detectVehicles(); 
 
 };
 
