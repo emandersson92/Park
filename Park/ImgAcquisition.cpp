@@ -75,6 +75,6 @@ void ImgAcquisition::error(std::string& path) {
 	std::cout << "" << std::endl;
 	std::cout << "Push any character to exit" << std::endl;
 	getchar();
-	exit(-1);
+	exit(0);
 }
 

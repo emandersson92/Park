@@ -101,13 +101,11 @@ int main(int argc, char** argv)
 
 	//TEMPORARILY PUT HERE
 
-	namedWindow("filtered");
-	namedWindow("segmented");
+	const int widMax = 200;
+	const int widMin = 50;
+	const int heiMax = 200;
+	const int heiMin = 50;
 
-	int widMax = 200;
-	int widMin = 10;
-	int heiMax = 200;
-	int heiMin = 10;
 
 	// using CV_TRACKER
 	if (CV_TRACKER == true) {
@@ -115,7 +113,7 @@ int main(int argc, char** argv)
 
 		Mat img;
 		Mat raw, segmented, filtered, classified;
-		bool paused = true;
+		bool paused = false;
 		bool isTracking = false;
 
 		///Prepare Bindetect
@@ -124,10 +122,13 @@ int main(int argc, char** argv)
 		Rect2d boundingBox;
 
 		///Prepare TrackerKCF
-		Ptr<TrackerKCF> tracker = TrackerKCF::create();
+		MultiTracker multiTracker;
+
 		bool initialized = false;
 
 		namedWindow("tracking window");
+		namedWindow("erode");
+		namedWindow("dilate");
 
 
 		//*****************************************
@@ -142,77 +143,68 @@ int main(int argc, char** argv)
 			{
 				detector->imgAquist(raw);
 
-				//*****************************************
-				// 1/2 --> detect object from movement
-				//*****************************************
-				if (!isTracking)
-				{
-					detector->segment(raw, segmented); //wrong background subtraction second time? todo
-					detector->filter(segmented, filtered);
-					detector->classify(filtered, contours);
+				//new detected objects must not intersect with tracking objects 
+				detector->segment(raw, segmented); //wrong background subtraction second time? todo
+				detector->filter(segmented, filtered);
+				detector->classify(filtered, contours);
 
-
-					cv::imshow("filtered", filtered);
-					cv::imshow("segmented", segmented);
-
-					char ch = waitKey(0);
+				//cv::imshow("filtered", filtered);
+				//cv::imshow("segmented", segmented);
+				//char ch = waitKey();
 					
-
-
-					///if no object is found, wait for next frame
-					if (contours.size() > 0)
-					{
-						///get one initiating rect to define boundingBox region
-
+				///if no object is found, wait for next frame
+				if (contours.size() > 0)
+				{
+					///get one initiating rect to define boundingBox region
+					while (!contours.empty()) {
 						boundingBox = boundingRect(contours.back());
+						contours.pop_back();
 
+						///box big enough?
 						if (boundingBox.width <= widMax && boundingBox.width >= widMin && boundingBox.height <= heiMax && boundingBox.height >= heiMin)
 						{
+							vector<Rect2d> existingRects = multiTracker.getObjects();
 
-							if (!initialized)
+							bool intersect = false;
+
+							for each (Rect2d r in existingRects)
 							{
-								//initializes the tracker
-								if (!tracker->init(raw, boundingBox))
+								if (((r & boundingBox).area() > 0)) {
+									intersect = true;
+									break;
+								}
+							}
+
+							if (!intersect) {
+								///no intersection. Create new tracker
+								Ptr<TrackerKCF> t = TrackerKCF::create();
+
+								///initialize the tracker
+								if (!t->init(raw, boundingBox))
 								{
-									//cannot initialyze new tracker secont time. TODO
 									std::cout << "***Could not initialize tracker...***\n";
 									getchar();
 									return -1;
 								}
-								initialized = true;
-								isTracking = true;
-							}
-							///tracker is initialized
-							else {
-								isTracking = true;
+
+								multiTracker.add(t, raw, boundingBox);
 							}
 						}
 					}
 				}
-				///the tracker is tracking
-				if (isTracking)
-				{
-					//*****************************************
-					// 2/2 --> track object detected by movement
-					//*****************************************
 
-					if (tracker->update(raw, boundingBox))
-					{
-						rectangle(raw, boundingBox, Scalar(255, 0, 0), 2, 1);
-					}
-					else {
-						//tracker lost?? todo check if you come here when tracker is lost
-						initialized = false;
-						isTracking = false;
-						//tracker->clear(); //nessesarry?? todo
-						//Todo memory leakage?
-						tracker = TrackerKCF::create();
-						
-						
-					}
-				}
-
+				///update the tracking result
+				multiTracker.update(raw);
+				///Todo are the trackers deleted when they are lost?
+				
+				/// draw the tracked object
+				for (unsigned i = 0; i<multiTracker.getObjects().size(); i++)
+					rectangle(raw, multiTracker.getObjects()[i], Scalar(255, 0, 0), 2, 1);
+				
+				// show image with the tracked object
 				imshow("tracking window", raw);
+				//quit on ESC button
+				if (waitKey(1) == 27)break;
 			}
 
 			char c = (char)waitKey(2);
@@ -220,10 +212,10 @@ int main(int argc, char** argv)
 				break;
 			if (c == 'p')
 				paused = !paused;
-
 		}
-
 	}
+
+
 
 	else {
 		MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
