@@ -11,7 +11,7 @@ BgsSegment::BgsSegment(){
 }
 
 BgsSegment::~BgsSegment() {
-	delete(b);
+	delete(b);	///not needed with smart pointers? todo
 }
 
 
@@ -22,7 +22,13 @@ void BgsSegment::apply(cv::Mat& in, cv::Mat& out) {
 }
 
 void BgsSegment::BgsMog2(cv::Mat& in, cv::Mat& out) {
+
+	//cv::Ptr<cv::BackgroundSubtractor> pMOG2 = cv::createBackgroundSubtractorMOG2();
+	//cv::Ptr<cv::BackgroundSubtractor> b; //MOG2 Background subtractor
+
+	//pMOG2->apply(in, out);
 	b->apply(in, out);
+
 }
 
 

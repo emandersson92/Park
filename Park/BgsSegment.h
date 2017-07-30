@@ -1,6 +1,3 @@
-#pragma once
-#include "opencvIncludes.h"
-
 /********************************
 Info:
 Class that segment the foreground from the background in a videostream.
@@ -10,6 +7,9 @@ The constructor shall define what function to use when apply() is called.
 Author:
 Emil Andersson 2017-07-18
 ********************************/
+#pragma once
+#include "opencv2\core.hpp"
+#include "opencv2\bgsegm.hpp"
 
 class BgsSegment
 {
