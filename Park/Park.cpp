@@ -25,13 +25,11 @@
 #include "Show.h"
 #include "list"
 
-using namespace cv;
-using namespace std;
-using namespace tl;
+
  
 
 void test(const char *);
-void imgDis(Mat& out);
+void imgDis(cv::Mat& out);
 static void help();
 
 bool CV_TRACKER;
@@ -44,17 +42,17 @@ static const char* keys =
 
 
 
-typedef std::vector<Point> vecPoint;
+typedef std::vector<cv::Point> vecPoint;
 typedef std::vector<vecPoint> vecVecPoint;
 
 
 int main(int argc, char** argv)
 {
 	
-	CommandLineParser parser(argc, argv, keys);
+	cv::CommandLineParser parser(argc, argv, keys);
 
-	String tracker_algorithm = parser.get<String>(0);
-	String video_name = parser.get<String>(1);
+	cv::String tracker_algorithm = parser.get<cv::String>(0);
+	cv::String video_name = parser.get<cv::String>(1);
 
 	if (tracker_algorithm.empty())
 	{
@@ -65,7 +63,7 @@ int main(int argc, char** argv)
 
 	if (tracker_algorithm == "opencv_tracker")
 	{ 
-		cout << "using opencv_tracker" << endl;
+		std::cout << "using opencv_tracker" << std::endl;
 		CV_TRACKER = true;
 
 	}
@@ -76,10 +74,10 @@ int main(int argc, char** argv)
 
 	// using CV_TRACKER
 	if (CV_TRACKER == true) {
-		cout << "CV_TRACKER IS DEFINED" << endl;
+		std::cout << "CV_TRACKER IS DEFINED" << std::endl;
 
-		Mat img;
-		Mat raw, segmented, filtered, classified;
+		cv::Mat img;
+		cv::Mat raw, segmented, filtered, classified;
 		bool paused = false;
 		bool isTracking = false;
 
@@ -106,7 +104,7 @@ int main(int argc, char** argv)
 
 				Show::showImg();
 
-				char c = (char)waitKey(2);
+				char c = (char)cv::waitKey(2);
 				if (c == 'q')exit(-1);///Quit on q
 				if (c == 'p')paused = !paused;///Pause on p
 				if (c == 27)exit(-1);///Quit on ESC-button
@@ -123,7 +121,7 @@ int main(int argc, char** argv)
 		//...
 		//...
 
-		vector<MyTracker*> trackers;
+		std::vector<MyTracker*> trackers;
 
 		trackers.push_back(simpleTracker);
 		//trackers.push_back(still tracker);
@@ -191,18 +189,18 @@ int main(int argc, char** argv)
 
 static void help()
 {
-	cout << "blablabla" << endl;
+	std::cout << "blablabla" << std::endl;
 
 }
 
 
 
 //Image Display
-void imgDis(Mat& out) {
-	namedWindow("win");
+void imgDis(cv::Mat& out) {
+	cv::namedWindow("win");
 	imshow("win", out);
 	cvMoveWindow("win", 0, 0);
-	waitKey(0);
+	cv::waitKey(0);
 
 }
 
@@ -210,11 +208,11 @@ void test(const char* test) {
 	printf(test);
 
 	//does not work yet
-	if (tools::file_exists(test)) {
-		cout << " exists" << endl;
+	if (tl::tools::file_exists(test)) {
+		std::cout << " exists" << std::endl;
 	}
 	else {
-		cout << " dont exists" << endl;
+		std::cout << " dont exists" << std::endl;
 	}
 
 }
