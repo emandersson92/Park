@@ -22,6 +22,7 @@
 #include "opencv2\highgui.hpp"
 
 #include "Show.h"
+#include "list"
 
 using namespace cv;
 using namespace std;
@@ -44,7 +45,6 @@ struct myTrack {
 	Ptr<TrackerKCF> track;
 	Ptr<Rect2d> rect;
 };
-
 
 
 int main(int argc, char** argv)
@@ -73,41 +73,6 @@ int main(int argc, char** argv)
 	}
 
 
-	/*
-	int thresh = 100;
-
-	Mat out;
-	Mat img = imread("img\\bin_dot_1.png");
-	namedWindow("Contours", CV_WINDOW_AUTOSIZE);
-
-	vector<vector<Point> > contours;
-	vector<Vec4i> hierarchy;
-	RNG rng(12345);
-
-	Canny(img, out, thresh, thresh * 2, 3);
-
-	imshow("Contours", out);
-	waitKey();
-	findContours(out, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE);
-
-	/// Draw contours
-	Mat drawing = Mat::zeros(out.size(), CV_8UC3);
-	for (int i = 0; i< contours.size(); i++)
-	{
-		Scalar color = Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
-		drawContours(drawing, contours, i, color, 2, 8, hierarchy, 0, Point());
-	}
-
-	/// Show in a window
-	
-	imshow("Contours", drawing);
-
-
-	waitKey();
-	*/
-
-	
-
 	//TEMPORARILY PUT HERE
 
 	const int widMax = 200;
@@ -132,6 +97,7 @@ int main(int argc, char** argv)
 
 		///Prepare TrackerKCF
 		std::vector<myTrack> trackers;
+		std::vector<myTrack> tmpVec;//used when deleting certain elements in trackers (ugly but works)
 		//MultiTracker multiTracker;
 
 		bool initialized = false;
@@ -196,7 +162,7 @@ int main(int argc, char** argv)
 								}
 
 								myTrack nt;///new tracker
-								nt.rect = &boundingBox; //need to create new tracker? boundingbox will get destroyed?
+								nt.rect = new Rect2d(boundingBox); //need to create new tracker? boundingbox will get destroyed?
 								nt.track = t;
 
 								trackers.push_back(nt);
@@ -207,14 +173,82 @@ int main(int argc, char** argv)
 				}
 
 				///update the tracking result
+
+				
+
+				while (!trackers.empty()) {
+					
+					Ptr<TrackerKCF> t = trackers.back().track;
+					Ptr<Rect2d> r = trackers.back().rect;
+					myTrack tmpTrack = trackers.back();
+					trackers.pop_back();
+
+					if (!t->update(raw, *r)) {
+						///could not update tracker
+						///delete tracker
+						
+						//memory leakage??
+						//delete(t);
+						//delete(r);
+					}
+					else {
+						tmpVec.push_back(tmpTrack);
+					}
+				}
+
+				trackers = tmpVec;
+				tmpVec.clear();
+
+				/*
+				for (int i = 0; i < trackers.size(); i++)
+				{
+					Ptr<TrackerKCF> t = trackers[i].track;
+					Ptr<Rect2d> r = trackers[i].rect;
+
+					if (!t->update(raw, *r)) {
+						///could not update tracker
+						///delete tracker
+						delete(t);
+						delete(r);
+						trackers.erase(trackers.at(i));
+
+					}
+				}
+				*/
+				
+				/*
+				for (std::list<myTrack*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
+				{
+					Ptr<TrackerKCF> t = it->track;
+					Ptr<Rect2d> r = it->rect;
+
+					if (!t->update(raw, *r)) {
+						///could not update tracker
+						///delete tracker
+						delete(t);
+						delete(r);
+						it = trackers->erase(it);
+
+					}
+
+				}
+				*/
+
+
+				
+				/*
 				for each (myTrack t in trackers)
 				{
 					if (!t.track->update(raw, *t.rect)) {
 						///could not update tracker
 						///delete tracker
+						delete(t.rect);
 						t.track->~TrackerKCF();
+						//trackers.erase()
 					}
 				}
+
+				*/
 
 
 //				multiTracker.update(raw);
