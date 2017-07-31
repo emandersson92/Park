@@ -39,6 +39,14 @@ static const char* keys =
 "{@video_name        | | video name        }" };
 
   
+
+struct myTrack {
+	Ptr<TrackerKCF> track;
+	Ptr<Rect2d> rect;
+};
+
+
+
 int main(int argc, char** argv)
 {
 	
@@ -123,7 +131,8 @@ int main(int argc, char** argv)
 		Rect2d boundingBox;
 
 		///Prepare TrackerKCF
-		MultiTracker multiTracker;
+		std::vector<myTrack> trackers;
+		//MultiTracker multiTracker;
 
 		bool initialized = false;
 
@@ -162,17 +171,17 @@ int main(int argc, char** argv)
 						///box big enough?
 						if (boundingBox.width <= widMax && boundingBox.width >= widMin && boundingBox.height <= heiMax && boundingBox.height >= heiMin)
 						{
-							vector<Rect2d> existingRects = multiTracker.getObjects();
 
 							bool intersect = false;
 
-							for each (Rect2d r in existingRects)
+							for each (myTrack t in trackers)
 							{
-								if (((r & boundingBox).area() > 0)) {
+								if (((*t.rect & boundingBox).area() > 0)) {
 									intersect = true;
 									break;
 								}
 							}
+
 
 							if (!intersect) {
 								///no intersection. Create new tracker
@@ -186,21 +195,49 @@ int main(int argc, char** argv)
 									return -1;
 								}
 
-								multiTracker.add(t, raw, boundingBox);
+								myTrack nt;///new tracker
+								nt.rect = &boundingBox; //need to create new tracker? boundingbox will get destroyed?
+								nt.track = t;
+
+								trackers.push_back(nt);
+								//multiTracker.add(t, raw, boundingBox);
 							}
 						}
 					}
 				}
 
 				///update the tracking result
-				multiTracker.update(raw);
+				for each (myTrack t in trackers)
+				{
+					if (!t.track->update(raw, *t.rect)) {
+						///could not update tracker
+						///delete tracker
+						t.track->~TrackerKCF();
+					}
+				}
+
+
+//				multiTracker.update(raw);
+				
 				///Todo are the trackers deleted when they are lost?
 				
-				/// draw the tracked object
-				for (unsigned i = 0; i<multiTracker.getObjects().size(); i++)
-					rectangle(raw, multiTracker.getObjects()[i], Scalar(255, 0, 0), 2, 1);
-				
-				// show image with the tracked object
+
+				/// draw the tracked objects
+				for (std::vector<myTrack>::iterator it = trackers.begin(); it < trackers.end(); ++it)
+				{
+					rectangle(raw, *it->rect, Scalar(255, 0, 0), 2, 1);
+
+				}
+
+
+/*
+				/// draw the tracked objects
+				for (unsigned i = 0; i<trackers.size(); i++)
+					rectangle(raw, trackers.begin()   getObjects()[i], Scalar(255, 0, 0), 2, 1);
+
+	*/
+	// show image with the tracked object
+		
 				imshow("tracking window", raw);
 				//quit on ESC button
 				if (waitKey(1) == 27)break;
@@ -290,6 +327,7 @@ int main(int argc, char** argv)
 
     return 0;
 }
+
 
 
 static void help()
