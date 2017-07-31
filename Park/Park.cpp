@@ -26,8 +26,6 @@
 #include "list"
 
 
- 
-
 void test(const char *);
 void imgDis(cv::Mat& out);
 static void help();
@@ -37,8 +35,6 @@ bool CV_TRACKER;
 static const char* keys =
 { "{@tracker_algorithm | | tracker algorithm }"
 "{@video_name        | | video name        }" };
-
-  
 
 
 
@@ -76,16 +72,12 @@ int main(int argc, char** argv)
 	if (CV_TRACKER == true) {
 		std::cout << "CV_TRACKER IS DEFINED" << std::endl;
 
-		cv::Mat img;
 		cv::Mat raw, segmented, filtered, classified;
 		bool paused = false;
-		bool isTracking = false;
 
 		///Prepare Bindetect
 		VehicleDetector* detector = new BinDetect();
 		vecVecPoint contours;
-
-		//MultiTracker multiTracker;
 
 		MyTrackerKCF myTrackerKcf;
 

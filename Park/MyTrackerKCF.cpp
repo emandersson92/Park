@@ -96,7 +96,6 @@ void MyTrackerKCF::apply(cv::Mat& raw, vecVecPoint& contours) {
 	for (std::vector<myTrack>::iterator it = trackers.begin(); it < trackers.end(); ++it)
 	{
 		rectangle(raw, *it->rect, cv::Scalar(255, 0, 0), 2, 1);
-
 	}
 
 	Show::add(raw, "tracking window");
