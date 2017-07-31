@@ -51,10 +51,10 @@ void Show::showImg() {
 	for each (myWindow w in windows)
 	{
 		cv::imshow(w.name, w.image);
-		cv::waitKey(10);
 	}
 	
 }
+
 
 cv::Point Show::getNewPos(const int dx) {
 	return cv::Point(winCount * dx, 650);

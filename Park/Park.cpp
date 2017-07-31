@@ -18,6 +18,7 @@
 #include "VehicleList.h"
 
 #include "Bin_MovingObj_MyTracker.h"
+#include "MyTrackerKCF.h"
 
 #include "opencv2\highgui.hpp"
 
@@ -41,10 +42,10 @@ static const char* keys =
 
   
 
-struct myTrack {
-	Ptr<TrackerKCF> track;
-	Ptr<Rect2d> rect;
-};
+
+
+typedef std::vector<Point> vecPoint;
+typedef std::vector<vecPoint> vecVecPoint;
 
 
 int main(int argc, char** argv)
@@ -73,14 +74,6 @@ int main(int argc, char** argv)
 	}
 
 
-	//TEMPORARILY PUT HERE
-
-	const int widMax = 200;
-	const int widMin = 50;
-	const int heiMax = 200;
-	const int heiMin = 50;
-
-
 	// using CV_TRACKER
 	if (CV_TRACKER == true) {
 		cout << "CV_TRACKER IS DEFINED" << endl;
@@ -92,25 +85,12 @@ int main(int argc, char** argv)
 
 		///Prepare Bindetect
 		VehicleDetector* detector = new BinDetect();
-		std::vector<std::vector<cv::Point>> contours;
-		Rect2d boundingBox;
+		vecVecPoint contours;
 
-		///Prepare TrackerKCF
-		std::vector<myTrack> trackers;
-		std::vector<myTrack> tmpVec;//used when deleting certain elements in trackers (ugly but works)
 		//MultiTracker multiTracker;
 
-		bool initialized = false;
+		MyTrackerKCF myTrackerKcf;
 
-		namedWindow("tracking window");
-
-
-		//*****************************************
-		// PARTS IN while(true)
-		//
-		// 1/2 --> detect object from movement
-		// 2/2 --> track object detected by movement
-		//*****************************************
 		while (true)
 		{
 			if (!paused)
@@ -122,172 +102,17 @@ int main(int argc, char** argv)
 				detector->filter(segmented, filtered);
 				detector->classify(filtered, contours);
 
-				//cv::imshow("filtered", filtered);
-				//cv::imshow("segmented", segmented);
-				//char ch = waitKey();
-					
-				///if no object is found, wait for next frame
-				if (contours.size() > 0)
-				{
-					///get one initiating rect to define boundingBox region
-					while (!contours.empty()) {
-						boundingBox = boundingRect(contours.back());
-						contours.pop_back();
+				myTrackerKcf.apply(raw, contours);
 
-						///box big enough?
-						if (boundingBox.width <= widMax && boundingBox.width >= widMin && boundingBox.height <= heiMax && boundingBox.height >= heiMin)
-						{
+				Show::showImg();
 
-							bool intersect = false;
-
-							for each (myTrack t in trackers)
-							{
-								if (((*t.rect & boundingBox).area() > 0)) {
-									intersect = true;
-									break;
-								}
-							}
-
-
-							if (!intersect) {
-								///no intersection. Create new tracker
-								Ptr<TrackerKCF> t = TrackerKCF::create();
-								
-								///initialize the tracker
-								if (!t->init(raw, boundingBox))
-								{
-									std::cout << "***Could not initialize tracker...***\n";
-									getchar();
-									return -1;
-								}
-
-								myTrack nt;///new tracker
-								nt.rect = new Rect2d(boundingBox); //need to create new tracker? boundingbox will get destroyed?
-								nt.track = t;
-
-								trackers.push_back(nt);
-								//multiTracker.add(t, raw, boundingBox);
-							}
-						}
-					}
-				}
-
-				///update the tracking result
-
-				
-
-				while (!trackers.empty()) {
-					
-					Ptr<TrackerKCF> t = trackers.back().track;
-					Ptr<Rect2d> r = trackers.back().rect;
-					myTrack tmpTrack = trackers.back();
-					trackers.pop_back();
-
-					if (!t->update(raw, *r)) {
-						///could not update tracker
-						///delete tracker
-						
-						//memory leakage??
-						//delete(t);
-						//delete(r);
-					}
-					else {
-						tmpVec.push_back(tmpTrack);
-					}
-				}
-
-				trackers = tmpVec;
-				tmpVec.clear();
-
-				/*
-				for (int i = 0; i < trackers.size(); i++)
-				{
-					Ptr<TrackerKCF> t = trackers[i].track;
-					Ptr<Rect2d> r = trackers[i].rect;
-
-					if (!t->update(raw, *r)) {
-						///could not update tracker
-						///delete tracker
-						delete(t);
-						delete(r);
-						trackers.erase(trackers.at(i));
-
-					}
-				}
-				*/
-				
-				/*
-				for (std::list<myTrack*>::iterator it = trackers.begin(); it != trackers.end(); ++it)
-				{
-					Ptr<TrackerKCF> t = it->track;
-					Ptr<Rect2d> r = it->rect;
-
-					if (!t->update(raw, *r)) {
-						///could not update tracker
-						///delete tracker
-						delete(t);
-						delete(r);
-						it = trackers->erase(it);
-
-					}
-
-				}
-				*/
-
-
-				
-				/*
-				for each (myTrack t in trackers)
-				{
-					if (!t.track->update(raw, *t.rect)) {
-						///could not update tracker
-						///delete tracker
-						delete(t.rect);
-						t.track->~TrackerKCF();
-						//trackers.erase()
-					}
-				}
-
-				*/
-
-
-//				multiTracker.update(raw);
-				
-				///Todo are the trackers deleted when they are lost?
-				
-
-				/// draw the tracked objects
-				for (std::vector<myTrack>::iterator it = trackers.begin(); it < trackers.end(); ++it)
-				{
-					rectangle(raw, *it->rect, Scalar(255, 0, 0), 2, 1);
-
-				}
-
-
-/*
-				/// draw the tracked objects
-				for (unsigned i = 0; i<trackers.size(); i++)
-					rectangle(raw, trackers.begin()   getObjects()[i], Scalar(255, 0, 0), 2, 1);
-
-	*/
-	// show image with the tracked object
-		
-				imshow("tracking window", raw);
-				//quit on ESC button
-				if (waitKey(1) == 27)break;
+				char c = (char)waitKey(2);
+				if (c == 'q')exit(-1);///Quit on q
+				if (c == 'p')paused = !paused;///Pause on p
+				if (c == 27)exit(-1);///Quit on ESC-button
 			}
-
-			Show::showImg();
-
-			char c = (char)waitKey(2);
-			if (c == 'q')	//quit
-				break;
-			if (c == 'p')
-				paused = !paused;
 		}
 	}
-
-
 
 	else {
 		MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
