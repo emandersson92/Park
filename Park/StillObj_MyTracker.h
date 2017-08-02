@@ -16,7 +16,9 @@ Emil Andersson 2017-07-DATE
 #include "Timer.h"
 
 
-typedef std::vector<std::vector<cv::Point>> vecVecCont;
+typedef std::vector<cv::Point> vecCont;
+typedef std::vector<vecCont> vecVecCont;
+
 
 class StillObj_MyTracker
 {
@@ -28,14 +30,18 @@ public:
 
 private:
 
-
 	void alarm();
 
 
 	Timer t;
-	vecVecCont trackarea;
+
+	vecCont init_trackArea;
+	vecCont cur_trackArea;
 
 
-
+	//Tracker survival data
+	void surviveTest();
+	///min life before tracker dies in % (cur_trackArea/init_trackArea). 
+	const double minLife = 30.0;
 };
 
