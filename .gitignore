@@ -262,7 +262,8 @@ __pycache__/
 
 
 #Added by Emil
-*.props
+
+#*.props
 ReadMe.txt
 stdafx.cpp
 stdafx.h
