@@ -181,7 +181,7 @@ int main(int argc, char** argv)
 
 static void help()
 {
-	std::cout << "blablabla" << std::endl;
+	std::cout << "Invalid number of arguments" << std::endl;
 
 }
 

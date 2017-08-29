@@ -29,7 +29,7 @@ void Show::add(cv::Mat& img, const char * name) {
 	///window already added?
 	for each (myWindow w in windows)
 	{
-		if (w.name._Equal(name))
+		if (!w.name.compare(name))
 			return;
 	}
 

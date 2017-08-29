@@ -10,7 +10,26 @@ ImgAcquisition::ImgAcquisition(int pathNmb)
 
 	if (vidPath)
 	{
+
+
+		cap = cv::VideoCapture("Park\\vid\\p0.mp4");
+		if (!cap.isOpened())
+			error(path);
+
+
+		cap = cv::VideoCapture("img\\bin_dot_1.png");
+		if (!cap.isOpened())
+			error(path);
+
+
+		cap = cv::VideoCapture("vid\\p0.mp4");
+		if (!cap.isOpened())
+			error(path);
+
+
 		cap = cv::VideoCapture(path);
+		if (!cap.isOpened())
+			error(path);
 	}
 }
 
