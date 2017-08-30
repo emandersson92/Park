@@ -8,8 +8,8 @@ Author:
 Emil Andersson 2017-07-18
 ********************************/
 #pragma once
-#include "opencvIncludes.h"
 #include "ImgAcquisition.h"
+#include "ImgAcquisition_vs15.h"
 
 class ImgAcquisition_vs15 : public ImgAcquisition
 {
@@ -37,7 +37,7 @@ private:
 
 	void error(std::string& path);
 
-
+	
 
 	cv::VideoCapture cap;
 
