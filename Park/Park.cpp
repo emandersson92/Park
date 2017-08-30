@@ -28,7 +28,7 @@
 
 void test(const char *);
 void imgDis(cv::Mat& out);
-static void help();
+static void printError();
 
 bool CV_TRACKER;
 
@@ -44,39 +44,34 @@ typedef std::vector<vecPoint> vecVecPoint;
 
 int main(int argc, char** argv)
 {
-	
-	cv::CommandLineParser parser(argc, argv, keys);
 
-	cv::String tracker_algorithm = parser.get<cv::String>(0);
-	cv::String video_name = parser.get<cv::String>(1);
-
-	if (tracker_algorithm.empty())
-	{
-		help();
-		getchar();
-		return -1;
-	}
-
-	if (tracker_algorithm == "opencv_tracker")
-	{ 
-		std::cout << "using opencv_tracker" << std::endl;
-		CV_TRACKER = true;
-
-	}
-	else { 
-		CV_TRACKER = false;
-	}
+//****************************************
+  // cmd arg code
+  //	cv::CommandLineParser parser(argc, argv, keys);
+  //	cv::String tracker_algorithm = parser.get<cv::String>(0);
+  //	cv::String video_name = parser.get<cv::String>(1);
+//****************************************
 
 
-	// using CV_TRACKER
-	if (CV_TRACKER == true) {
+
+
+
+#define opencvTracker
+//#define myTracker
+//#define timer
+
+//******************************************************************************************************************************************************
+#ifdef opencvTracker
+#define
+
 		std::cout << "CV_TRACKER IS DEFINED" << std::endl;
 
 		cv::Mat raw, segmented, filtered, classified;
 		bool paused = false;
 
-		///Prepare Bindetect
-		VehicleDetector* detector = new BinDetect();
+		///Prepare Bindetect, 
+		///ImgAquisition can be vs15, vs17 or raspberry.
+		VehicleDetector* detector = new BinDetect(BinDetect.VS15);
 		vecVecPoint contours;
 
 		MyTrackerKCF myTrackerKcf;
@@ -102,9 +97,28 @@ int main(int argc, char** argv)
 				if (c == 27)exit(-1);///Quit on ESC-button
 			}
 		}
-	}
 
-	else {
+#endif
+
+
+
+
+//******************************************************************************************************************************************************
+#ifdef timer
+#define
+
+		//timer code here
+
+#endif
+
+
+
+
+
+//******************************************************************************************************************************************************
+#ifdef myTracker
+#define
+
 		MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
 
 
@@ -171,7 +185,8 @@ int main(int argc, char** argv)
 			t->track();
 		}
 
-	}
+#endif
+
 
 
     return 0;
@@ -179,9 +194,29 @@ int main(int argc, char** argv)
 
 
 
-static void help()
+static void printError(int num)
 {
-	std::cout << "Invalid number of arguments" << std::endl;
+  if(num == 1){
+    std::cout << "Invalid number of arguments" << std::endl;
+  }
+  else if(num == 2){
+  
+  }
+  else if(num == 3){
+  
+  }
+ else if(num == 4){
+  
+  }
+ else if(num == 5){
+  
+  }
+ else if(num == 6){
+  
+  }
+
+
+  getchar();
 
 }
 
