@@ -64,8 +64,6 @@ int main(int argc, char** argv)
 #ifdef opencvTracker
 #define
 
-		std::cout << "CV_TRACKER IS DEFINED" << std::endl;
-
 		cv::Mat raw, segmented, filtered, classified;
 		bool paused = false;
 
@@ -108,6 +106,13 @@ int main(int argc, char** argv)
 #define
 
 		//timer code here
+
+		//IMG ACQ
+		//contours
+		//detect cars
+		//start timer
+		//
+
 
 #endif
 
