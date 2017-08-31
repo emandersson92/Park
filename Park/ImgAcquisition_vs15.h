@@ -31,12 +31,10 @@ private:
 	// ...
 	// ...
 
-
 	void getImg(std::string& path, cv::Mat& out);
 	void setPath(int pathNmb, std::string& path);
 
 	void error(std::string& path);
-
 	
 
 	cv::VideoCapture cap;

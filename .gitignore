@@ -265,8 +265,8 @@ __pycache__/
 
 #*.props
 ReadMe.txt
-stdafx.cpp
-stdafx.h
-targetver.h
+#stdafx.cpp
+#stdafx.h
+#targetver.h
 *.sln
 *#

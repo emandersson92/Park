@@ -13,6 +13,36 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Header Files\ImgProc">
+      <UniqueIdentifier>{0f3c057d-22be-4378-8b49-31e2545e1e6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImgProc\Acquisition">
+      <UniqueIdentifier>{d781497b-be21-4c74-b663-81098ff0d7ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImgProc\Filter">
+      <UniqueIdentifier>{b9bce316-2f7c-46ce-a182-334def8bf540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImgProc\Tracking">
+      <UniqueIdentifier>{d709121c-74f3-44b7-a180-5e5ab0033bd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImgProc\Detection">
+      <UniqueIdentifier>{81905834-6bf6-4a25-a74e-944b3695334a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImgProc">
+      <UniqueIdentifier>{f315023c-3c9f-4697-ac69-98283d3ff5f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ImgProc\Acquisition">
+      <UniqueIdentifier>{ed0f2fae-7ea9-4a6e-b14e-f41b8d7af6fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Datatypes">
+      <UniqueIdentifier>{bd9710e8-a146-4224-b9d0-f34c802fa507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Datatypes\Lists">
+      <UniqueIdentifier>{dfb9c90a-18e8-4c00-b293-6c3b118f125e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ImgProc\Segmentation">
+      <UniqueIdentifier>{a045830b-98c9-44f4-8c1f-a4dabc5e2e17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="park\Background.cpp">
@@ -82,74 +112,23 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="park\ImgAcquisition.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ImgProc\Acquisition</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgAcquisition_vs15.cpp">
+      <Filter>Source Files\ImgProc\Acquisition</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgAcquisition_vs17.cpp">
+      <Filter>Source Files\ImgProc\Acquisition</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="park\Background.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\BgsSegment.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\BinClassify.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\BinDetect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\Bin_MovingObj_MyTracker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\Filter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\ImgAcquisition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\MovingObj_MyTracker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\Moving_VehicleList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\MyTracker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\MyTrackerKCF.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="park\Show.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\StillObj_MyTracker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\Still_VehicleList.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\Timer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\Vehicle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\VehicleDetector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\VehicleFrame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="park\draw.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="park\opencvIncludes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="park\tools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="park\vehicleList.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="park\stdafx.h">
@@ -157,6 +136,69 @@
     </ClInclude>
     <ClInclude Include="park\targetver.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="park\Filter.h">
+      <Filter>Header Files\ImgProc\Filter</Filter>
+    </ClInclude>
+    <ClInclude Include="park\MyTracker.h">
+      <Filter>Header Files\ImgProc\Tracking</Filter>
+    </ClInclude>
+    <ClInclude Include="park\MyTrackerKCF.h">
+      <Filter>Header Files\ImgProc\Tracking</Filter>
+    </ClInclude>
+    <ClInclude Include="park\Vehicle.h">
+      <Filter>Header Files\Datatypes</Filter>
+    </ClInclude>
+    <ClInclude Include="park\VehicleFrame.h">
+      <Filter>Header Files\Datatypes</Filter>
+    </ClInclude>
+    <ClInclude Include="park\VehicleDetector.h">
+      <Filter>Header Files\ImgProc\Detection</Filter>
+    </ClInclude>
+    <ClInclude Include="park\Still_VehicleList.h">
+      <Filter>Header Files\Datatypes\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="park\vehicleList.h">
+      <Filter>Header Files\Datatypes\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="park\MovingObj_MyTracker.h">
+      <Filter>Header Files\ImgProc\Tracking</Filter>
+    </ClInclude>
+    <ClInclude Include="park\Moving_VehicleList.h">
+      <Filter>Header Files\Datatypes\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="park\BgsSegment.h">
+      <Filter>Header Files\ImgProc\Segmentation</Filter>
+    </ClInclude>
+    <ClInclude Include="park\Background.h">
+      <Filter>Header Files\ImgProc\Detection</Filter>
+    </ClInclude>
+    <ClInclude Include="park\Bin_MovingObj_MyTracker.h">
+      <Filter>Header Files\ImgProc\Tracking</Filter>
+    </ClInclude>
+    <ClInclude Include="park\BinClassify.h">
+      <Filter>Header Files\ImgProc\Detection</Filter>
+    </ClInclude>
+    <ClInclude Include="park\BinDetect.h">
+      <Filter>Header Files\ImgProc\Detection</Filter>
+    </ClInclude>
+    <ClInclude Include="park\StillObj_MyTracker.h">
+      <Filter>Header Files\ImgProc\Tracking</Filter>
+    </ClInclude>
+    <ClInclude Include="park\Timer.h">
+      <Filter>Header Files\ImgProc\Tracking</Filter>
+    </ClInclude>
+    <ClInclude Include="park\opencvIncludes.h">
+      <Filter>Header Files\ImgProc\Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="Park\ImgAcquisition_vs17.h">
+      <Filter>Header Files\ImgProc\Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="Park\ImgAcquisition_vs15.h">
+      <Filter>Header Files\ImgProc\Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="Park\ImgAcquisition.h">
+      <Filter>Header Files\ImgProc\Acquisition</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

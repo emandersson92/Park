@@ -98,6 +98,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ImgAcquisition_vs15.cpp" />
+    <ClCompile Include="ImgAcquisition_vs17.cpp" />
     <ClCompile Include="park\Background.cpp" />
     <ClCompile Include="park\BgsSegment.cpp" />
     <ClCompile Include="park\BinClassify.cpp" />
@@ -130,7 +132,9 @@
     <ClInclude Include="park\Bin_MovingObj_MyTracker.h" />
     <ClInclude Include="park\draw.h" />
     <ClInclude Include="park\Filter.h" />
-    <ClInclude Include="park\ImgAcquisition.h" />
+    <ClInclude Include="Park\ImgAcquisition.h" />
+    <ClInclude Include="Park\ImgAcquisition_vs15.h" />
+    <ClInclude Include="Park\ImgAcquisition_vs17.h" />
     <ClInclude Include="park\MovingObj_MyTracker.h" />
     <ClInclude Include="park\Moving_VehicleList.h" />
     <ClInclude Include="park\MyTracker.h" />
