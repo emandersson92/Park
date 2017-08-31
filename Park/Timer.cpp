@@ -1,25 +1,10 @@
-#include "stdafx.h"
-#include "Timer.h"
+#include "WindowsTimer.h"
+
+WindowsTimer::WindowsTimer(){}
+
+WindowsTimer::WindowsTimer~(){}
 
 
-Timer::Timer()
-{
-}
 
 
-Timer::~Timer()
-{
-}
 
-void Timer::startTimer(HWND hwnd, UINT_PTR IDT_TIMER1) {
-
-	SetTimer(hwnd,             // handle to main window 
-		IDT_TIMER1,            // timer identifier 
-		10000,                 // 10-second interval 
-		(TIMERPROC)NULL);     // no timer callback 
-
-}
-
-void Timer::stopTimer() {
-
-}
