@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Background.h"
 
+
 Background::Background()
 {
   //This is the constructor
