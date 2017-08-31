@@ -4,6 +4,7 @@
 
 StillObj_MyTracker::StillObj_MyTracker()
 {
+	ALIVE = true;
 }
 
 
@@ -13,7 +14,7 @@ StillObj_MyTracker::~StillObj_MyTracker()
 
 
 void StillObj_MyTracker::track() {
-	surviveTest();
+    surviveTest();
 }
 
 
@@ -28,6 +29,11 @@ void StillObj_MyTracker::surviveTest() {
 	double lifeLeft = (100.0*(double)cur_trackArea.size() / (double)init_trackArea.size());
 	if (lifeLeft < minLife)
 	{
+		ALIVE = false;
 //		killTracker();
 	}
+}
+
+void StillObj_MyTracker::isAlive(){
+	return ALIVE;
 }
