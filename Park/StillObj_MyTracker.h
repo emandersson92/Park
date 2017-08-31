@@ -35,8 +35,11 @@ private:
 
 	Timer t;
 
-	vecCont init_trackArea;
-	vecCont cur_trackArea;
+
+	cv::Mat ROI;
+
+	std::vector<Point>* init_trackArea;
+	std::vector<Point>* cur_trackArea;
 
 
 	//Tracker survival data
