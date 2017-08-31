@@ -2,18 +2,30 @@
 #include "BinDetect.h"
 
 
-BinDetect::BinDetect()
+BinDetect::BinDetect(int IMGAC)
 {
-	a = new ImgAcquisition(Path);
+	
+	if (IMGAC == VS_15)
+	{
+		a = new ImgAcquisition_vs15();
+	}
+
+	else if(IMGAC == VS_17)
+	{
+		a = new ImgAcquisition_vs17();
+	}
+	//else if(IMGAC == RASPBERRY){
+	  //a = new ImgAcquisition_raspberry();
+	//}
+	
+
 	s = new BgsSegment();
 	f = new Filter();
 	d = new BinClassify();
 }
 
+BinDetect::~BinDetect(){}
 
-BinDetect::~BinDetect()
-{
-}
 
 void BinDetect::apply(std::vector<std::vector<cv::Point>>& contours) {
 
