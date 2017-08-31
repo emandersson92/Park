@@ -15,18 +15,20 @@ Emil Andersson 2017-07-19
 #include "opencv2\core.hpp"
 
 #include "VehicleDetector.h"
-
 #include "ImgAcquisition.h"
+#include "ImgAcquisition_vs15.h"
+#include "ImgAcquisition_vs17.h"
 #include "BgsSegment.h"
 #include "Filter.h"
 #include "BinClassify.h"
+
 
 
 class BinDetect : public VehicleDetector
 {
 
 public:
-	BinDetect();
+	BinDetect(int IMGAC);
 	~BinDetect();
 
 	void apply(std::vector<std::vector<cv::Point>>& contours);
@@ -35,6 +37,11 @@ public:
 	void segment(cv::Mat& in, cv::Mat& out);
 	void filter(cv::Mat& in, cv::Mat& out);
 	void classify(cv::Mat& in, std::vector<std::vector<cv::Point>>& contours);
+
+
+	static const int VS_15 = 1;
+	static const int VS_17 = 2;
+	static const int RASPBERRY = 3;
 
 
 private:
@@ -55,10 +62,9 @@ private:
 
 
 	//Application specific choices:
-	const int Path = ImgAcquisition::PED_CROSS_VID;
+	//const int Path = ImgAcquisition::PED_CROSS_VID;
 	//const int Path = ImgAcquisition::BIN_DOT_IMG;
 
-
-
+		
 };
 
