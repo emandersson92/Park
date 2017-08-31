@@ -62,51 +62,76 @@ int main(int argc, char** argv)
 
 //******************************************************************************************************************************************************
 #ifdef opencvTracker
-#define
 
-		cv::Mat raw, segmented, filtered, classified;
-		bool paused = false;
-
-		///Prepare Bindetect, 
-		///ImgAquisition can be vs15, vs17 or raspberry.
-		VehicleDetector* detector = new BinDetect(BinDetect.VS15);
-		vecVecPoint contours;
-
-		MyTrackerKCF myTrackerKcf;
-
-		while (true)
-		{
-			if (!paused)
-			{
-				detector->imgAquist(raw);
-
-				//new detected objects must not intersect with tracking objects 
-				detector->segment(raw, segmented); //wrong background subtraction second time? todo
-				detector->filter(segmented, filtered);
-				detector->classify(filtered, contours);
-
-				myTrackerKcf.apply(raw, contours);
-
-				Show::showImg();
-
-				char c = (char)cv::waitKey(2);
-				if (c == 'q')exit(-1);///Quit on q
-				if (c == 'p')paused = !paused;///Pause on p
-				if (c == 27)exit(-1);///Quit on ESC-button
-			}
-		}
-
+    cv::Mat raw, segmented, filtered, classified;
+    bool paused = false;
+    
+    ///Prepare Bindetect, 
+    ///ImgAquisition can be vs15, vs17 or raspberry.
+    VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
+    vecVecPoint contours;
+    
+    MyTrackerKCF myTrackerKcf;
+    
+    while (true)
+        {
+            if (!paused)
+	{
+	    detector->imgAquist(raw);
+	    
+	    //new detected objects must not intersect with tracking objects 
+	    detector->segment(raw, segmented); //wrong background subtraction second time? todo
+	    detector->filter(segmented, filtered);
+	    detector->classify(filtered, contours);
+	    
+	    myTrackerKcf.apply(raw, contours);
+	    
+	    Show::showImg();
+	    
+	    char c = (char)cv::waitKey(2);
+	    if (c == 'q')exit(-1);///Quit on q
+	    if (c == 'p')paused = !paused;///Pause on p
+	    if (c == 27)exit(-1);///Quit on ESC-button
+	}
+        }
+    
 #endif
-
-
-
-
-//******************************************************************************************************************************************************
+    
+    
+    
+    
+    //******************************************************************************************************************************************************
 #ifdef timer
-#define
+    double parktimelimit = 200.0;
+    Example e();
+    
+    Vehicle* v = e.createVehicle();
+    
+	VehicleFrame* vf = new VehicleFrame();
+	
+    Tracker* t = new StillObjectTracker(vf);
+    
+    timer->start();
+	
+    while(true){
+        if(v->getParkTime > parktimelimit){
+            //send alarm
+        }
+        
+		t->track();
+		
+        if(!t->isAlive()){
+		std::cout << "tracker could not find vehicle" << std::endl;			
+        }
+
+        timer->increment(); //need to increment SimpleTimer explicitly
+    }
+    
+		
+		
 
 		//timer code here
-
+		
 		//IMG ACQ
 		//contours
 		//detect cars
@@ -122,7 +147,6 @@ int main(int argc, char** argv)
 
 //******************************************************************************************************************************************************
 #ifdef myTracker
-#define
 
 		MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
 
