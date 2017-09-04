@@ -4,17 +4,26 @@ The vehicle is created here
 
  */
 
+#pragma once
+
+#include "opencv2\imgproc.hpp"
+
+
 #include "Vehicle.h"
 #include <vector>
 
 
-class Example(){
+
+class Example{
 
  public:
+  Example();
+  ~Example();
+
   Vehicle* createVehicle();
 
 
  private:
 
-}
+};
 

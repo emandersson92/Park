@@ -123,6 +123,9 @@
     <ClCompile Include="Park\SimpleTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Park\Example.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="park\Show.h">
@@ -204,6 +207,9 @@
       <Filter>Header Files\ImgProc\Acquisition</Filter>
     </ClInclude>
     <ClInclude Include="Park\SimpleTimer.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Park\Example.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

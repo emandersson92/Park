@@ -25,6 +25,7 @@
 
 #include "Show.h"
 #include "list"
+#include "Example.h"
 
 
 void test(const char *);

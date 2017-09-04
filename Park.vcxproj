@@ -50,6 +50,7 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="opencv_vs15.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -106,6 +107,7 @@
     <ClCompile Include="park\BinDetect.cpp" />
     <ClCompile Include="park\Bin_MovingObj_MyTracker.cpp" />
     <ClCompile Include="park\draw.cpp" />
+    <ClCompile Include="Park\Example.cpp" />
     <ClCompile Include="park\Filter.cpp" />
     <ClCompile Include="park\ImgAcquisition.cpp" />
     <ClCompile Include="park\MovingObj_MyTracker.cpp" />
@@ -132,6 +134,7 @@
     <ClInclude Include="park\BinDetect.h" />
     <ClInclude Include="park\Bin_MovingObj_MyTracker.h" />
     <ClInclude Include="park\draw.h" />
+    <ClInclude Include="Park\Example.h" />
     <ClInclude Include="park\Filter.h" />
     <ClInclude Include="Park\ImgAcquisition.h" />
     <ClInclude Include="Park\ImgAcquisition_vs15.h" />

@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Example.h"
 
 
@@ -5,13 +6,13 @@ Example::Example(){
 
 }
 
-Example::Example~(){
+Example::~Example(){
 
 }
 
 Vehicle* Example::createVehicle(){
 	
-	Vehicle* v = Vehicle();
+	Vehicle* v = new Vehicle();
 
 //--------------------------------------------------
 //
@@ -33,7 +34,7 @@ Vehicle* Example::createVehicle(){
 	points4.add(cv::Point(1, 1));
 
 	//serious points, this VF will be used by stillTracker 
-	points5f.add(cv::Point(500, 500));
+	points5.add(cv::Point(500, 500));
 	points5.add(cv::Point(700, 500));
 	points5.add(cv::Point(500, 700));
 	points5.add(cv::Point(700, 700));
