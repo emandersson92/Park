@@ -9,16 +9,15 @@ VehicleFrame::VehicleFrame()
   yPos = 0;
 }
 
-VehicleFrame::Vehicle::Vehicle(double speed, int x, int y, Timer* t, vector<Point>* ta)
+VehicleFrame::Vehicle::Vehicle(double speed, int x, int y, vector<Point>* track_area)
 {
   speed = speed;
   xPos = x;
   yPos = y;
-  timer = t;
-  vehicleArea = ta;
+  vehicleArea = track_area;
 
 }
-ex
+
 //Vehicle::~Vehicle()
 //{
 //}

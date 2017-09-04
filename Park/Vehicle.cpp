@@ -10,3 +10,8 @@ Vehicle::Vehicle()
 Vehicle::~Vehicle()
 {
 }
+
+Vehicle::getLastVehicleFrame(){
+  return vehicleFrames->back();
+
+}

@@ -1,11 +1,19 @@
 #pragma once
+
+#include "VehicleFrame"
+#include "Vehicle"
+#include <iostream>
+
+
 class Vehicle
 {
 public:
 	Vehicle();
 	~Vehicle();
+	getLastVehicleFrame();
+
 
  private:
-	vector<VehicleFrame> frames;
+	std::vector<VehicleFrame> vehicleFrames;
 };
 

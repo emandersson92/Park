@@ -4,7 +4,7 @@
 
 StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
 {
-  init_trackArea = cu_trackArea = v->getLastVehicleFrame()->getArea().copy();
+  init_trackArea = cur_trackArea = v->getLastVehicleFrame()->getArea().copy();
   detector = d;
 
   timer = new SimpleTimer();
@@ -26,8 +26,9 @@ void StillObj_MyTracker::track() {
 	timer->start();
   }
   
-    surviveTest();
-	timer->increment();
+  reduceTrackerArea();
+  surviveTest();
+  timer->increment();
 }
 
 
@@ -39,26 +40,27 @@ void StillObj_MyTracker::reduceTrackerArea() {
 
 	  the BinDetect() - class can be used with BGS in order to detect movement on the ROI.
 	 */
-
-	Mat out; //shall not be here
-	Mat in;
 	
-	binDetect->ImgAquist(out);
-	binDetect->segment(in, out);
-	binDetect->filter(in, out);
+	detector->ImgAquist(out_detect);
+	detector->segment(in_detect, out_detect);
+	detector->filter(in_detect, out_detect);
 	
-	cur_trackArea =- out;
-	
+	cur_trackArea =- out_detect;
 
 }
 
 //Private
 void StillObj_MyTracker::surviveTest() {
-	double lifeLeft = (100.0*(double)cur_trackArea.size() / (double)init_trackArea.size());
-	if (lifeLeft < minLife)
+
+  //validate
+  double c = cur_trackArea.size();
+  double i = init_trackArea.size();
+  
+	double lifeLeft = (100.0 * c/i);
+	if (lifeLeft < _minLife)
 	{
 		ALIVE = false;
-		//killTracker();
+		//killTracker(); --> use abstract class enwrapper?
 	}
 }
 
@@ -70,4 +72,11 @@ void StillObj_MyTracker::getParkTime(){
 	return time;
 }
 
+Mat StillObj_MyTracker::getRaw(){
+  return raw;
+}
 
+void StillObj_MyTracker::paint(){
+  //Paint trackingarea on raw img.
+  circle()
+}

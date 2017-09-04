@@ -12,10 +12,22 @@ Todolist. For each todo-object, make one commit
 
 *compile with simple detection
 
-
-
 *implement working opencv-tracker
 
-
-
 *make list forwarding work
+
+*make timer function work
+
+
+Can the cpp program be transfered to the camera?
+
+
+
+2017-09-04:
+goals:
+Make a VS program run with the timer option
+Define an example roi where there will be checked for movement
+Reduce the area when there is movement
+Judge.
+
+

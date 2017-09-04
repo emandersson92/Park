@@ -3,7 +3,6 @@
 
 #include "VehicleFrame.h"
 #include "VehicleList.h"
-#include "Timer"
 
 class VehicleList;
 
@@ -26,8 +25,6 @@ private:
 	int yPos;
 	
 	vector<Point>* vehicleArea;
-   
-	Timer timer;
 
 };
 

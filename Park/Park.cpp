@@ -1,3 +1,4 @@
+
 // Park.cpp : Defines the entry point for the console application.
 //
 
@@ -56,9 +57,9 @@ int main(int argc, char** argv)
 
 
 
-#define opencvTracker
+//#define opencvTracker
 //#define myTracker
-//#define timer
+#define timer
 
 //******************************************************************************************************************************************************
 #ifdef opencvTracker
@@ -73,14 +74,13 @@ int main(int argc, char** argv)
     
     MyTrackerKCF myTrackerKcf;
     
-    while (true)
-        {
-            if (!paused)
-	{
-	    detector->imgAquist(raw);
-	    
-	    //new detected objects must not intersect with tracking objects 
-	    detector->segment(raw, segmented); //wrong background subtraction second time? todo
+    while (true){
+	  if (!paused)
+		{
+		  detector->imgAquist(raw);
+		  
+		  //new detected objects must not intersect with tracking objects 
+		  detector->segment(raw, segmented); //wrong background subtraction second time? todo
 	    detector->filter(segmented, filtered);
 	    detector->classify(filtered, contours);
 	    
@@ -102,42 +102,63 @@ int main(int argc, char** argv)
     
     //******************************************************************************************************************************************************
 #ifdef timer
-    double parktimelimit = 200.0;
-    Example e();
-    
-    Vehicle* v = e.createVehicle();
-    
-	VehicleFrame* vf = new VehicleFrame();
-	
-    Tracker* t = new StillObjectTracker(vf);
-    
-    timer->start();
-	
-    while(true){
-        if(v->getParkTime > parktimelimit){
-            //send alarm
-        }
-        
-		t->track();
-		
-        if(!t->isAlive()){
-		std::cout << "tracker could not find vehicle" << std::endl;			
-        }
 
-        timer->increment(); //need to increment SimpleTimer explicitly
+    VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
+
+    ///Creating example vehicle with example vehicleFrames
+	Example e();
+	Vehicle* v = e.createVehicle();
+	
+    Tracker* t = new StillObjectTracker(v, detector);
+
+	///Validating timer principals
+    double parktimelimit = 200.0;
+	
+	namedWindow("win");
+
+    while(true){
+	  
+	  //first call will start the timer
+	  t->track();
+	  
+	  if(!t->isAlive()){
+		std::cout << "VEHICLE HAS LEFT PARKING LOT" << std::endl;			
+		getchar();
+		exit(0);
+	  }
+
+      else if(t->getParkTime() > parktimelimit){
+		std::cout << "VEHICLE HAS BEEN PARKING TO LONG!" << std::endl;
+		getchar();
+		exit(0);
+      }
+
+
+	  //----------------------------------------
+	  //* tracker is alive
+	  //* parking time not to long
+
+	  t->paint();
+	  
+	  //display image
+	  imgDis();
+	  imshow("win", t->getRaw());
+	  waitKey(0);
     }
     
-		
-		
 
-		//timer code here
-		
-		//IMG ACQ
-		//contours
-		//detect cars
-		//start timer
-		//
-
+	//Where is the paint-function?
+	
+	
+	
+	//timer code here
+	
+	//IMG ACQ
+	//contours
+	//detect cars
+	//start timer
+	//
+	
 
 #endif
 

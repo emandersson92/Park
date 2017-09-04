@@ -32,12 +32,17 @@ public:
 private:
 
 	VehicleDetector* detector;
+	cv::Mat out_detect; //shall not be here
+	cv::Mat in_detect;
+
 
 	Timer* timer;
 
 	Boolean FIRST;
 
 	cv::Mat ROI;
+	cv::Mat raw;
+
 
 	std::vector<Point>* init_trackArea;
 	std::vector<Point>* cur_trackArea;
@@ -46,7 +51,7 @@ private:
 	//Tracker survival data
 	void surviveTest();
 	///min life before tracker dies in % (cur_trackArea/init_trackArea). 
-	const double minLife = 30.0;
+	const double _minLife = 30.0;
 	boolean ALIVE; // lists with trackers can check i trackers are dead. If they are, they can be removed and later freed.
 };
 
