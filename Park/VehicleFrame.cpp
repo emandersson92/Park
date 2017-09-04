@@ -9,18 +9,18 @@ VehicleFrame::VehicleFrame()
   yPos = 0;
 }
 
-VehicleFrame::Vehicle::Vehicle(double speed, int x, int y, vector<Point>* track_area)
+VehicleFrame::VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* track_area)
 {
-  speed = speed;
+  speed = spd;
   xPos = x;
   yPos = y;
   vehicleArea = track_area;
 
 }
 
-//Vehicle::~Vehicle()
-//{
-//}
+VehicleFrame::~VehicleFrame()
+{
+}
 
 double VehicleFrame::getSpeed() {
 	return 0.0;
@@ -40,7 +40,7 @@ cv::Point2d VehicleFrame::getPosition() {
 }
 
 
-vector<Point>* VehicleFrame::getVehicle(){
+std::vector<cv::Point>* VehicleFrame::getContours(){
 	return vehicleArea;
 }
 
