@@ -4,7 +4,6 @@ Area is tracked
 Movement on area will "eat" the trackers area
 When area is to small the tracker will get destroyed
 
-
 Author:
 Emil Andersson 2017-07-DATE
 ********************************/
@@ -13,8 +12,10 @@ Emil Andersson 2017-07-DATE
 #include "vector"
 #include "opencv2\core.hpp"
 #include "opencv2\imgproc.hpp"
-#include "Timer.h"
 
+#include "Timer.h"
+#include "VehicleDetector.h"
+#include "Vehicle.h"
 
 typedef std::vector<cv::Point> vecCont;
 typedef std::vector<vecCont> vecVecCont;
@@ -30,11 +31,11 @@ public:
 
 private:
 
-	void alarm();
+	VehicleDetector* detector;
 
+	Timer* timer;
 
-	Timer t;
-
+	Boolean FIRST;
 
 	cv::Mat ROI;
 

@@ -2,27 +2,34 @@
 #include "StillObj_MyTracker.h"
 
 
-StillObj_MyTracker::StillObj_MyTracker(VehicleFrame* vf, BinDetect* binDetect)
+StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
 {
-	init_trackArea = cu_trackArea = vf->getTrackArea().copy();
-	ALIVE = true;
+  init_trackArea = cu_trackArea = v->getLastVehicleFrame()->getArea().copy();
+  detector = d;
+
+  timer = new SimpleTimer();
+
+  ALIVE = true;
+  FIRST = true;
 }
 
 
 StillObj_MyTracker::~StillObj_MyTracker()
 {
+  delete(timer);
 }
 
 
 void StillObj_MyTracker::track() {
+  if (FIRST){
+	FIRST = false;
+	timer->start();
+  }
+  
     surviveTest();
+	timer->increment();
 }
 
-
-//Vehicle has parked to long!
-void StillObj_MyTracker::alarm() {
-
-}
 
 void StillObj_MyTracker::reduceTrackerArea() {
 	//backgroundsubtraction on area.
@@ -51,10 +58,16 @@ void StillObj_MyTracker::surviveTest() {
 	if (lifeLeft < minLife)
 	{
 		ALIVE = false;
-//		killTracker();
+		//killTracker();
 	}
 }
 
 void StillObj_MyTracker::isAlive(){
 	return ALIVE;
 }
+
+void StillObj_MyTracker::getParkTime(){
+	return time;
+}
+
+
