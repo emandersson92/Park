@@ -114,6 +114,7 @@
     <ClCompile Include="park\MyTrackerKCF.cpp" />
     <ClCompile Include="park\Park.cpp" />
     <ClCompile Include="park\Show.cpp" />
+    <ClCompile Include="Park\SimpleTimer.cpp" />
     <ClCompile Include="park\stdafx.cpp" />
     <ClCompile Include="park\StillObj_MyTracker.cpp" />
     <ClCompile Include="park\Still_VehicleList.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="park\MyTrackerKCF.h" />
     <ClInclude Include="park\opencvIncludes.h" />
     <ClInclude Include="park\Show.h" />
+    <ClInclude Include="Park\SimpleTimer.h" />
     <ClInclude Include="park\stdafx.h" />
     <ClInclude Include="park\StillObj_MyTracker.h" />
     <ClInclude Include="park\Still_VehicleList.h" />

@@ -11,7 +11,7 @@ public:
 	Vehicle();
 	~Vehicle();
 	getLastVehicleFrame();
-
+	addVehicleFrame(VehicleFrame* v);
 
  private:
 	std::vector<VehicleFrame> vehicleFrames;

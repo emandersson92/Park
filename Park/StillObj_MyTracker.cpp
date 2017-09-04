@@ -5,6 +5,7 @@
 StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
 {
   init_trackArea = cur_trackArea = v->getLastVehicleFrame()->getArea().copy();
+
   detector = d;
 
   timer = new SimpleTimer();

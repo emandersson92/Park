@@ -16,6 +16,7 @@ Emil Andersson 2017-07-DATE
 #include "Timer.h"
 #include "VehicleDetector.h"
 #include "Vehicle.h"
+#include "SimpleTimer.h"
 
 typedef std::vector<cv::Point> vecCont;
 typedef std::vector<vecCont> vecVecCont;
@@ -35,7 +36,7 @@ private:
 	cv::Mat out_detect; //shall not be here
 	cv::Mat in_detect;
 
-
+	Timer a;
 	Timer* timer;
 
 	Boolean FIRST;

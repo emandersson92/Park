@@ -15,3 +15,7 @@ Vehicle::getLastVehicleFrame(){
   return vehicleFrames->back();
 
 }
+
+Vehicle::addVehicleFrame(VehicleFrame* v){
+  vehicleFrames->push_back(v); 
+}

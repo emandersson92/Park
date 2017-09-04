@@ -29,5 +29,9 @@ Make a VS program run with the timer option
 Define an example roi where there will be checked for movement
 Reduce the area when there is movement
 Judge.
+How does findcontours() work?
+It returns OutputArrayOfArrays
+If i have 4 points which marks a rectangle, and if i paint it, will it be a rectangle then?
+I will test to compile my program with cmake gui.
 
 

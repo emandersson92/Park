@@ -120,6 +120,9 @@
     <ClCompile Include="ImgAcquisition_vs17.cpp">
       <Filter>Source Files\ImgProc\Acquisition</Filter>
     </ClCompile>
+    <ClCompile Include="Park\SimpleTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="park\Show.h">
@@ -199,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="Park\ImgAcquisition.h">
       <Filter>Header Files\ImgProc\Acquisition</Filter>
+    </ClInclude>
+    <ClInclude Include="Park\SimpleTimer.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
