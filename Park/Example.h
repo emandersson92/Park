@@ -7,12 +7,10 @@ The vehicle is created here
 #pragma once
 
 #include "opencv2\imgproc.hpp"
-
-
-#include "Vehicle.h"
 #include <vector>
 
-
+#include "Vehicle.h"
+#include "VehicleFrame.h"
 
 class Example{
 

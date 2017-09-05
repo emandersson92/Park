@@ -3,7 +3,7 @@
 #include "Vehicle.h"
 #include "VehicleList.h"
 
-class Vehicle;
+class Vehicle; //Declaration
 
 class MyTracker
 {
@@ -12,8 +12,13 @@ public:
 	~MyTracker();
 
 	virtual void track() = 0;			//connect vehicles and detected vehilceFrames
+	virtual bool isAlive() = 0;
+	virtual double getParkTime() = 0;
 
-	Vehicle* getVehicle();
+	virtual cv::Mat getLastImg() = 0;
+	virtual void paint() = 0;	
+	Vehicle* getVehicle();	
+
 
 private:
 

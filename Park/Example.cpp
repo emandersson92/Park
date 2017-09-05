@@ -20,24 +20,23 @@ Vehicle* Example::createVehicle(){
 //
 //--------------------------------------------------
 
-	vector<Point> points1;
-	vector<Point> points2;
-	vector<Point> points3;
-	vector<Point> points4;
-	vector<Point> points5;
-	
+	std::vector<cv::Point>* points1 = new std::vector<cv::Point>;
+	std::vector<cv::Point>* points2 = new std::vector<cv::Point>;
+	std::vector<cv::Point>* points3 = new std::vector<cv::Point>;
+	std::vector<cv::Point>* points4 = new std::vector<cv::Point>;
+	std::vector<cv::Point>* points5 = new std::vector<cv::Point>;
 
 	//dummypoints
-	points1.add(cv::Point(1, 1)); //Just adding one point
-	points2.add(cv::Point(1, 1));
-	points3.add(cv::Point(1, 1));
-	points4.add(cv::Point(1, 1));
+	points1->push_back(cv::Point(1, 1)); //Just adding one point
+	points2->push_back(cv::Point(1, 1));
+	points3->push_back(cv::Point(1, 1));
+	points4->push_back(cv::Point(1, 1));
 
 	//serious points, this VF will be used by stillTracker 
-	points5.add(cv::Point(500, 500));
-	points5.add(cv::Point(700, 500));
-	points5.add(cv::Point(500, 700));
-	points5.add(cv::Point(700, 700));
+	points5->push_back(cv::Point(500, 500));
+	points5->push_back(cv::Point(700, 500));
+	points5->push_back(cv::Point(500, 700));
+	points5->push_back(cv::Point(700, 700));
 	
 
 
@@ -46,7 +45,7 @@ Vehicle* Example::createVehicle(){
 	VehicleFrame* vf2 = new VehicleFrame(2.2, 45, 45, points2);
 	VehicleFrame* vf3 = new VehicleFrame(1.1, 45, 45, points3);
 	VehicleFrame* vf4 = new VehicleFrame(0.1, 45, 45, points4);
-	VehicleFrame* vf5 = new VehilceFrame(0.0, 600, 600, points5);
+	VehicleFrame* vf5 = new VehicleFrame(0.0, 600, 600, points5);
 
 
 	v->addVehicleFrame(vf1);

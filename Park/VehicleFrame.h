@@ -25,6 +25,9 @@ public:
 	void setPosition(int x, int y);
 	cv::Point2d getPosition();
 	std::vector<cv::Point>* getContours();
+	double getArea();
+	Mat getBinROI();
+	Mat getColorROI();
 
 	VehicleList* list;
 
@@ -33,7 +36,11 @@ private:
 	int xPos;
 	int yPos;
 	
-	std::vector<cv::Point>* vehicleArea;
+	Mat color_ROI;
+	Mat bin_ROI;
+	
+
+	std::vector<cv::Point>* vehicleContours;
 
 };
 

@@ -4,10 +4,12 @@
 
 StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
 {
-  init_trackBinROI = cur_trackBinROI = v->getLastVehicleFrame()->getBinROI();
 
-  //construct binary ROI with the contours area (foreground) as 1 and background as 0
+  VehicleFrame* vf = v->getLastVehicleFrame();
 
+  init_trackBinROI = cur_trackBinROI = vf->getBinROI();
+  stillTrack_VehicleFrame = vf;
+  
   detector = d;
 
   timer = new SimpleTimer();
@@ -84,7 +86,7 @@ void StillObj_MyTracker::surviveTest() {
 	}
 }
 
-boolean StillObj_MyTracker::isAlive(){
+bool StillObj_MyTracker::isAlive(){
 	return ALIVE;
 }
 
@@ -92,14 +94,11 @@ double StillObj_MyTracker::getParkTime(){
 	return timer->getTime();
 }
 
-cv::Mat StillObj_MyTracker::getRaw(){
-  return raw;
-}
 
 void StillObj_MyTracker::paint(){
   //Paint trackingarea on raw img.
+  out_detect =+ stillTrack_VehicleFrame;
 
-  //circle()
 }
 
 
@@ -111,3 +110,6 @@ double StillObj_MyTracker::percentage_foreground(cv::Mat m){
   return ret;
 }
 
+cv::Mat StillObj_MyTracker::getLastImg(){
+  return out_detect;
+}

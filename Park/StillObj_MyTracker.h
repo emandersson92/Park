@@ -17,6 +17,7 @@ Emil Andersson 2017-07-DATE
 
 //My classes
 #include "VehicleDetector.h"
+#include "VehicleFrame.h"
 #include "Vehicle.h"
 #include "Timer.h"
 #include "SimpleTimer.h"
@@ -37,9 +38,9 @@ class StillObj_MyTracker : public MyTracker
   ~StillObj_MyTracker();
 
 	void track();
-	boolean isAlive();
+	bool isAlive();
 	double getParkTime();
-	cv::Mat getRaw();
+	cv::Mat getLastImg();
 	void paint();
 	
 
@@ -50,16 +51,14 @@ private:
 	void reduceTrackerArea();
 	void surviveTest();
 
+	VehicleFrame* stillTrack_VehicleFrame;
 	VehicleDetector* detector;
-	cv::Mat out_detect; //shall not be here
+	cv::Mat out_detect;
 	cv::Mat in_detect;
 
 	Timer* timer;
 	
 	bool FIRST;
-
-	cv::Mat ROI;
-	cv::Mat raw;
 
 
 	cv::Mat init_trackBinROI; //Initially binary image with tracked vehicle in foreground 

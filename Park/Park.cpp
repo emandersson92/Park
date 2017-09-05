@@ -26,6 +26,8 @@
 #include "Show.h"
 #include "list"
 #include "Example.h"
+#include "MyTracker.h"
+#include "StillObj_MyTracker.h"
 
 
 void test(const char *);
@@ -107,17 +109,18 @@ int main(int argc, char** argv)
     VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
 
     ///Creating example vehicle with example vehicleFrames
-	Example e();
-	Vehicle* v = e.createVehicle();
-	
-    Tracker* t = new StillObjectTracker(v, detector);
+	Example e;
+
+	Vehicle* vehicle = e.createVehicle();
+    
+	MyTracker* t = new StillObj_MyTracker(vehicle, detector);
 
 	///Validating timer principals
     double parktimelimit = 200.0;
-	
-	namedWindow("win");
 
-    while(true){
+	cv::namedWindow("win");
+
+	while (true) {
 	  
 	  //first call will start the timer
 	  t->track();
@@ -142,9 +145,8 @@ int main(int argc, char** argv)
 	  t->paint();
 	  
 	  //display image
-	  imgDis();
-	  imshow("win", t->getRaw());
-	  waitKey(0);
+	  cv::imshow("win", t->getLastImg());
+	  cv::waitKey(0);
     }
     
 

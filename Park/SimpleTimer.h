@@ -2,7 +2,7 @@
 #include "windows.h"
 #include "Timer.h"
 
-class SimpleTimer : Timer
+class SimpleTimer : public Timer
 {
 public:
   SimpleTimer();

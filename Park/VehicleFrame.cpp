@@ -9,12 +9,15 @@ VehicleFrame::VehicleFrame()
   yPos = 0;
 }
 
-VehicleFrame::VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* track_area)
+VehicleFrame::VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* contours, Mat c_ROI, Mat b_ROI)
 {
+  color_ROI = c_ROI;
+  bin_ROI = b_ROI;
+
   speed = spd;
   xPos = x;
   yPos = y;
-  vehicleArea = track_area;
+  vehicleContours = contours;
 
 }
 
@@ -31,7 +34,6 @@ void VehicleFrame::setPosition(int x, int y){
   xPos = x;
   yPos = y;
   
-    
 } 
 
 
@@ -41,10 +43,20 @@ cv::Point2d VehicleFrame::getPosition() {
 
 
 std::vector<cv::Point>* VehicleFrame::getContours(){
-	return vehicleArea;
+	return vehicleContours;
 }
 
+double VehicleFrame::getArea(){
+  return contours.getvehicleArea
+}
 
+Mat VehicleFrame::getBinROI(){
+  return bin_ROI;
+}
+
+Mat VehicleFrame::getColorROI(){
+  return color_ROI;
+}
 
 
 

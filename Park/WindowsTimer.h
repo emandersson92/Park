@@ -1,19 +1,19 @@
-/*
-Abstract Timer Class
- */
-
-#include "opencvIncludes.h"
+#pragma once
+#include "windows.h"
 
 
-class WindowsTimer{
- public:
+class WindowsTimer : Timer
+{
+public:
+	WindowsTimer(Vehicle);
+	~WindowsTimer();
+	void start(HWND hwnd, UINT_PTR IDT_TIMER1);
+	void stop();
+p
 
-  WindowsTimer();
-  ~WindowsTimer();
+private:
+	long time;
 
-  virtual void start() = 0;
-  virtual void stop() = 0;
-
- private:
 
 };
+

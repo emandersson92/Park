@@ -35,3 +35,34 @@ If i have 4 points which marks a rectangle, and if i paint it, will it be a rect
 I will test to compile my program with cmake gui.
 
 
+
+WindowsTimer in Timer.cpp!!!j aosdöfih
+
+Tango seems to be a nice theme... --> customize-themes
+alter emacs.ahk with the lines:
+
+   IfWinActive,ahk_exe emacs.exe ; myEmacs
+     Return 1
+
+seems to be working!
+
+workon:StillObj_MyTracker: make fix object subtraction with init_trackContours and cur_trackContours
+*will achive a binROI from vehicleFrame
+
+
+
+TEST 2:
+implement awesome vehicle tracker and just track the vehicles speed.
+
+Setup rules:
+Cannot go faster than...
+Cannot turn faster than...
+Cannot jump 
+Predict...
+
+
+Work in modules:
+Track cars module
+All vehicles area module
+
+
