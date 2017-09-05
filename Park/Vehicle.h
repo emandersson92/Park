@@ -1,19 +1,19 @@
 #pragma once
 
-#include "VehicleFrame"
-#include "Vehicle"
+#include "VehicleFrame.h"
+#include "Vehicle.h"
 #include <iostream>
 
 
 class Vehicle
 {
-public:
+ public:
 	Vehicle();
 	~Vehicle();
-	getLastVehicleFrame();
-	addVehicleFrame(VehicleFrame* v);
+	VehicleFrame* getLastVehicleFrame();
+	void addVehicleFrame(VehicleFrame* v);
 
  private:
-	std::vector<VehicleFrame> vehicleFrames;
+	std::vector<VehicleFrame*> vehicleFrames;
 };
 

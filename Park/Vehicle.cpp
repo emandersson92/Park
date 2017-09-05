@@ -11,11 +11,11 @@ Vehicle::~Vehicle()
 {
 }
 
-Vehicle::getLastVehicleFrame(){
-  return vehicleFrames->back();
+VehicleFrame* Vehicle::getLastVehicleFrame(){
+	return vehicleFrames.back();
 
 }
 
-Vehicle::addVehicleFrame(VehicleFrame* v){
-  vehicleFrames->push_back(v); 
+void Vehicle::addVehicleFrame(VehicleFrame* v){
+  vehicleFrames.push_back(v); 
 }
