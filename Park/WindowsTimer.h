@@ -1,18 +1,19 @@
 #pragma once
 #include "windows.h"
+#include "Vehicle.h"
+#include "MyTimer.h"
 
-
-class WindowsTimer : Timer
+class WindowsTimer : public MyTimer
 {
 public:
-	WindowsTimer(Vehicle);
+	WindowsTimer(Vehicle v);
 	~WindowsTimer();
 	void start(HWND hwnd, UINT_PTR IDT_TIMER1);
 	void stop();
-p
+
 
 private:
-	long time;
+	double time;
 
 
 };

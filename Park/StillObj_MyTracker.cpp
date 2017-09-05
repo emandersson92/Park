@@ -97,7 +97,7 @@ double StillObj_MyTracker::getParkTime(){
 
 void StillObj_MyTracker::paint(){
   //Paint trackingarea on raw img.
-  out_detect =+ stillTrack_VehicleFrame;
+	out_detect += stillTrack_VehicleFrame->getBinROI();
 
 }
 

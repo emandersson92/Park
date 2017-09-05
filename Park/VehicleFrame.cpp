@@ -9,7 +9,7 @@ VehicleFrame::VehicleFrame()
   yPos = 0;
 }
 
-VehicleFrame::VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* contours, Mat c_ROI, Mat b_ROI)
+VehicleFrame::VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* contours, cv::Mat c_ROI, cv::Mat b_ROI)
 {
   color_ROI = c_ROI;
   bin_ROI = b_ROI;
@@ -46,15 +46,15 @@ std::vector<cv::Point>* VehicleFrame::getContours(){
 	return vehicleContours;
 }
 
-double VehicleFrame::getArea(){
-  return contours.getvehicleArea
-}
+//double VehicleFrame::getArea(){
+//  return vehicleContours->getvehicleArea()
+//}
 
-Mat VehicleFrame::getBinROI(){
+cv::Mat VehicleFrame::getBinROI(){
   return bin_ROI;
 }
 
-Mat VehicleFrame::getColorROI(){
+cv::Mat VehicleFrame::getColorROI(){
   return color_ROI;
 }
 

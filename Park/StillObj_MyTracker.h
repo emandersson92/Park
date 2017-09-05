@@ -19,7 +19,7 @@ Emil Andersson 2017-07-DATE
 #include "VehicleDetector.h"
 #include "VehicleFrame.h"
 #include "Vehicle.h"
-#include "Timer.h"
+#include "MyTimer.h"
 #include "SimpleTimer.h"
 #include "MyTracker.h"
 
@@ -56,7 +56,7 @@ private:
 	cv::Mat out_detect;
 	cv::Mat in_detect;
 
-	Timer* timer;
+	MyTimer* timer;
 	
 	bool FIRST;
 
@@ -64,11 +64,9 @@ private:
 	cv::Mat init_trackBinROI; //Initially binary image with tracked vehicle in foreground 
 	cv::Mat cur_trackBinROI;//Current binary image.......
 
-
-	//Tracker survival data
-	void surviveTest();
+	
 	///min life before tracker dies in % (cur_trackArea/init_trackArea). 
 	const double _minLife = 30.0;
-	boolean ALIVE; // lists with trackers can check i trackers are dead. If they are, they can be removed and later freed.
+	bool ALIVE; // lists with trackers can check i trackers are dead. If they are, they can be removed and later freed.
 };
 

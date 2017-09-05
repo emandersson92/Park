@@ -18,7 +18,7 @@ class Example{
   Example();
   ~Example();
 
-  Vehicle* createVehicle();
+  Vehicle* createVehicle(VehicleDetector* detector);
 
 
  private:

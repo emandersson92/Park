@@ -1,15 +1,14 @@
 /*
 Abstract Timer Class
  */
-
+#pragma once
 #include "opencvIncludes.h"
 
-
-class Timer{
+class MyTimer{
  public:
 
-  Timer();
-  ~Timer();
+  MyTimer();
+  ~MyTimer();
 
   virtual void start() = 0;
   virtual void stop() = 0;

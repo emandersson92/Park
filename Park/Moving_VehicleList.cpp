@@ -52,11 +52,11 @@ void Moving_VehicleList::checkListConditions() {
 bool Moving_VehicleList::belongCheck(Vehicle* v) {
 	
 	
-
+	/*
 	//speed ok?
 	if (v->getSpeed() > maxSpeed)
 		return false;
-	
+	*/
 
 	return true;
 	/*

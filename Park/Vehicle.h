@@ -1,9 +1,10 @@
 #pragma once
 
 #include "VehicleFrame.h"
-#include "Vehicle.h"
 #include <iostream>
+#include <vector>
 
+class VehicleFrame;
 
 class Vehicle
 {

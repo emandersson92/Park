@@ -2,7 +2,7 @@
 #include "Timer.h"
 
 
-WindowsTimer::WindowsTimer()
+WindowsTimer::WindowsTimer(Vehicle v)
 {
 }
 

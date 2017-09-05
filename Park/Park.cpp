@@ -111,7 +111,7 @@ int main(int argc, char** argv)
     ///Creating example vehicle with example vehicleFrames
 	Example e;
 
-	Vehicle* vehicle = e.createVehicle();
+	Vehicle* vehicle = e.createVehicle(detector);
     
 	MyTracker* t = new StillObj_MyTracker(vehicle, detector);
 
@@ -149,19 +149,6 @@ int main(int argc, char** argv)
 	  cv::waitKey(0);
     }
     
-
-	//Where is the paint-function?
-	
-	
-	
-	//timer code here
-	
-	//IMG ACQ
-	//contours
-	//detect cars
-	//start timer
-	//
-	
 
 #endif
 

@@ -1,23 +1,27 @@
 /*
 VehicleFrame (VF) is one sample of a vehicle, while a Vehicle is a set of VF's
  */
-
-
 #pragma once
-#include "opencvIncludes.h"
 
-#include "VehicleFrame.h"
+//Opencv
+#include <opencv2\imgproc.hpp>
+
+//My classes
 #include "VehicleList.h"
+
+//std
 #include <vector>
 
+
 class VehicleList;
+class VehicleFrame;
 
 class VehicleFrame
 {
 public:
 
   VehicleFrame();
-  VehicleFrame(double speed, int x, int y, std::vector<cv::Point>* track_area);
+  VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* contours, cv::Mat c_ROI, cv::Mat b_ROI);
   ~VehicleFrame();
 
 	//Functions used by lists to determine if they belong
@@ -25,9 +29,9 @@ public:
 	void setPosition(int x, int y);
 	cv::Point2d getPosition();
 	std::vector<cv::Point>* getContours();
-	double getArea();
-	Mat getBinROI();
-	Mat getColorROI();
+	//double getArea();
+	cv::Mat getBinROI();
+	cv::Mat getColorROI();
 
 	VehicleList* list;
 
@@ -36,8 +40,8 @@ private:
 	int xPos;
 	int yPos;
 	
-	Mat color_ROI;
-	Mat bin_ROI;
+	cv::Mat color_ROI;
+	cv::Mat bin_ROI;
 	
 
 	std::vector<cv::Point>* vehicleContours;

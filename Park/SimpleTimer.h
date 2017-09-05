@@ -1,8 +1,8 @@
 #pragma once
 #include "windows.h"
-#include "Timer.h"
+#include "MyTimer.h"
 
-class SimpleTimer : public Timer
+class SimpleTimer : public MyTimer
 {
 public:
   SimpleTimer();
@@ -18,7 +18,7 @@ public:
 private:
 
 	double time; //program made up time in order to simplify timer object
-	boolean COUNTING; //true if the timer incrementing "time"
+	bool COUNTING; //true if the timer incrementing "time"
 
 };
 

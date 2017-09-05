@@ -81,9 +81,6 @@
     <ClCompile Include="park\Still_VehicleList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="park\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="park\Vehicle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -114,16 +111,22 @@
     <ClCompile Include="park\ImgAcquisition.cpp">
       <Filter>Source Files\ImgProc\Acquisition</Filter>
     </ClCompile>
-    <ClCompile Include="ImgAcquisition_vs15.cpp">
-      <Filter>Source Files\ImgProc\Acquisition</Filter>
-    </ClCompile>
-    <ClCompile Include="ImgAcquisition_vs17.cpp">
-      <Filter>Source Files\ImgProc\Acquisition</Filter>
-    </ClCompile>
     <ClCompile Include="Park\SimpleTimer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Park\Example.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Park\MyAssert.cpp">
+      <Filter>Source Files\ImgProc</Filter>
+    </ClCompile>
+    <ClCompile Include="Park\MyTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Park\ImgAcquisition_vs15.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Park\ImgAcquisition_vs17.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -210,6 +213,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Park\Example.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Park\MyAssert.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Park\MyTimer.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
