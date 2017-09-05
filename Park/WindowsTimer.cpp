@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Timer.h"
+#include "WindowsTimer.h"
 
 
 WindowsTimer::WindowsTimer(Vehicle v)

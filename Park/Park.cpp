@@ -49,106 +49,106 @@ typedef std::vector<vecPoint> vecVecPoint;
 int main(int argc, char** argv)
 {
 
-//****************************************
-  // cmd arg code
-  //	cv::CommandLineParser parser(argc, argv, keys);
-  //	cv::String tracker_algorithm = parser.get<cv::String>(0);
-  //	cv::String video_name = parser.get<cv::String>(1);
-//****************************************
+	//****************************************
+	// cmd arg code
+	//	cv::CommandLineParser parser(argc, argv, keys);
+	//	cv::String tracker_algorithm = parser.get<cv::String>(0);
+	//	cv::String video_name = parser.get<cv::String>(1);
+	//****************************************
 
 
 
 
 
-//#define opencvTracker
-//#define myTracker
+	//#define opencvTracker
+	//#define myTracker
 #define timer
 
-//******************************************************************************************************************************************************
+	//******************************************************************************************************************************************************
 #ifdef opencvTracker
 
-    cv::Mat raw, segmented, filtered, classified;
-    bool paused = false;
-    
-    ///Prepare Bindetect, 
-    ///ImgAquisition can be vs15, vs17 or raspberry.
-    VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
-    vecVecPoint contours;
-    
-    MyTrackerKCF myTrackerKcf;
-    
-    while (true){
-	  if (!paused)
+	cv::Mat raw, segmented, filtered, classified;
+	bool paused = false;
+
+	///Prepare Bindetect, 
+	///ImgAquisition can be vs15, vs17 or raspberry.
+	VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
+	vecVecPoint contours;
+
+	MyTrackerKCF myTrackerKcf;
+
+	while (true) {
+		if (!paused)
 		{
-		  detector->imgAquist(raw);
-		  
-		  //new detected objects must not intersect with tracking objects 
-		  detector->segment(raw, segmented); //wrong background subtraction second time? todo
-	    detector->filter(segmented, filtered);
-	    detector->classify(filtered, contours);
-	    
-	    myTrackerKcf.apply(raw, contours);
-	    
-	    Show::showImg();
-	    
-	    char c = (char)cv::waitKey(2);
-	    if (c == 'q')exit(-1);///Quit on q
-	    if (c == 'p')paused = !paused;///Pause on p
-	    if (c == 27)exit(-1);///Quit on ESC-button
+			detector->imgAquist(raw);
+
+			//new detected objects must not intersect with tracking objects 
+			detector->segment(raw, segmented); //wrong background subtraction second time? todo
+			detector->filter(segmented, filtered);
+			detector->classify(filtered, contours);
+
+			myTrackerKcf.apply(raw, contours);
+
+			Show::showImg();
+
+			char c = (char)cv::waitKey(2);
+			if (c == 'q')exit(-1);///Quit on q
+			if (c == 'p')paused = !paused;///Pause on p
+			if (c == 27)exit(-1);///Quit on ESC-button
+		}
 	}
-        }
-    
+
 #endif
-    
-    
-    
-    
-    //******************************************************************************************************************************************************
+
+
+
+
+	//******************************************************************************************************************************************************
 #ifdef timer
 
-    VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
+	VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
 
-    ///Creating example vehicle with example vehicleFrames
+	///Creating example vehicle with example vehicleFrames
 	Example e;
 
 	Vehicle* vehicle = e.createVehicle(detector);
-    
+
 	MyTracker* t = new StillObj_MyTracker(vehicle, detector);
 
 	///Validating timer principals
-    double parktimelimit = 200.0;
+	double parktimelimit = 200.0;
 
 	cv::namedWindow("win");
 
 	while (true) {
-	  
-	  //first call will start the timer
-	  t->track();
-	  
-	  if(!t->isAlive()){
-		std::cout << "VEHICLE HAS LEFT PARKING LOT" << std::endl;			
-		getchar();
-		exit(0);
-	  }
 
-      else if(t->getParkTime() > parktimelimit){
-		std::cout << "VEHICLE HAS BEEN PARKING TO LONG!" << std::endl;
-		getchar();
-		exit(0);
-      }
+		//first call will start the timer
+		t->track();
+
+		if (!t->isAlive()) {
+			std::cout << "VEHICLE HAS LEFT PARKING LOT" << std::endl;
+			getchar();
+			exit(0);
+		}
+
+		else if (t->getParkTime() > parktimelimit) {
+			std::cout << "VEHICLE HAS BEEN PARKING TO LONG!" << std::endl;
+			getchar();
+			exit(0);
+		}
 
 
-	  //----------------------------------------
-	  //* tracker is alive
-	  //* parking time not to long
+		//----------------------------------------
+		//* tracker is alive
+		//* parking time not to long
 
-	  t->paint();
-	  
-	  //display image
-	  cv::imshow("win", t->getLastImg());
-	  cv::waitKey(0);
-    }
-    
+		t->paint();
+
+		//display image
+		cv::imshow("win", t->getLastImg());
+		cv::waitKey(0);
+	}
+
 
 #endif
 
@@ -156,107 +156,107 @@ int main(int argc, char** argv)
 
 
 
-//******************************************************************************************************************************************************
+	//******************************************************************************************************************************************************
 #ifdef myTracker
 
-		MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
+	MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
 
 
-		//still tracker
-		//...
-		//...
-		//...
+	//still tracker
+	//...
+	//...
+	//...
 
-		std::vector<MyTracker*> trackers;
+	std::vector<MyTracker*> trackers;
 
-		trackers.push_back(simpleTracker);
-		//trackers.push_back(still tracker);
-		//...
-		//...
-		//...
-
-
-
-		VehicleList* movList = new Moving_VehicleList();
-		VehicleList* stillList = new Still_VehicleList();
-		VehicleList* alarmList = new Still_VehicleList();
-
-		//************************************************
-		//vehicle lifecycle:
-		//
-		//   [movlist] --> [stillList] --> [alarmList]
-		//
-		movList->connectTo(stillList);
-		stillList->connectTo(alarmList);
-		//
-		//................................................
+	trackers.push_back(simpleTracker);
+	//trackers.push_back(still tracker);
+	//...
+	//...
+	//...
 
 
 
+	VehicleList* movList = new Moving_VehicleList();
+	VehicleList* stillList = new Still_VehicleList();
+	VehicleList* alarmList = new Still_VehicleList();
 
-		//Forward vehicles to next lists if condition is ok
-		for (MyTracker* t : trackers) {
-			Vehicle* v = t->getVehicle();
+	//************************************************
+	//vehicle lifecycle:
+	//
+	//   [movlist] --> [stillList] --> [alarmList]
+	//
+	movList->connectTo(stillList);
+	stillList->connectTo(alarmList);
+	//
+	//................................................
 
-			/*
-			v->list->nextList.belongCheck(v);
 
 
-			if (v->list.nextList.belongCheck(*v)) {
 
-			v->list.forwVehicle();
-			}
-			else if (t.list.belongCheck(v)) {
+	//Forward vehicles to next lists if condition is ok
+	for (MyTracker* t : trackers) {
+		Vehicle* v = t->getVehicle();
 
-			//toss vehicle and tracker();
-			}
+		/*
+		v->list->nextList.belongCheck(v);
 
-			*/
+
+		if (v->list.nextList.belongCheck(*v)) {
+
+		v->list.forwVehicle();
+		}
+		else if (t.list.belongCheck(v)) {
+
+		//toss vehicle and tracker();
 		}
 
+		*/
+	}
 
-		//Alt 1: Add vehicles only to the first list
-		//Alt 2: Add vehicles in all lists
-		//
-		//Using Alt ?:
 
-		for each (MyTracker* t in trackers)
-		{
-			t->track();
-		}
+	//Alt 1: Add vehicles only to the first list
+	//Alt 2: Add vehicles in all lists
+	//
+	//Using Alt ?:
+
+	for each (MyTracker* t in trackers)
+	{
+		t->track();
+	}
 
 #endif
 
 
 
-    return 0;
+	return 0;
 }
 
 
 
 static void printError(int num)
 {
-  if(num == 1){
-    std::cout << "Invalid number of arguments" << std::endl;
-  }
-  else if(num == 2){
-  
-  }
-  else if(num == 3){
-  
-  }
- else if(num == 4){
-  
-  }
- else if(num == 5){
-  
-  }
- else if(num == 6){
-  
-  }
+	if (num == 1) {
+		std::cout << "Invalid number of arguments" << std::endl;
+	}
+	else if (num == 2) {
+
+	}
+	else if (num == 3) {
+
+	}
+	else if (num == 4) {
+
+	}
+	else if (num == 5) {
+
+	}
+	else if (num == 6) {
+
+	}
 
 
-  getchar();
+	getchar();
 
 }
 
@@ -283,4 +283,3 @@ void test(const char* test) {
 	}
 
 }
-

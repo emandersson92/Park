@@ -263,10 +263,13 @@ __pycache__/
 
 #Added by Emil
 
-#*.props
-ReadMe.txt
-#stdafx.cpp
-#stdafx.h
-#targetver.h
+*.props
+*.vcxproj.filters
+*.vcxproj
+stdafx.cpp
+stdafx.h
+targetver.h
 *.sln
+
+#emacs's autosave files or whatever
 *#
