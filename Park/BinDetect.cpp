@@ -2,23 +2,10 @@
 #include "BinDetect.h"
 
 
-BinDetect::BinDetect(int IMGAC)
+BinDetect::BinDetect(std::string media)
 {
 	
-	if (IMGAC == VS_15)
-	{
-		a = new ImgAcquisition_vs15();
-	}
-
-	else if(IMGAC == VS_17)
-	{
-		a = new ImgAcquisition_vs17();
-	}
-	//else if(IMGAC == RASPBERRY){
-	  //a = new ImgAcquisition_raspberry();
-	//}
-	
-
+	a = new ImgAcquisition_vs15(media);
 	s = new BgsSegment();
 	f = new Filter();
 	d = new BinClassify();

@@ -4,7 +4,7 @@
 
 Bin_MovingObj_MyTracker::Bin_MovingObj_MyTracker(std::vector<std::vector<cv::Point>>* c){
 	contours = c;
-	detector = new BinDetect(BinDetect::VS_15);				//This tracker type uses BinDetect-detector
+	detector = new BinDetect(traffic);				//This tracker type uses BinDetect-detector
 }
 
 

@@ -106,7 +106,7 @@ int main(int argc, char** argv)
 	//******************************************************************************************************************************************************
 #ifdef timer
 
-	VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
+	VehicleDetector* detector = new BinDetect(traffic);
 
 	///Creating example vehicle with example vehicleFrames
 	Example e;

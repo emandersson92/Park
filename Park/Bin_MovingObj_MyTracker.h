@@ -1,6 +1,7 @@
 #pragma once
 #include "MovingObj_MyTracker.h"
 #include "BinDetect.h"
+#include "MediaPaths.h"
 
 class Bin_MovingObj_MyTracker : public MovingObj_MyTracker
 {

@@ -1,66 +1,42 @@
 #include "stdafx.h"
 #include "ImgAcquisition_vs15.h"
 
-ImgAcquisition_vs15::ImgAcquisition_vs15() {}
-
-ImgAcquisition_vs15::ImgAcquisition_vs15(int pathNmb)
+ImgAcquisition_vs15::ImgAcquisition_vs15(std::string media)
 {
-	setPath(pathNmb, path);
-
-	if (vidPath)
-	{
-
-		cap = cv::VideoCapture("Park\\vid\\p0.mp4");
-		if (!cap.isOpened())
-			error(path);
+  cap = cv::VideoCapture(media);
+  if (!cap.isOpened())
+	error(media);
 
 
-		cap = cv::VideoCapture("img\\bin_dot_1.png");
-		if (!cap.isOpened())
-			error(path);
 
+  //determine if the media is an image or an video file
 
-		cap = cv::VideoCapture("vid\\p0.mp4");
-		if (!cap.isOpened())
-			error(path);
+  if (hasEnding(media, ".jpg"))
+	  imgPath = true;
 
+  else if (hasEnding(media, ".png"))
+	  imgPath = true;
 
-		cap = cv::VideoCapture(path);
-		if (!cap.isOpened())
-			error(path);
-	}
+  else if (hasEnding(media, ".mp4"))
+	  vidPath = true;
+
+  else if (hasEnding(media, ".avi"))
+	vidPath = true;
+
+  else{
+	std::cout << "Could not determine the media extention" << std::endl;
+	getchar();
+  }
+
 }
 
 ImgAcquisition_vs15::~ImgAcquisition_vs15()
 {
 }
 
-//Called from constructor
-void ImgAcquisition_vs15::setPath(int pathNmb, std::string& path) {
-	switch (pathNmb) {
-	case BIN_DOT_IMG:
-		path = bin_dot_img_path;
-		imgPath = true;
-		break;
-
-	case PED_CROSS_VID:
-		path = pedest_cross_vid_path;
-		vidPath = true;
-		break;
-
-
-	default:
-		std::cout << "could not set image path" << std::endl;
-		std::cout << "" << std::endl;
-		std::cout << "press any key to quit" << std::endl;
-		getchar();
-		exit(-1);
-	}
-}
-
-
 
 void ImgAcquisition_vs15::apply(cv::Mat& out) {
+
 	if (vidPath)
 	{
 		cap >> out;
@@ -70,10 +46,16 @@ void ImgAcquisition_vs15::apply(cv::Mat& out) {
 		}
 	}
 
-	if (imgPath)
+	else if (imgPath)
 	{
 		getImg(path, out);
 	}
+	
+	else{
+	  std::cout << "media path undetermined" << std::endl;
+	  getchar();
+	}
+	
 }
 
 
@@ -93,4 +75,13 @@ void ImgAcquisition_vs15::error(std::string& path) {
 	std::cout << "Push any character to exit" << std::endl;
 	getchar();
 	exit(0);
+}
+
+
+bool ImgAcquisition_vs15::hasEnding(std::string const &fullString, std::string const &ending) {
+    if (fullString.length() >= ending.length()) {
+        return (0 == fullString.compare (fullString.length() - ending.length(), ending.length(), ending));
+    } else {
+        return false;
+    }
 }

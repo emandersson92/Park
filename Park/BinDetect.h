@@ -28,7 +28,7 @@ class BinDetect : public VehicleDetector
 {
 
 public:
-	BinDetect(int IMGAC);
+	BinDetect(std::string media);
 	~BinDetect();
 
 	void apply(std::vector<std::vector<cv::Point>>& contours);
