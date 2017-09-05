@@ -4,7 +4,9 @@
 
 StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
 {
-  init_trackArea = cur_trackArea = v->getLastVehicleFrame()->getArea().copy();
+  init_trackBinROI = cur_trackBinROI = v->getLastVehicleFrame()->getBinROI();
+
+  //construct binary ROI with the contours area (foreground) as 1 and background as 0
 
   detector = d;
 
@@ -41,43 +43,71 @@ void StillObj_MyTracker::reduceTrackerArea() {
 
 	  the BinDetect() - class can be used with BGS in order to detect movement on the ROI.
 	 */
-	
-	detector->ImgAquist(out_detect);
+  
+	detector->imgAquist(out_detect);
 	detector->segment(in_detect, out_detect);
 	detector->filter(in_detect, out_detect);
-	
-	cur_trackArea =- out_detect;
+
+
+	//Binary image subtraction
+	//expl: when movement is detected on vehicle spot it indicates vehicle movement
+
+
+	//apply image watch here
+	cur_trackBinROI =- out_detect;
 
 }
 
 //Private
 void StillObj_MyTracker::surviveTest() {
-
-  //validate
-  double c = cur_trackArea.size();
-  double i = init_trackArea.size();
   
-	double lifeLeft = (100.0 * c/i);
-	if (lifeLeft < _minLife)
+  //simplifying code reading
+  cv::Mat cr = cur_trackBinROI;
+  cv::Mat ir = init_trackBinROI;
+  double cr_fg = percentage_foreground(cr);
+  double ir_fg = percentage_foreground(ir);
+
+
+  //test
+  if(ir_fg < cr_fg){
+	getchar();
+  }
+
+  double lifeLeft = (100.0 * cr_fg/ir_fg);
+  
+  MyAssert::assertPercentage(lifeLeft);
+
+  if (lifeLeft < _minLife)
 	{
-		ALIVE = false;
-		//killTracker(); --> use abstract class enwrapper?
+	  ALIVE = false;
+	  //killTracker(); --> use abstract class enwrapper?
 	}
 }
 
-void StillObj_MyTracker::isAlive(){
+boolean StillObj_MyTracker::isAlive(){
 	return ALIVE;
 }
 
-void StillObj_MyTracker::getParkTime(){
-	return time;
+double StillObj_MyTracker::getParkTime(){
+	return timer->getTime();
 }
 
-Mat StillObj_MyTracker::getRaw(){
+cv::Mat StillObj_MyTracker::getRaw(){
   return raw;
 }
 
 void StillObj_MyTracker::paint(){
   //Paint trackingarea on raw img.
-  circle()
+
+  //circle()
 }
+
+
+double StillObj_MyTracker::percentage_foreground(cv::Mat m){
+  
+  double ret = cv::countNonZero(m)/(m.cols * m.rows)*100;
+  MyAssert::assertPercentage(ret);
+  
+  return ret;
+}
+

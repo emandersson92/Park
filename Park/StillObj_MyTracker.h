@@ -9,44 +9,61 @@ Emil Andersson 2017-07-DATE
 ********************************/
 
 #pragma once
+
+//Opencv
 #include "vector"
 #include "opencv2\core.hpp"
 #include "opencv2\imgproc.hpp"
 
-#include "Timer.h"
+//My classes
 #include "VehicleDetector.h"
 #include "Vehicle.h"
+#include "Timer.h"
 #include "SimpleTimer.h"
+#include "MyTracker.h"
+
+//Test
+#include "MyAssert.h"
+
 
 typedef std::vector<cv::Point> vecCont;
 typedef std::vector<vecCont> vecVecCont;
 
 
-class StillObj_MyTracker
+class StillObj_MyTracker : public MyTracker
 {
-public:
-	StillObj_MyTracker();
-	~StillObj_MyTracker();
+ public:
+  StillObj_MyTracker(Vehicle* v, VehicleDetector* d);
+  ~StillObj_MyTracker();
 
 	void track();
+	boolean isAlive();
+	double getParkTime();
+	cv::Mat getRaw();
+	void paint();
+	
+
 
 private:
+
+	double percentage_foreground(cv::Mat m);
+	void reduceTrackerArea();
+	void surviveTest();
 
 	VehicleDetector* detector;
 	cv::Mat out_detect; //shall not be here
 	cv::Mat in_detect;
 
-	Timer a;
 	Timer* timer;
-
-	Boolean FIRST;
+	
+	bool FIRST;
 
 	cv::Mat ROI;
 	cv::Mat raw;
 
 
-	std::vector<Point>* init_trackArea;
-	std::vector<Point>* cur_trackArea;
+	cv::Mat init_trackBinROI; //Initially binary image with tracked vehicle in foreground 
+	cv::Mat cur_trackBinROI;//Current binary image.......
 
 
 	//Tracker survival data
