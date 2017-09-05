@@ -1,8 +1,10 @@
 
 class MyAssert{
-  //  MyAssert();
-  //  ~MyAssert();
 
-  static void assertPercentage();
+public:
+	MyAssert();
+	~MyAssert();
+
+	static void assertPercentage(double t);
 
 };

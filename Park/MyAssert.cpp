@@ -2,8 +2,12 @@
 #include "MyAssert.h"
 
 
-void MyAssert::assertPercentage(){
-	if(ret < 0 || ret > 100){
+MyAssert::MyAssert() {}
+
+MyAssert::~MyAssert() {}
+
+void MyAssert::assertPercentage(double t){
+	if(t < 0 || t > 100){
 	  getchar();
 	}
 }
