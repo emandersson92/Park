@@ -1,19 +1,23 @@
 #pragma once
 #include "windows.h"
+#include "Timer.h"
 
-
-class SimpleTimer
+class SimpleTimer : Timer
 {
 public:
-  SimpleTimer(Vehicle);
+  SimpleTimer();
   ~SimpleTimer();
   void start();
   void stop();
   void pause();
+  void reset();
+  double getTime();
+  void increment();
+
 
 private:
 
-	long time; //program made up time in order to simplify timer object
+	double time; //program made up time in order to simplify timer object
 	boolean COUNTING; //true if the timer incrementing "time"
 
 };

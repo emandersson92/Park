@@ -1,11 +1,11 @@
 #include "stdafx.h"
-#include "Timer.h"
+#include "SimpleTimer.h"
 
 
 SimpleTimer::SimpleTimer()
 {
   COUNTING = false;
-  timer = 0;
+  time = 0;
 }
 
 
@@ -15,7 +15,7 @@ SimpleTimer::~SimpleTimer()
 
 void SimpleTimer::increment(){
   if(COUNTING == true){
-    timer++;
+    time++;
   }
 }
 
@@ -33,6 +33,10 @@ void SimpleTimer::stop() {
 
 void SimpleTimer::reset(){
   COUNTING = false;
-  timer = 0;
+  time = 0;
 
+}
+
+double SimpleTimer::getTime(){
+  return time;
 }
