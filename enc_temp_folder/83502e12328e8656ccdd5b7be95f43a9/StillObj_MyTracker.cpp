@@ -5,16 +5,14 @@
 StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
 {
 
-	///VehicleFrame
   VehicleFrame* vf = v->getLastVehicleFrame();
-  init_vehicleArea = cur_vehicleArea = vf->getBinROI();
-  vehicleFrame = vf;
+
+  init_trackBinROI = cur_trackBinROI = vf->getBinROI();
+  stillTrack_VehicleFrame = vf;
+
+  ir_fg = percentage_foreground(init_trackBinROI);
 
   detector = d;
-
-  ///percentage of ROI is car area (not 0 but 255)
-  ir_fg = percentage_foreground(init_vehicleArea);
-
 
   timer = new SimpleTimer();
 
@@ -41,37 +39,49 @@ void StillObj_MyTracker::track() {
 }
 
 
-/*
-Explanation:
-When movement is detected on vehicle spot it indicates vehicle movement.
-
-Practical:
-The vehicleArea's white area will be replaced with black on the parts where movement apperears.
-*/
 void StillObj_MyTracker::reduceTrackerArea() {
+	//backgroundsubtraction on area.
+	//need a reducer
+	/*
+	  the reduce tecqnology works is based on BGS. If there is movement on the ROI the tracking area will be reduced.
+
+	  the BinDetect() - class can be used with BGS in order to detect movement on the ROI.
+	 */
+  
+	
 
 	detector->imgAquist(in_detect);
+
 	raw = in_detect.clone();
+
 	detector->segment(in_detect, tmp1);
 	detector->filter(tmp1, out_detect);
 
+
+	//Binary image subtraction
+	//expl: when movement is detected on vehicle spot it indicates vehicle movement
+
+
 	///get relative ROI location
 	cv::Size size; cv::Point ofs;
-	cur_vehicleArea.locateROI(size, ofs);
+	cur_trackBinROI.locateROI(size, ofs);
+
+
 	///get ROI movement spot
-	cv::Mat movImgROI = out_detect(cv::Rect(ofs.x, ofs.y, cur_vehicleArea.cols, cur_vehicleArea.rows));
+	cv::Mat movImgROI = out_detect(cv::Rect(ofs.x, ofs.y, cur_trackBinROI.cols, cur_trackBinROI.rows));
 	
-	///tracked area subtracted with area with movement
-	cur_vehicleArea -= movImgROI;
+	cur_trackBinROI -= movImgROI;
 	
 }
 
+//Private
 void StillObj_MyTracker::surviveTest() {
   
-  ///simplifying future code reading
-  cv::Mat cr = cur_vehicleArea;
-  cv::Mat ir = init_vehicleArea;
+  //simplifying code reading
+  cv::Mat cr = cur_trackBinROI;
+  cv::Mat ir = init_trackBinROI;
   double cr_fg = percentage_foreground(cr);
+
 
 
   //test
@@ -81,7 +91,6 @@ void StillObj_MyTracker::surviveTest() {
 
   lifeLeft = (100.0 * cr_fg/ir_fg);
   
-  //test
   MyAssert::assertPercentage(lifeLeft);
 
   if (lifeLeft < _minLife)
@@ -111,19 +120,19 @@ double StillObj_MyTracker::getParkTime(){
 
 void StillObj_MyTracker::paint(){
 	//Paint trackingarea on raw img.
-	cv::Mat vehicleArea = vehicleFrame->getBinROI();
+	cv::Mat trackBinROI = stillTrack_VehicleFrame->getBinROI();
 
 	///get relative ROI location
 	cv::Size size; cv::Point ofs;
-	cur_vehicleArea.locateROI(size, ofs);
+	cur_trackBinROI.locateROI(size, ofs);
 
 	///get ROI movement spot
-	cv::Mat rawROI = raw(cv::Rect(ofs.x, ofs.y, cur_vehicleArea.cols, cur_vehicleArea.rows));
+	cv::Mat rawROI = raw(cv::Rect(ofs.x, ofs.y, cur_trackBinROI.cols, cur_trackBinROI.rows));
 
 
-	///convert vehicleArea to 3 type channel in order to add to raw
+	///convert trackBinROI to 3 type channel in order to add to raw
 	cv::Mat trackColROI;///color
-	cv::cvtColor(vehicleArea, trackColROI, CV_GRAY2BGR);
+	cv::cvtColor(trackBinROI, trackColROI, CV_GRAY2BGR);
 
 	rawROI = rawROI + trackColROI;
 

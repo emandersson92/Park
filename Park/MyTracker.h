@@ -19,6 +19,10 @@ public:
 	virtual void paint() = 0;	
 	Vehicle* getVehicle();	
 
+	virtual double getLifeThresh() = 0;
+	virtual double getLifeLeft() = 0;
+
+
 
 private:
 

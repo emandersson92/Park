@@ -51,6 +51,15 @@ workon:StillObj_MyTracker: make fix object subtraction with init_trackContours a
 check
 
 workon:make BGS work
+BGS works
+
+The code is working.
+
+After first work:
+* Perform testing
+* Make tidy and correct
+* Make modular for later use
+
 
 
 

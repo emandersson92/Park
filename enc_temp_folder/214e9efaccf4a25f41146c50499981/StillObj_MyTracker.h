@@ -1,11 +1,11 @@
 /********************************
 Info:
-A vehicles area is tracked.
-Movement on the vehicleArea will be "rubbered" (the vehicle is moving)
-When the vehcileArea is to small the vehicle has left the parkinglot
+Area is tracked
+Movement on area will "eat" the trackers area
+When area is to small the tracker will get destroyed
 
 Author:
-Emil Andersson 2017-09-07
+Emil Andersson 2017-07-DATE
 ********************************/
 
 #pragma once
@@ -54,7 +54,7 @@ private:
 	void reduceTrackerArea();
 	void surviveTest();
 
-	VehicleFrame* vehicleFrame;
+	VehicleFrame* stillTrack_VehicleFrame;
 	VehicleDetector* detector;
 	
 	cv::Mat raw;
@@ -67,15 +67,13 @@ private:
 	
 	bool FIRST;
 
-	///percentage foreground (255) of init_vehicleArea
 	double ir_fg;
 
 
-	///Initially and Current vehicle area in white (255)  and background in black (0), one channel. 
-	cv::Mat init_vehicleArea; 
-	cv::Mat cur_vehicleArea;
+	cv::Mat init_trackBinROI; //Initially binary image with tracked vehicle in foreground 
+	cv::Mat cur_trackBinROI;//Current binary image.......
 
-
+	
 	///min life before tracker dies in % (cur_trackArea/init_trackArea). 
 	double lifeLeft;
 	const double _minLife = 30.0;

@@ -116,7 +116,7 @@ int main(int argc, char** argv)
 	MyTracker* t = new StillObj_MyTracker(vehicle, detector);
 
 	///Validating timer principals
-	double parktimelimit = 200.0;
+	double parktimelimit = 1000.0;
 
 	cv::namedWindow("win");
 
@@ -125,13 +125,22 @@ int main(int argc, char** argv)
 		//first call will start the timer
 		t->track();
 
+		double ptime = t->getParkTime();
+		double lifeThresh = t->getLifeThresh();
+		double lifeLeft = t->getLifeLeft();
+		
+		///Printing info in console
+		std::cout << "Parktime: " << ptime << " of " << parktimelimit << std::endl;
+		std::cout << "Life: " <<  lifeLeft << " of " << lifeThresh << " minimum " << std::endl << std::endl;
+
+	
 		if (!t->isAlive()) {
 			std::cout << "VEHICLE HAS LEFT PARKING LOT" << std::endl;
 			getchar();
 			exit(0);
 		}
 
-		else if (t->getParkTime() > parktimelimit) {
+		else if (ptime > parktimelimit) {
 			std::cout << "VEHICLE HAS BEEN PARKING TO LONG!" << std::endl;
 			getchar();
 			exit(0);
