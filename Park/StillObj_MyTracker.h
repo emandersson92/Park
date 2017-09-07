@@ -53,8 +53,11 @@ private:
 
 	VehicleFrame* stillTrack_VehicleFrame;
 	VehicleDetector* detector;
-	cv::Mat out_detect;
+	
 	cv::Mat in_detect;
+	cv::Mat tmp1;
+	cv::Mat tmp2;
+	cv::Mat out_detect;
 
 	MyTimer* timer;
 	

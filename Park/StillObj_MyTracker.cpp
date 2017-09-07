@@ -46,18 +46,25 @@ void StillObj_MyTracker::reduceTrackerArea() {
 	  the BinDetect() - class can be used with BGS in order to detect movement on the ROI.
 	 */
   
-	detector->imgAquist(out_detect);
-	detector->segment(in_detect, out_detect);
-	detector->filter(in_detect, out_detect);
+	detector->imgAquist(in_detect);
+	detector->segment(in_detect, tmp1);
+	detector->filter(tmp1, out_detect);
 
 
 	//Binary image subtraction
 	//expl: when movement is detected on vehicle spot it indicates vehicle movement
 
 
-	//apply image watch here
-	cur_trackBinROI =- out_detect;
+	///get relative ROI location
+	cv::Size size; cv::Point ofs;
+	cur_trackBinROI.locateROI(size, ofs);
 
+
+	///get ROI movement spot
+	cv::Mat movImgROI = out_detect(cv::Rect(ofs.x, ofs.y, cur_trackBinROI.cols, cur_trackBinROI.rows));
+	
+	cur_trackBinROI -= movImgROI;
+	
 }
 
 //Private

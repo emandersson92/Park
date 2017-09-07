@@ -7,7 +7,8 @@ BgsSegment::BgsSegment(){
 
 
 	///todo move this to a BgsMog2_init() function
-	b = cv::createBackgroundSubtractorMOG2(); //MOG2 approach
+	///no shadows bgs
+	b = cv::createBackgroundSubtractorMOG2(500, 16.0, false); //MOG2 approach
 }
 
 BgsSegment::~BgsSegment() {
@@ -25,7 +26,7 @@ void BgsSegment::BgsMog2(cv::Mat& in, cv::Mat& out) {
 
 	//cv::Ptr<cv::BackgroundSubtractor> pMOG2 = cv::createBackgroundSubtractorMOG2();
 	//cv::Ptr<cv::BackgroundSubtractor> b; //MOG2 Background subtractor
-
+  
 	//pMOG2->apply(in, out);
 	b->apply(in, out);
 

@@ -20,11 +20,25 @@ Vehicle* Example::createVehicle(VehicleDetector* detector){
 //
 //--------------------------------------------------
 
+	cv::Mat in;
+	cv::Mat out;
+	cv::Mat tmp1;//temporary 1
+
+
+	detector->imgAquist(in);
+	cv::Mat raw = in.clone();
+
+	int x = raw.cols / 2;
+	int y = raw.rows / 2;
+	int w = raw.cols / 6;
+	int h = raw.rows / 6;
+
 	std::vector<cv::Point>* points1 = new std::vector<cv::Point>;
 	std::vector<cv::Point>* points2 = new std::vector<cv::Point>;
 	std::vector<cv::Point>* points3 = new std::vector<cv::Point>;
 	std::vector<cv::Point>* points4 = new std::vector<cv::Point>;
 	std::vector<cv::Point>* points5 = new std::vector<cv::Point>;
+	std::vector<cv::Point> points6;
 
 	//dummypoints
 	points1->push_back(cv::Point(1, 1)); //Just adding one point
@@ -33,30 +47,40 @@ Vehicle* Example::createVehicle(VehicleDetector* detector){
 	points4->push_back(cv::Point(1, 1));
 
 	//serious points, this VF will be used by stillTracker 
-	points5->push_back(cv::Point(500, 500));
-	points5->push_back(cv::Point(700, 500));
-	points5->push_back(cv::Point(500, 700));
-	points5->push_back(cv::Point(700, 700));
+	points5->push_back(cv::Point(x, y));
+	points5->push_back(cv::Point(x + w, y));
+	points5->push_back(cv::Point(x + w, y + w));
+	points5->push_back(cv::Point(x, y + w));
+
+	
+	cv::Rect ROIrect(x, y, w, h);
+	
+	///test. the Rect can be painted
+	///cv::rectangle(raw, ROIrect, cv::Scalar(0, 0, 255), 3);
 
 
-	cv::Mat in;
-	cv::Mat out;
+	///test:: can print the contours added manually
+	///std::vector<std::vector<cv::Point>>* a = new std::vector<std::vector<cv::Point>>();
+	///a->push_back(*points5);
 
-  	detector->imgAquist(out);
-	cv::Mat raw = out.clone();
+	///cv::drawContours(raw, *a, -1, cv::Scalar(255, 0, 0), 3);
 
-	detector->segment(in, out);
-	detector->filter(in, out);
 
-	int x = 500;
-	int y = 500;
-	int w = 30;
-	int h = 30;
+	detector->segment(in, tmp1);
+	///convert to gray
+	///detector->filter(tmp1, out);
+
+	///construct image with all element with value 255
+	cv::Mat white(in.rows, in.cols, CV_8UC1, 255);
+
+	
 
 
 	cv::Mat cr = raw(cv::Rect(x, y, w, h)); //this roi is used for every vehicle frame
-	cv::Mat br = out(cv::Rect(x, y, w, h));
+	cv::Mat br = white(cv::Rect(x, y, w, h));
 	
+
+
 	
 	//Simulate moving car that stops
 	VehicleFrame* vf1 = new VehicleFrame(3.3, 50, 50, points1, cr, br);
@@ -73,6 +97,6 @@ Vehicle* Example::createVehicle(VehicleDetector* detector){
  	v->addVehicleFrame(vf5);
 
 	return v;
-  
+
 }
 

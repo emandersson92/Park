@@ -48,6 +48,12 @@ seems to be working!
 
 workon:StillObj_MyTracker: make fix object subtraction with init_trackContours and cur_trackContours
 *will achive a binROI from vehicleFrame
+check
+
+workon:make BGS work
+
+
+
 
 
 
