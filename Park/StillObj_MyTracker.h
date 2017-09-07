@@ -47,21 +47,24 @@ class StillObj_MyTracker : public MyTracker
 
 private:
 
-	double percentage_foreground(cv::Mat m);
+	double percentage_foreground(cv::Mat& m);
 	void reduceTrackerArea();
 	void surviveTest();
 
 	VehicleFrame* stillTrack_VehicleFrame;
 	VehicleDetector* detector;
 	
+	cv::Mat raw;
 	cv::Mat in_detect;
 	cv::Mat tmp1;
 	cv::Mat tmp2;
-	cv::Mat out_detect;
+	cv::Mat out_detect;//Mat after detection
 
 	MyTimer* timer;
 	
 	bool FIRST;
+
+	double ir_fg;
 
 
 	cv::Mat init_trackBinROI; //Initially binary image with tracked vehicle in foreground 
