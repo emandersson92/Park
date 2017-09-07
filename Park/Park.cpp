@@ -146,7 +146,7 @@ int main(int argc, char** argv)
 
 		//display image
 		cv::imshow("win", t->getLastImg());
-		cv::waitKey(0);
+		cv::waitKey(2);
 	}
 
 

@@ -126,7 +126,6 @@ void StillObj_MyTracker::paint(){
 	cv::cvtColor(trackBinROI, trackColROI, CV_GRAY2BGR);
 
 	rawROI = rawROI + trackColROI;
-	//cv::bitwise_and(rawROI, , rawROI);
 
 }
 
@@ -142,5 +141,5 @@ double StillObj_MyTracker::percentage_foreground(cv::Mat& m){
 }
 
 cv::Mat StillObj_MyTracker::getLastImg(){
-  return out_detect;
+  return raw;
 }
