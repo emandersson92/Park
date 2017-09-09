@@ -83,18 +83,18 @@ Vehicle* Example::createVehicle(VehicleDetector* detector){
 
 	
 	//Simulate moving car that stops
-	VehicleFrame* vf1 = new VehicleFrame(3.3, 50, 50, points1, cr, br, raw, white);
-	VehicleFrame* vf2 = new VehicleFrame(2.2, 45, 45, points2, cr, br, raw, white);
-	VehicleFrame* vf3 = new VehicleFrame(1.1, 45, 45, points3, cr, br, raw, white);
-	VehicleFrame* vf4 = new VehicleFrame(0.1, 45, 45, points4, cr, br, raw, white);
-	VehicleFrame* vf5 = new VehicleFrame(0.0, 600, 600, points5, cr, br, raw, white);
+	VehicleFrame* vf1 = new VehicleFrame(3.3, points1, cr, br, raw, white);
+	VehicleFrame* vf2 = new VehicleFrame(2.2, points2, cr, br, raw, white);
+	VehicleFrame* vf3 = new VehicleFrame(1.1, points3, cr, br, raw, white);
+	VehicleFrame* vf4 = new VehicleFrame(0.1, points4, cr, br, raw, white);
+	VehicleFrame* vf5 = new VehicleFrame(0.0, points5, cr, br, raw, white);
 
 
-	v->addVehicleFrame(vf1);
-	v->addVehicleFrame(vf2);
-	v->addVehicleFrame(vf3);
-	v->addVehicleFrame(vf4);
- 	v->addVehicleFrame(vf5);
+	v->addVF(vf1);
+	v->addVF(vf2);
+	v->addVF(vf3);
+	v->addVF(vf4);
+ 	v->addVF(vf5);
 
 	return v;
 

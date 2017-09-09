@@ -61,8 +61,8 @@ int main(int argc, char** argv)
 
 
 	//#define opencvTracker
-	//#define myTracker
-#define timer
+	#define myTracker
+	//#define timer
 
 	//******************************************************************************************************************************************************
 #ifdef opencvTracker
@@ -99,7 +99,6 @@ int main(int argc, char** argv)
 	}
 
 #endif
-
 
 
 
@@ -168,7 +167,27 @@ int main(int argc, char** argv)
 	//******************************************************************************************************************************************************
 #ifdef myTracker
 
-	MyTracker* simpleTracker = new Bin_MovingObj_MyTracker(new std::vector<std::vector<cv::Point>>);
+	int minObjArea = 10;
+
+	VehicleDetector* detector = new BinDetect(traffic);
+	///moving object tracker
+
+	Bin_MovingObj_MyTracker* motracker = new Bin_MovingObj_MyTracker(detector, minObjArea);
+
+	while(true){
+		motracker->track();
+		
+		std::vector<Vehicle*> vehicles = motracker->getVehicles();
+
+		for(Vehicle* v : vehicles){
+			//todo: implement 0 speed for time function
+			double spd = v->getSpeed();
+			if(-0.1 < spd && spd < 0.1){
+				std::cout << "VEHICLE HAS STOPPED" << std::endl;
+				getchar();
+			}
+		}
+	}
 
 
 	//still tracker
@@ -177,8 +196,8 @@ int main(int argc, char** argv)
 	//...
 
 	std::vector<MyTracker*> trackers;
-
-	trackers.push_back(simpleTracker);
+	
+	//trackers.push_back(simpleTracker);
 	//trackers.push_back(still tracker);
 	//...
 	//...
@@ -235,7 +254,6 @@ int main(int argc, char** argv)
 	}
 
 #endif
-
 
 
 	return 0;

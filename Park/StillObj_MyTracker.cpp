@@ -4,16 +4,10 @@
 
 StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
 {
-
 	///VehicleFrame
   VehicleFrame* vf = v->getLastVehicleFrame();
   cur_vehicleArea = vf->cloneBinROI();
   init_vehicleArea = vf->cloneBinROI();
-  
-  //cur_vehicleArea = vf->getBinROI();
-  //init_vehicleArea = vf->getBinROI();
-
-
 
   vehicleFrame = vf;
 
@@ -79,6 +73,8 @@ void StillObj_MyTracker::reduceVehicleArea() {
 
 void StillObj_MyTracker::surviveTest() {
   
+	//Implement time?
+
   ///simplifying future code reading
   cv::Mat cr = cur_vehicleArea;
   cv::Mat ir = init_vehicleArea;
@@ -129,10 +125,6 @@ double StillObj_MyTracker::getParkTime(){
 
 
 void StillObj_MyTracker::paint(){
-	//Paint trackingarea on raw img.
-
-	//testing
-	//cv::Mat vehicleArea = vehicleFrame->getBinROI();
 
 	///get relative ROI location
 	cv::Size size; cv::Point ofs;
@@ -140,7 +132,6 @@ void StillObj_MyTracker::paint(){
 
 	///get ROI movement spot
 	cv::Mat rawROI = raw(cv::Rect(ofs.x, ofs.y, cur_vehicleArea.cols, cur_vehicleArea.rows));
-
 
 	///convert vehicleArea to 3 type channel in order to add to raw
 	cv::Mat trackColROI;///color

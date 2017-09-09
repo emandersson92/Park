@@ -5,11 +5,9 @@
 VehicleFrame::VehicleFrame()
 {
   speed = 0.0;
-  xPos = 0;
-  yPos = 0;
 }
 
-VehicleFrame::VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* contours, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw)
+VehicleFrame::VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw)
 {
   color_ROI = c_ROI;
   bin_ROI = b_ROI;
@@ -17,8 +15,6 @@ VehicleFrame::VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* con
   bin_raw = arg_bin_raw;
 
   speed = spd;
-  xPos = x;
-  yPos = y;
   vehicleContours = contours;
 
 }
@@ -27,17 +23,38 @@ VehicleFrame::~VehicleFrame()
 {
 }
 
+bool VehicleFrame::intersect(VehicleFrame* vf) {
+	///the bin_ROI's must be a ROI (part of a bigger cv::Mat object)
+	cv::Mat deb1 = vf->bin_ROI;
+	cv::Mat res = deb1 & bin_ROI;
+
+	if(cv::countNonZero(res) == 0){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
+
+void VehicleFrame::locateROI() {
+	///get relative ROI location
+	cv::Size size; cv::Point ofs;
+	bin_ROI.locateROI(size, ofs);
+	//return size and ofs?
+	
+	///get ROI movement spot
+	
+	//movementArea = out_detect(cv::Rect(ofs.x, ofs.y, cur_vehicleArea.cols, cur_vehicleArea.rows));
+
+}
+
+
 double VehicleFrame::getSpeed() {
 	return 0.0;
 }
 
-
-void VehicleFrame::setPosition(int x, int y){
-  xPos = x;
-  yPos = y;
-  
-} 
-
+ 
 
 cv::Point2d VehicleFrame::getPosition() {
 	return cv::Point2d(0, 0);

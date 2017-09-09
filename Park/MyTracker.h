@@ -18,6 +18,7 @@ public:
 	virtual cv::Mat getLastImg() = 0;
 	virtual void paint() = 0;	
 	Vehicle* getVehicle();	
+	virtual std::vector<Vehicle*> getVehicles() = 0;
 
 	virtual double getLifeThresh() = 0;
 	virtual double getLifeLeft() = 0;
