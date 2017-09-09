@@ -4,15 +4,25 @@
 
 VehicleFrame::VehicleFrame()
 {
-  speed = 0.0;
+  speed = -1.0;
 }
 
 VehicleFrame::VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw)
 {
-  color_ROI = c_ROI;
-  bin_ROI = b_ROI;
-  raw = arg_raw;
-  bin_raw = arg_bin_raw;
+
+	///need to copy, Mat's given by argument will be overwritten
+  raw = arg_raw.clone();
+  bin_raw = arg_bin_raw.clone();
+
+  ///Need to recreate the ROI's. Can be done prettier.
+  cv::Size size; cv::Point ofs;
+  c_ROI.locateROI(size, ofs);
+  color_ROI = raw(cv::Rect(ofs.x, ofs.y, c_ROI.cols, c_ROI.rows));
+  ///
+  b_ROI.locateROI(size, ofs);
+  bin_ROI = bin_raw(cv::Rect(ofs.x, ofs.y, b_ROI.cols, b_ROI.rows));
+
+
 
   speed = spd;
   vehicleContours = contours;
@@ -25,8 +35,13 @@ VehicleFrame::~VehicleFrame()
 
 bool VehicleFrame::intersect(VehicleFrame* vf) {
 	///the bin_ROI's must be a ROI (part of a bigger cv::Mat object)
-	cv::Mat deb1 = vf->bin_ROI;
-	cv::Mat res = deb1 & bin_ROI;
+	cv::Mat argROI = vf->bin_ROI;
+	cv::Mat thisROI = bin_ROI;
+
+	cv::Mat f_argROI = ROI_toFullsize(argROI);
+	cv::Mat f_thisROI = ROI_toFullsize(thisROI);
+
+	cv::Mat res = f_argROI & f_thisROI;
 
 	if(cv::countNonZero(res) == 0){
 		return false;
@@ -36,22 +51,44 @@ bool VehicleFrame::intersect(VehicleFrame* vf) {
 	}
 }
 
+cv::Mat VehicleFrame::ROI_toFullsize(cv::Mat& ROI) {
+	///get relative ROI location
+	cv::Size size; cv::Point ofs;
+	ROI.locateROI(size, ofs);
+	
+	if (size.width <= 0 || size.height <= 0) {
+		std::cout << "the ROI has no parent Mat object" << std::endl;
+		getchar();
+	}
+
+	cv::Mat black(size.height, size.width, CV_8UC1, cv::Scalar(0));
+
+	cv::Mat blackROI = black(cv::Rect(ofs.x, ofs.y, ROI.cols, ROI.rows));
+
+	blackROI += ROI;
+
+	///the ROI object all by itself
+	cv::Mat lonelyROI = black;
+
+	return lonelyROI;
+}
+
 
 void VehicleFrame::locateROI() {
 	///get relative ROI location
 	cv::Size size; cv::Point ofs;
-	bin_ROI.locateROI(size, ofs);
+	//ROI.locateROI(size, ofs);
 	//return size and ofs?
-	
+
 	///get ROI movement spot
 	
-	//movementArea = out_detect(cv::Rect(ofs.x, ofs.y, cur_vehicleArea.cols, cur_vehicleArea.rows));
+	//movementArea = fullsize(cv::Rect(ofs.x, ofs.y, ROI.cols, ROI.rows));
 
 }
 
 
 double VehicleFrame::getSpeed() {
-	return 0.0;
+	return speed;
 }
 
  

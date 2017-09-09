@@ -34,6 +34,7 @@ public:
 	cv::Mat getColorROI();
 	bool VehicleFrame::intersect(VehicleFrame* vf);
 	void VehicleFrame::locateROI();
+	cv::Mat VehicleFrame::ROI_toFullsize(cv::Mat& ROI);
 
 
 	VehicleList* list;

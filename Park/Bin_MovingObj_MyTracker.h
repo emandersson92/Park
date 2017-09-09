@@ -16,7 +16,7 @@ public:
 	Bin_MovingObj_MyTracker(VehicleDetector* d, int arg_minObjArea);
 	~Bin_MovingObj_MyTracker();
 	std::vector<Vehicle*> Bin_MovingObj_MyTracker::getVehicles();
-
+	void Bin_MovingObj_MyTracker::paint();
 	void track();
 
 

@@ -174,6 +174,8 @@ int main(int argc, char** argv)
 
 	Bin_MovingObj_MyTracker* motracker = new Bin_MovingObj_MyTracker(detector, minObjArea);
 
+	cv::namedWindow("win");
+
 	while(true){
 		motracker->track();
 		
@@ -187,6 +189,9 @@ int main(int argc, char** argv)
 				getchar();
 			}
 		}
+
+		motracker->paint();
+
 	}
 
 

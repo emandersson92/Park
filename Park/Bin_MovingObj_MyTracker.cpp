@@ -16,6 +16,22 @@ std::vector<Vehicle*> Bin_MovingObj_MyTracker::getVehicles() {
 	return vehicles;
 }
 
+void Bin_MovingObj_MyTracker::paint() {
+	for(Vehicle* v : vehicles){
+		cv::Size size; cv::Point ofs;
+		cv::Mat ROI = v->getLastVehicleFrame()->getBinROI();
+		ROI.locateROI(size, ofs);
+		cv::Rect r = cv::Rect(ofs.x, ofs.y, ROI.cols, ROI.rows);
+		cv::rectangle(raw, r, cv::Scalar(255, 0, 0));
+
+	}
+
+	cv::namedWindow("win");
+	cv::imshow("win", raw);
+	cv::waitKey(2);
+	
+}
+
 
 void Bin_MovingObj_MyTracker::track() {
 	//Tracking by detection
@@ -24,7 +40,7 @@ void Bin_MovingObj_MyTracker::track() {
 	detector->segment(in_detect, tmp1);
 	detector->filter(tmp1, out_detect);
 
-	std::vector<std::vector<cv::Point>*> contours;
+	std::vector<std::vector<cv::Point>> contours;
 	std::vector<cv::Vec4i> hierarchy;
 
 	/// Find contours
@@ -37,32 +53,45 @@ void Bin_MovingObj_MyTracker::track() {
 	}
 
 	///create vehicleFrames of found contours
-	for (std::vector<cv::Point>* c : contours) {
+	for (std::vector<cv::Point> c : contours) {
 
-		if (cv::contourArea(*c) > minObjArea) {
-			cv::Rect r = cv::boundingRect(*c);
+		if (cv::contourArea(c) > minObjArea) {
+			cv::Rect r = cv::boundingRect(c);
 
 			///construct vehicleFrame
 			cv::Mat binROI = out_detect(r);
 			cv::Mat colROI = raw(r);
-			VehicleFrame* vf = new VehicleFrame(-1, c, colROI, binROI, raw, out_detect);
+
+			///convert c to pointer
+			std::vector<cv::Point>* c_pnt = new std::vector<cv::Point>;
+
+			while (!c.empty()) {
+				c_pnt->push_back(c.back());
+				c.pop_back();
+			}
 
 
+			VehicleFrame* vf = new VehicleFrame(-1, c_pnt, colROI, binROI, raw, out_detect);
+
+
+			bool vehicleFound = false;
 			for (Vehicle* v : vehicles) {
-				if (vf->intersect(v->getLastVehicleFrame())) {
+				if (!v->VF_found && vf->intersect(v->getLastVehicleFrame())) {
 					//calc speed;
 					v->addVF(vf);
 					v->VF_found = true;
+					vehicleFound = true;
 					break;
 				}
 
 			}
 
-
-			///No matching, create New Vehicle
-
-			Vehicle* v = new Vehicle(vf);
-			vehicles.push_back(v);
+			if (!vehicleFound) {
+				///No matching, create New Vehicle
+				Vehicle* v = new Vehicle(vf);
+				v->VF_found = true;
+				vehicles.push_back(v);
+			}
 
 		}
 
@@ -86,3 +115,4 @@ void Bin_MovingObj_MyTracker::track() {
 		}
 	}
 }
+
