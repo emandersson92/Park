@@ -28,7 +28,8 @@ void Filter::openFilter(cv::Mat& in, cv::Mat& out) {
 
 	dilate(tmp, out, diElem);
 	Show::add(out, "dilate");
-	//imshow("dilate", out);
+	
+	imshow("dilate", out);
 
 }
 void Filter::closeFilter(cv::Mat& in, cv::Mat& out) {

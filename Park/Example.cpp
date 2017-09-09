@@ -81,13 +81,23 @@ Vehicle* Example::createVehicle(VehicleDetector* detector){
 	
 
 
+	///calc centroid
+	cv::Point p1 = tools::getCentroid(*points1);
+	cv::Point p2 = tools::getCentroid(*points2);
+	cv::Point p3 = tools::getCentroid(*points3);
+	cv::Point p4 = tools::getCentroid(*points4);
+	cv::Point p5 = tools::getCentroid(*points5);
+
+
+
+
 	
 	//Simulate moving car that stops
-	VehicleFrame* vf1 = new VehicleFrame(3.3, points1, cr, br, raw, white);
-	VehicleFrame* vf2 = new VehicleFrame(2.2, points2, cr, br, raw, white);
-	VehicleFrame* vf3 = new VehicleFrame(1.1, points3, cr, br, raw, white);
-	VehicleFrame* vf4 = new VehicleFrame(0.1, points4, cr, br, raw, white);
-	VehicleFrame* vf5 = new VehicleFrame(0.0, points5, cr, br, raw, white);
+	VehicleFrame* vf1 = new VehicleFrame(3.3, points1, p1, cr, br, raw, white);
+	VehicleFrame* vf2 = new VehicleFrame(2.2, points2, p2, cr, br, raw, white);
+	VehicleFrame* vf3 = new VehicleFrame(1.1, points3, p3, cr, br, raw, white);
+	VehicleFrame* vf4 = new VehicleFrame(0.1, points4, p4, cr, br, raw, white);
+	VehicleFrame* vf5 = new VehicleFrame(0.0, points5, p5, cr, br, raw, white);
 
 
 	v->addVF(vf1);

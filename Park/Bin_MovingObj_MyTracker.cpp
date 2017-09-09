@@ -18,12 +18,19 @@ std::vector<Vehicle*> Bin_MovingObj_MyTracker::getVehicles() {
 
 void Bin_MovingObj_MyTracker::paint() {
 	for(Vehicle* v : vehicles){
+
+		VehicleFrame* vf = v->getLastVehicleFrame();
+
+		///Paint rectangle
 		cv::Size size; cv::Point ofs;
-		cv::Mat ROI = v->getLastVehicleFrame()->getBinROI();
+		cv::Mat ROI = vf->getBinROI();
 		ROI.locateROI(size, ofs);
 		cv::Rect r = cv::Rect(ofs.x, ofs.y, ROI.cols, ROI.rows);
 		cv::rectangle(raw, r, cv::Scalar(255, 0, 0));
 
+		///Paint centroid
+		cv::Point p = vf->getCentroid();
+		cv::circle(raw, p, 5, cv::Scalar(0, 255, 0), 3);
 	}
 
 	cv::namedWindow("win");
@@ -71,7 +78,9 @@ void Bin_MovingObj_MyTracker::track() {
 			}
 
 
-			VehicleFrame* vf = new VehicleFrame(-1, c_pnt, colROI, binROI, raw, out_detect);
+			cv::Point p = tools::getCentroid(*c_pnt);
+
+			VehicleFrame* vf = new VehicleFrame(-1, c_pnt, p, colROI, binROI, raw, out_detect);
 
 
 			bool vehicleFound = false;

@@ -31,6 +31,8 @@ void Vehicle::addVF(VehicleFrame* v){
   vehicleFrames.push_back(v); 
 }
 
+
+
 void Vehicle::addVF_ifBelong(VehicleFrame* vf){
 	
 	//NOT USED

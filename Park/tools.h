@@ -8,18 +8,18 @@
 //useful code-snippets
 //Emil A 2017-07-08
 
-namespace tl {
-	using namespace std;
 
-	class tools {
-		public:
-			tools();
-			~tools();
+class tools {
+	public:
+		tools();
+		~tools();
 			
-			static bool file_exists(const char *fileName);
-			static bool tools::removeListIndex(list<Vehicle*> l, Vehicle* v);
+		static bool file_exists(const char *fileName);
+		static bool removeListIndex(std::list<Vehicle*> l, Vehicle* v);
+		static cv::Point tools::getCentroid(std::vector<cv::Point>& contours);
+		
 
-		private:
 
-	};
-}
+	private:
+
+};

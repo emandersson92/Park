@@ -21,7 +21,7 @@ class VehicleFrame
 public:
 
   VehicleFrame();
-  VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw);
+  VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Point arg_centroid, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw);
   ~VehicleFrame();
 
 	//Functions used by lists to determine if they belong
@@ -32,6 +32,7 @@ public:
 	cv::Mat cloneBinROI();
 	cv::Mat getBinROI();
 	cv::Mat getColorROI();
+	cv::Point getCentroid();
 	bool VehicleFrame::intersect(VehicleFrame* vf);
 	void VehicleFrame::locateROI();
 	cv::Mat VehicleFrame::ROI_toFullsize(cv::Mat& ROI);
@@ -48,7 +49,7 @@ private:
 	cv::Mat color_ROI;//main object in this class
 	cv::Mat bin_ROI;
 	
-
+	cv::Point centroid;
 	std::vector<cv::Point>* vehicleContours;
 
 };

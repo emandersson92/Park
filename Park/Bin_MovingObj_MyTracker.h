@@ -8,6 +8,7 @@ Author: Emil Andersson
 #include "VehicleDetector.h"
 #include "BinDetect.h"
 #include "MediaPaths.h"
+#include "tools.h"
 
 class Bin_MovingObj_MyTracker{
 

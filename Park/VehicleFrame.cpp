@@ -7,7 +7,7 @@ VehicleFrame::VehicleFrame()
   speed = -1.0;
 }
 
-VehicleFrame::VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw)
+VehicleFrame::VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Point arg_centroid, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw)
 {
 
 	///need to copy, Mat's given by argument will be overwritten
@@ -23,7 +23,7 @@ VehicleFrame::VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Mat
   bin_ROI = bin_raw(cv::Rect(ofs.x, ofs.y, b_ROI.cols, b_ROI.rows));
 
 
-
+  centroid = arg_centroid;
   speed = spd;
   vehicleContours = contours;
 
@@ -32,6 +32,12 @@ VehicleFrame::VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Mat
 VehicleFrame::~VehicleFrame()
 {
 }
+
+
+cv::Point VehicleFrame::getCentroid() {
+	return centroid;
+}
+
 
 bool VehicleFrame::intersect(VehicleFrame* vf) {
 	///the bin_ROI's must be a ROI (part of a bigger cv::Mat object)

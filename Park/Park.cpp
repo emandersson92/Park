@@ -167,7 +167,7 @@ int main(int argc, char** argv)
 	//******************************************************************************************************************************************************
 #ifdef myTracker
 
-	int minObjArea = 10;
+	int minObjArea = 5000;
 
 	VehicleDetector* detector = new BinDetect(traffic);
 	///moving object tracker
@@ -307,7 +307,7 @@ void test(const char* test) {
 	printf(test);
 
 	//does not work yet
-	if (tl::tools::file_exists(test)) {
+	if (tools::file_exists(test)) {
 		std::cout << " exists" << std::endl;
 	}
 	else {
