@@ -7,7 +7,14 @@ StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
 
 	///VehicleFrame
   VehicleFrame* vf = v->getLastVehicleFrame();
-  init_vehicleArea = cur_vehicleArea = vf->getBinROI();
+  cur_vehicleArea = vf->cloneBinROI();
+  init_vehicleArea = vf->cloneBinROI();
+  
+  //cur_vehicleArea = vf->getBinROI();
+  //init_vehicleArea = vf->getBinROI();
+
+
+
   vehicleFrame = vf;
 
   detector = d;
@@ -35,10 +42,15 @@ void StillObj_MyTracker::track() {
 	timer->start();
   }
   
-  reduceTrackerArea();
+  reduceVehicleArea();
   surviveTest();
+  restoreVehicleArea();
+  
+
+
   timer->increment();
 }
+
 
 
 /*
@@ -48,7 +60,7 @@ When movement is detected on vehicle spot it indicates vehicle movement.
 Practical:
 The vehicleArea's white area will be replaced with black on the parts where movement apperears.
 */
-void StillObj_MyTracker::reduceTrackerArea() {
+void StillObj_MyTracker::reduceVehicleArea() {
 
 	detector->imgAquist(in_detect);
 	raw = in_detect.clone();
@@ -59,11 +71,10 @@ void StillObj_MyTracker::reduceTrackerArea() {
 	cv::Size size; cv::Point ofs;
 	cur_vehicleArea.locateROI(size, ofs);
 	///get ROI movement spot
-	cv::Mat movImgROI = out_detect(cv::Rect(ofs.x, ofs.y, cur_vehicleArea.cols, cur_vehicleArea.rows));
+	movementArea = out_detect(cv::Rect(ofs.x, ofs.y, cur_vehicleArea.cols, cur_vehicleArea.rows));
 	
 	///tracked area subtracted with area with movement
-	cur_vehicleArea -= movImgROI;
-	
+	cur_vehicleArea -= movementArea;
 }
 
 void StillObj_MyTracker::surviveTest() {
@@ -91,6 +102,14 @@ void StillObj_MyTracker::surviveTest() {
 	}
 }
 
+void StillObj_MyTracker::restoreVehicleArea(){
+
+	cur_vehicleArea += init_vehicleArea;
+
+}
+
+
+
 double StillObj_MyTracker::getLifeThresh(){
   return _minLife;
 }
@@ -111,7 +130,9 @@ double StillObj_MyTracker::getParkTime(){
 
 void StillObj_MyTracker::paint(){
 	//Paint trackingarea on raw img.
-	cv::Mat vehicleArea = vehicleFrame->getBinROI();
+
+	//testing
+	//cv::Mat vehicleArea = vehicleFrame->getBinROI();
 
 	///get relative ROI location
 	cv::Size size; cv::Point ofs;
@@ -123,7 +144,10 @@ void StillObj_MyTracker::paint(){
 
 	///convert vehicleArea to 3 type channel in order to add to raw
 	cv::Mat trackColROI;///color
-	cv::cvtColor(vehicleArea, trackColROI, CV_GRAY2BGR);
+	cv::cvtColor(cur_vehicleArea, trackColROI, CV_GRAY2BGR);
+
+	///movement in red
+	trackColROI.setTo(cv::Scalar(0, 0, 255), movementArea);
 
 	rawROI = rawROI + trackColROI;
 

@@ -51,8 +51,9 @@ class StillObj_MyTracker : public MyTracker
 private:
 
 	double percentage_foreground(cv::Mat& m);
-	void reduceTrackerArea();
+	void reduceVehicleArea();
 	void surviveTest();
+	void restoreVehicleArea();
 
 	VehicleFrame* vehicleFrame;
 	VehicleDetector* detector;
@@ -75,6 +76,7 @@ private:
 	cv::Mat init_vehicleArea; 
 	cv::Mat cur_vehicleArea;
 
+	cv::Mat movementArea;//Binary image with white (255) on area where movement appeared since last frame and black (0) where movement did not appear
 
 	///min life before tracker dies in % (cur_trackArea/init_trackArea). 
 	double lifeLeft;

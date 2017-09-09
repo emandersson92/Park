@@ -21,7 +21,7 @@ class VehicleFrame
 public:
 
   VehicleFrame();
-  VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* contours, cv::Mat c_ROI, cv::Mat b_ROI);
+  VehicleFrame(double spd, int x, int y, std::vector<cv::Point>* contours, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw);
   ~VehicleFrame();
 
 	//Functions used by lists to determine if they belong
@@ -30,6 +30,7 @@ public:
 	cv::Point2d getPosition();
 	std::vector<cv::Point>* getContours();
 	//double getArea();
+	cv::Mat cloneBinROI();
 	cv::Mat getBinROI();
 	cv::Mat getColorROI();
 
@@ -40,7 +41,10 @@ private:
 	int xPos;
 	int yPos;
 	
-	cv::Mat color_ROI;
+	cv::Mat raw;//access to main img
+	cv::Mat bin_raw;
+
+	cv::Mat color_ROI;//main object in this class
 	cv::Mat bin_ROI;
 	
 
