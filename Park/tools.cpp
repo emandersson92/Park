@@ -36,6 +36,31 @@ cv::Point tools::getCentroid(std::vector<cv::Point>& contours) {
 }
 
 
+
+cv::Point tools::filterCentroids(std::vector<cv::Point>& points, int nback) {
+
+	if (nback < points.size()) {
+		std::cout << "VECTOR TO SHORT FOR FILTER NUMBER" << std::endl;
+		getchar();
+	}
+
+	///iterate from behind?
+	int xmean = 0;
+	int ymean = 0;
+	for (std::vector<cv::Point>::iterator it = points.begin(), int i = 0; it != points.end() || i >= nback; ++it, i++) {
+		xmean += it->x;
+		ymean += it->y;
+	}
+
+	xmean /= nback;
+	ymean /= nback;
+
+	return cv::Point(xmean, ymean);
+}
+
+
+
+
 bool tools::removeListIndex(std::list<Vehicle*> l, Vehicle* v) {
 	std::list<Vehicle*>::const_iterator it;
 

@@ -44,3 +44,7 @@ void Vehicle::addVF_ifBelong(VehicleFrame* vf){
 
 }
 
+
+std::vector<VehicleFrame*> Vehicle::getVehicleFrames() {
+	return vehicleFrames;
+}

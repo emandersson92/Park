@@ -31,6 +31,14 @@ void Bin_MovingObj_MyTracker::paint() {
 		///Paint centroid
 		cv::Point p = vf->getCentroid();
 		cv::circle(raw, p, 5, cv::Scalar(0, 255, 0), 3);
+
+		///Paint filtered centroids
+
+		std::vector<VehicleFrame*> vehicleFrames = v->getVehicleFrames();
+		///get centroids vector
+		todo: learn how to backward iterate vector
+		tools::filterCentroids(5)
+
 	}
 
 	cv::namedWindow("win");

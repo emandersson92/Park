@@ -16,6 +16,7 @@ class tools {
 			
 		static bool file_exists(const char *fileName);
 		static bool removeListIndex(std::list<Vehicle*> l, Vehicle* v);
+		static cv::Point filterCentroids(std::vector<cv::Point>& points, int nback);
 		static cv::Point tools::getCentroid(std::vector<cv::Point>& contours);
 		
 
