@@ -183,7 +183,7 @@ int main(int argc, char** argv)
 
 		for(Vehicle* v : vehicles){
 			//todo: implement 0 speed for time function
-			double spd = v->getSpeed();
+			double spd = v->getVehicleSpeed();
 			if(-0.1 < spd && spd < 0.1){
 				std::cout << "VEHICLE HAS STOPPED" << std::endl;
 				getchar();

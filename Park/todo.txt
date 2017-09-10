@@ -55,29 +55,20 @@ BGS works
 
 The code is working.
 
-After first work:
-* Perform testing
-* Make tidy and correct
-* Make modular for later use
-
-
-
-
-
-
 
 TEST 2:
-implement awesome vehicle tracker and just track the vehicles speed.
+*implement intersection vehicle tracker;
+check----------------------------------------
 
-Setup rules:
-Cannot go faster than...
-Cannot turn faster than...
-Cannot jump 
-Predict...
+*Fix memory leakage
+check----------------------------------------
+
+*Make filter on object centroids
 
 
-Work in modules:
-Track cars module
-All vehicles area module
+*Vehicle shall not die directly after it's lost
+
+
+*Call event when vehicle stands still
 
 

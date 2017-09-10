@@ -17,7 +17,9 @@ class Vehicle
 	void addVF(VehicleFrame* v);
 	void addVF_ifBelong(VehicleFrame* v);
 	bool VF_found;
-	double getSpeed();
+	double getVehicleSpeed();
+	cv::Point filterCentroid();
+
 
  private:
 	 std::vector<VehicleFrame*> vehicleFrames;

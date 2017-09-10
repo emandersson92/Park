@@ -35,6 +35,9 @@ VehicleFrame::~VehicleFrame()
 
 }
 
+void VehicleFrame::setFilteredCentroid(cv::Point p) {
+	filteredCentroid = p;
+}
 
 cv::Point VehicleFrame::getCentroid() {
 	return centroid;
@@ -95,7 +98,7 @@ void VehicleFrame::locateROI() {
 }
 
 
-double VehicleFrame::getSpeed() {
+double VehicleFrame::getFrameSpeed() {
 	return speed;
 }
 

@@ -25,7 +25,7 @@ public:
   ~VehicleFrame();
 
 	//Functions used by lists to determine if they belong
-	double getSpeed();
+	double getFrameSpeed();
 	cv::Point2d getPosition();
 	std::vector<cv::Point>* getContours();
 	//double getArea();
@@ -33,6 +33,7 @@ public:
 	cv::Mat getBinROI();
 	cv::Mat getColorROI();
 	cv::Point getCentroid();
+	void setFilteredCentroid(cv::Point p);
 	bool VehicleFrame::intersect(VehicleFrame* vf);
 	void VehicleFrame::locateROI();
 	cv::Mat VehicleFrame::ROI_toFullsize(cv::Mat& ROI);
@@ -50,7 +51,9 @@ private:
 	cv::Mat bin_ROI;
 	
 	cv::Point centroid;
+	cv::Point filteredCentroid = cv::Point(0, 0);
 	std::vector<cv::Point>* vehicleContours;
 
+	
 };
 
