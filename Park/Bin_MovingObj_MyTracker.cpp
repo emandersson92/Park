@@ -33,11 +33,12 @@ void Bin_MovingObj_MyTracker::paint() {
 		cv::circle(raw, p, 5, cv::Scalar(0, 255, 0), 3);
 
 		///Paint filtered centroids
-
+		/*
 		std::vector<VehicleFrame*> vehicleFrames = v->getVehicleFrames();
 		///get centroids vector
 		todo: learn how to backward iterate vector
 		tools::filterCentroids(5)
+		*/
 
 	}
 
@@ -123,6 +124,9 @@ void Bin_MovingObj_MyTracker::track() {
 
 			if (tv->VF_found == true) {
 				tmp_vehicles.push_back(tv);
+			}
+			else{
+				delete(tv);
 			}
 		}
 

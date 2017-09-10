@@ -16,6 +16,11 @@ Vehicle::Vehicle()
 
 Vehicle::~Vehicle()
 {
+	while(!vehicleFrames.empty()){
+		VehicleFrame* vf = vehicleFrames.back();
+		vehicleFrames.pop_back();
+		delete(vf);
+	}
 }
 
 VehicleFrame* Vehicle::getLastVehicleFrame(){

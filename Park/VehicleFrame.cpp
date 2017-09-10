@@ -31,6 +31,8 @@ VehicleFrame::VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Poi
 
 VehicleFrame::~VehicleFrame()
 {
+	delete(vehicleContours);
+
 }
 
 

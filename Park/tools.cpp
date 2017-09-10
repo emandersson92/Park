@@ -44,9 +44,12 @@ cv::Point tools::filterCentroids(std::vector<cv::Point>& points, int nback) {
 		getchar();
 	}
 
-	///iterate from behind?
+	
 	int xmean = 0;
 	int ymean = 0;
+
+	/*
+	///iterate from behind?
 	for (std::vector<cv::Point>::iterator it = points.begin(), int i = 0; it != points.end() || i >= nback; ++it, i++) {
 		xmean += it->x;
 		ymean += it->y;
@@ -54,6 +57,7 @@ cv::Point tools::filterCentroids(std::vector<cv::Point>& points, int nback) {
 
 	xmean /= nback;
 	ymean /= nback;
+	*/
 
 	return cv::Point(xmean, ymean);
 }
