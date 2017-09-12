@@ -72,3 +72,4 @@ check----------------------------------------
 *Call event when vehicle stands still
 
 
+* calculate vehicle speed

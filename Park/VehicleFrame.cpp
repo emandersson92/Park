@@ -7,7 +7,7 @@ VehicleFrame::VehicleFrame()
   speed = -1.0;
 }
 
-VehicleFrame::VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Point arg_centroid, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw)
+VehicleFrame::VehicleFrame(std::vector<cv::Point>* contours, cv::Point arg_centroid, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw)
 {
 
 	///need to copy, Mat's given by argument will be overwritten
@@ -22,17 +22,33 @@ VehicleFrame::VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Poi
   b_ROI.locateROI(size, ofs);
   bin_ROI = bin_raw(cv::Rect(ofs.x, ofs.y, b_ROI.cols, b_ROI.rows));
 
-
   centroid = arg_centroid;
-  speed = spd;
   vehicleContours = contours;
 
+  VF_fullyConstructed = false;///need to enter postConstruct also.
 }
 
 VehicleFrame::~VehicleFrame()
 {
 	delete(vehicleContours);
 
+}
+
+/*
+All nessesarry info about the VehicleFrame cant be achieved on initial construct. Therefore its nessecary with an postConstruct
+ */
+void VehicleFrame::postConstruct(double arg_speed, VehicleFrame* previousVF){
+
+	speed = arg_speed;
+  previousVehicleFrame = previousVF;
+  //is this working?
+  previousVehicleFrame->setNextVehicleFrame(this);
+
+  VF_fullyConstructed = true;
+}
+
+void VehicleFrame::setNextVehicleFrame(VehicleFrame* nvf) {
+	nextVehicleFrame = nvf;
 }
 
 void VehicleFrame::setFilteredCentroid(cv::Point p) {
@@ -43,13 +59,13 @@ cv::Point VehicleFrame::getCentroid() {
 	return centroid;
 }
 
-void VehicleFrame::setPreviousVehicleFrame(VehicleFrame* pvf){
-  previousVehicleFrame = pvf;
-}
 
 VehicleFrame* VehicleFrame::getPreviousVehicleFrame(){
   return previousVehicleFrame;
-  
+}
+
+VehicleFrame* VehicleFrame::getNextVehicleFrame(){
+  return nextVehicleFrame;
 }
 
 
@@ -72,6 +88,8 @@ bool VehicleFrame::intersect(VehicleFrame* vf) {
 }
 
 cv::Mat VehicleFrame::ROI_toFullsize(cv::Mat& ROI) {
+  fullyConstructed();///is this object fully constructed?
+  
 	///get relative ROI location
 	cv::Size size; cv::Point ofs;
 	ROI.locateROI(size, ofs);
@@ -131,6 +149,8 @@ cv::Mat VehicleFrame::getBinROI(){
 
 }
 cv::Mat VehicleFrame::cloneBinROI(){
+  fullyConstructed();///is this object fully constructed?
+
 	///get relative ROI location
 	cv::Size size; cv::Point ofs;
 	bin_ROI.locateROI(size, ofs);
@@ -147,6 +167,16 @@ cv::Mat VehicleFrame::getColorROI(){
   return color_ROI;
 }
 
+
+//Testcase
+bool VehicleFrame::fullyConstructed(){
+  if(VF_fullyConstructed == true){
+	  return true;
+  }
+  else{
+	  return false;
+  }
+}
 
 
 

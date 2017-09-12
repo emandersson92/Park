@@ -21,8 +21,10 @@ class VehicleFrame
 public:
 
   VehicleFrame();
-  VehicleFrame(double spd, std::vector<cv::Point>* contours, cv::Point arg_centroid, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw);
+  VehicleFrame(std::vector<cv::Point>* contours, cv::Point arg_centroid, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw);
+  void postConstruct(double arg_speed, VehicleFrame* previousVF);///arguments not available at initial construct
   ~VehicleFrame();
+
 
 	//Functions used by lists to determine if they belong
 	double getFrameSpeed();
@@ -38,7 +40,9 @@ public:
 	void VehicleFrame::locateROI();
 	cv::Mat VehicleFrame::ROI_toFullsize(cv::Mat& ROI);
 	VehicleFrame* getPreviousVehicleFrame();
-	void setPreviousVehicleFrame(VehicleFrame* pvf);
+	VehicleFrame* getNextVehicleFrame();
+	void setNextVehicleFrame(VehicleFrame* vf);
+	bool fullyConstructed();
 
 	VehicleList* list;
 
@@ -52,10 +56,12 @@ private:
 	cv::Mat bin_ROI;
 	
 	VehicleFrame* previousVehicleFrame;
+	VehicleFrame* nextVehicleFrame;
 	cv::Point centroid;
 	cv::Point filteredCentroid = cv::Point(0, 0);
 	std::vector<cv::Point>* vehicleContours;
 
+	bool VF_fullyConstructed;
 	
 };
 

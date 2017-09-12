@@ -9,6 +9,8 @@ Author: Emil Andersson
 #include "BinDetect.h"
 #include "MediaPaths.h"
 #include "tools.h"
+#include "environment.h"
+
 
 class Bin_MovingObj_MyTracker{
 

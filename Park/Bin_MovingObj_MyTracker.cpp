@@ -32,6 +32,10 @@ void Bin_MovingObj_MyTracker::paint() {
 		cv::Point p = vf->getCentroid();
 		cv::circle(raw, p, 5, cv::Scalar(0, 255, 0), 3);
 
+		///paint obj speed
+		cv::String text = "speed: " + std::to_string(vf->getFrameSpeed());
+		cv::putText(raw, text, cv::Point(p.x + 20, p.y), 0, 0.5, cv::Scalar(255, 255, 255));
+
 		///Paint filtered centroids
 		/*
 		std::vector<VehicleFrame*> vehicleFrames = v->getVehicleFrames();
@@ -50,6 +54,8 @@ void Bin_MovingObj_MyTracker::paint() {
 
 
 void Bin_MovingObj_MyTracker::track() {
+  VehicleFrame* previousVF;
+  
 	//Tracking by detection
 	detector->imgAquist(in_detect);
 	raw = in_detect.clone();
@@ -89,8 +95,7 @@ void Bin_MovingObj_MyTracker::track() {
 
 			cv::Point p = tools::getCentroid(*c_pnt);
 
-			VehicleFrame* vf = new VehicleFrame(-1, c_pnt, p, colROI, binROI, raw, out_detect);
-
+			VehicleFrame* vf = new VehicleFrame(c_pnt, p, colROI, binROI, raw, out_detect);
 
 			bool vehicleFound = false;
 			for (Vehicle* v : vehicles) {
@@ -114,6 +119,8 @@ void Bin_MovingObj_MyTracker::track() {
 		}
 
 
+		//do this prettier
+		//----------------------------------------
 		///Kill vehicles which did not fint vehicleFrames
 		std::vector<Vehicle*> tmp_vehicles;
 		Vehicle* tv;///tmp vehicle
@@ -133,6 +140,46 @@ void Bin_MovingObj_MyTracker::track() {
 		///move all obj in tmp_vehicles back in vehicles
 		for (Vehicle* tvs : tmp_vehicles) {
 			vehicles.push_back(tvs);
+		}
+		//----------------------------------------
+
+
+
+	}
+
+
+
+	///**************************************************
+	///postconstruction (add speed and lastVehicleFrame to vehicleFrame)
+	VehicleFrame* lastVF = NULL;
+
+	for (auto v_it = vehicles.begin(); v_it != vehicles.end(); v_it++) {
+		std::vector<VehicleFrame*> vehicleFrames = (*v_it)->getVehicleFrames();
+
+		for (auto vf_it = vehicleFrames.begin(); vf_it != vehicleFrames.end(); vf_it++) {
+
+			///if speed and linking is not performed
+			if (!(*vf_it)->fullyConstructed()) {
+				if (!lastVF == NULL) {
+					cv::Point lastP = lastVF->getCentroid();
+
+					///distance
+					double distancePixels = cv::norm(lastP - (*vf_it)->getCentroid());
+					double kmPerPixel = metersPerPixel / 1000;
+					double km = distancePixels*kmPerPixel;
+
+					///time
+					double hoursPerFrame = ((1.0 / (fps*3600.0)));
+
+					double speed = km / hoursPerFrame;///km/h
+
+					(*vf_it)->postConstruct(speed, lastVF);
+
+				}
+
+				lastVF = (*vf_it);
+
+			}
 		}
 	}
 }
