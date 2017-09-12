@@ -43,6 +43,15 @@ cv::Point VehicleFrame::getCentroid() {
 	return centroid;
 }
 
+void VehicleFrame::setPreviousVehicleFrame(VehicleFrame* pvf){
+  previousVehicleFrame = pvf;
+}
+
+VehicleFrame* VehicleFrame::getPreviousVehicleFrame(){
+  return previousVehicleFrame;
+  
+}
+
 
 bool VehicleFrame::intersect(VehicleFrame* vf) {
 	///the bin_ROI's must be a ROI (part of a bigger cv::Mat object)

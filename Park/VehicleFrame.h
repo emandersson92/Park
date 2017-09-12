@@ -37,7 +37,8 @@ public:
 	bool VehicleFrame::intersect(VehicleFrame* vf);
 	void VehicleFrame::locateROI();
 	cv::Mat VehicleFrame::ROI_toFullsize(cv::Mat& ROI);
-
+	VehicleFrame* getPreviousVehicleFrame();
+	void setPreviousVehicleFrame(VehicleFrame* pvf);
 
 	VehicleList* list;
 
@@ -50,6 +51,7 @@ private:
 	cv::Mat color_ROI;//main object in this class
 	cv::Mat bin_ROI;
 	
+	VehicleFrame* previousVehicleFrame;
 	cv::Point centroid;
 	cv::Point filteredCentroid = cv::Point(0, 0);
 	std::vector<cv::Point>* vehicleContours;
