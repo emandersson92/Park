@@ -271,6 +271,7 @@ stdafx.cpp
 stdafx.h
 targetver.h
 *.sln
+vid*
 
 #emacs's autosave files or whatever
 *#

@@ -151,36 +151,65 @@ void Bin_MovingObj_MyTracker::track() {
 
 	///**************************************************
 	///postconstruction (add speed and lastVehicleFrame to vehicleFrame)
-	VehicleFrame* lastVF = NULL;
+
 
 	for (auto v_it = vehicles.begin(); v_it != vehicles.end(); v_it++) {
 		std::vector<VehicleFrame*> vehicleFrames = (*v_it)->getVehicleFrames();
 
+		VehicleFrame* lastVF = NULL;
 		for (auto vf_it = vehicleFrames.begin(); vf_it != vehicleFrames.end(); vf_it++) {
 
 			///if speed and linking is not performed
 			if (!(*vf_it)->fullyConstructed()) {
-				if (!lastVF == NULL) {
+				///First iteration
+				if (lastVF == NULL) {
+					double speed = -1; ///Made up speed for first vehicleFrame
+					(*vf_it)->postConstruct(speed, lastVF);
+				
+				}
+				///Not first iteration
+				else{
 					cv::Point lastP = lastVF->getCentroid();
 
 					///distance
-					double distancePixels = cv::norm(lastP - (*vf_it)->getCentroid());
-					double kmPerPixel = metersPerPixel / 1000;
-					double km = distancePixels*kmPerPixel;
+					double distance = cv::norm(lastP - (*vf_it)->getCentroid());
+					double time = 1/fps;
+					double speed = distance/time;
 
-					///time
-					double hoursPerFrame = ((1.0 / (fps*3600.0)));
-
-					double speed = km / hoursPerFrame;///km/h
+					///Something is wrong
+					///Debugging
+					if(speed < 0){
+						//Breakpoint here.
+						__nop;
+						getchar();
+					}
 
 					(*vf_it)->postConstruct(speed, lastVF);
-
 				}
 
+				///set lastVF for next iteration
 				lastVF = (*vf_it);
 
 			}
 		}
 	}
+
+
+	/*
+	for(Vehicle* v : vehicles){
+		//Set breakpoint here
+		
+		std::vector<VehicleFrame*> vfs = v->getVehicleFrames();
+		
+		for(VehicleFrame* v : vfs){
+			if(v->getFrameSpeed == 0){
+				//Set breakpoint here
+				__nop;
+			}
+		}
+
+	}
+	*/
+
 }
 

@@ -20,7 +20,7 @@ class VehicleFrame
 {
 public:
 
-  VehicleFrame();
+  //VehicleFrame();
   VehicleFrame(std::vector<cv::Point>* contours, cv::Point arg_centroid, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw);
   void postConstruct(double arg_speed, VehicleFrame* previousVF);///arguments not available at initial construct
   ~VehicleFrame();

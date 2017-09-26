@@ -29,7 +29,11 @@ StillObj_MyTracker::~StillObj_MyTracker()
   delete(timer);
 }
 
-
+/* TODO
+Vehicle* StillObj_MyTracker::getVehicle() {
+	return;
+}
+*/
 void StillObj_MyTracker::track() {
   if (FIRST){
 	FIRST = false;

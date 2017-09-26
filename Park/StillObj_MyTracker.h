@@ -46,7 +46,7 @@ class StillObj_MyTracker : public MyTracker
 	double getLifeThresh();
 	double getLifeLeft();
 
-
+	
 
 private:
 

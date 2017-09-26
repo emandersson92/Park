@@ -58,10 +58,16 @@ int main(int argc, char** argv)
 
 
 
+	/*vehicles* v;
+	MyTracker(v);
+	MyTimer(v);
+	*/
+
 
 
 	//#define opencvTracker
-	#define myTracker
+	
+#define myTracker
 	//#define timer
 
 	//******************************************************************************************************************************************************
@@ -165,6 +171,8 @@ int main(int argc, char** argv)
 
 
 	//******************************************************************************************************************************************************
+
+
 #ifdef myTracker
 
 	int minObjArea = 5000;
@@ -193,6 +201,10 @@ int main(int argc, char** argv)
 		motracker->paint();
 
 	}
+
+
+	/*
+
 
 
 	//still tracker
@@ -231,7 +243,7 @@ int main(int argc, char** argv)
 	for (MyTracker* t : trackers) {
 		Vehicle* v = t->getVehicle();
 
-		/*
+		
 		v->list->nextList.belongCheck(v);
 
 
@@ -244,7 +256,9 @@ int main(int argc, char** argv)
 		//toss vehicle and tracker();
 		}
 
-		*/
+		
+
+
 	}
 
 
@@ -257,6 +271,9 @@ int main(int argc, char** argv)
 	{
 		t->track();
 	}
+
+	*/
+
 
 #endif
 

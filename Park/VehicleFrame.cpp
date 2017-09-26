@@ -1,11 +1,12 @@
 #include "stdafx.h"
 #include "VehicleFrame.h"
 
-
+/*
 VehicleFrame::VehicleFrame()
 {
   speed = -1.0;
 }
+*/
 
 VehicleFrame::VehicleFrame(std::vector<cv::Point>* contours, cv::Point arg_centroid, cv::Mat& c_ROI, cv::Mat& b_ROI, cv::Mat& arg_raw, cv::Mat& arg_bin_raw)
 {
