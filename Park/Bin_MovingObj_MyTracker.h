@@ -10,7 +10,7 @@ Author: Emil Andersson
 #include "MediaPaths.h"
 #include "tools.h"
 #include "environment.h"
-
+#include "MyAssert.h"
 
 class Bin_MovingObj_MyTracker{
 

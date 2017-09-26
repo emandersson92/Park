@@ -162,20 +162,19 @@ void Bin_MovingObj_MyTracker::track() {
 
 		///@Only one VehicleFrame exists
 		if(vehicleFrames.size() == 1){
-			lastVF->PostConstruct(speed, NULL);///NULL: no VehicleFrame before first vehicleFrame
+			(*lastVF)->postConstruct(speed, NULL);///NULL: no VehicleFrame before first vehicleFrame
 		}
 		
 		///@Multiple VehicleFrame exists
-		else if (vehicleFrames.size() > 1 || lastVF != NULL){
+		else if (vehicleFrames.size() > 1 || (*lastVF) != NULL){
+			auto secLastVF = --(--vehicleFrames.end());///Second last VehicleFrame
 
-			auto secLastVF = --lastVF;///Second last VehicleFrame
-			
 			//Debug, both shall always be true. (one condition above shall be enough to check) 
-			assertTrue(vehicleFrame.size());
-			assertTrue(lastVF != NULL);
+			MyAssert::assertTrue(vehicleFrames.size() > 1);
+			MyAssert::assertTrue((*lastVF) != NULL);
 			//Debug
 
-			cv::Point lastP = lastVF->getCentroid();
+			cv::Point lastP = (*lastVF)->getCentroid();
 			cv::Point secLastP = (*secLastVF)->getCentroid();
 
 			///distance
@@ -183,7 +182,7 @@ void Bin_MovingObj_MyTracker::track() {
 			double time = 1/fps;
 			speed = distance/time;
 
-			(*vf_it)->postConstruct(speed, lastVF);
+			(*lastVF)->postConstruct(speed, (*secLastVF));
 		}
 	}
 
@@ -193,7 +192,7 @@ void Bin_MovingObj_MyTracker::track() {
 	for (auto v_it = vehicles.begin(); v_it != vehicles.end(); v_it++) {
 		std::vector<VehicleFrame*> vehicleFrames = (*v_it)->getVehicleFrames();
 		for (auto vf_it = vehicleFrames.begin(); vf_it != vehicleFrames.end(); vf_it++) {
-			if(!(*vf_it)->fullyConsted){
+			if(!(*vf_it)->fullyConstructed()){
 				std::cout << "ERROR" << std::endl;
 				getchar();
 				
