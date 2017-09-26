@@ -11,3 +11,10 @@ void MyAssert::assertPercentage(double t){
 	  getchar();
 	}
 }
+
+void MyAssert::assertTrue(bool a){
+	if(!a){
+		getchar();
+	}
+
+}

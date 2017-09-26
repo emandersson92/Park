@@ -57,7 +57,7 @@ int Background::calcHist(char* img)
 	Mat histImg = Mat::zeros(sbins*scale, hbins * 10, CV_8UC3);
 
 	for (int h = 0; h < hbins; h++)
-n		for (int s = 0; s < sbins; s++)
+		for (int s = 0; s < sbins; s++)
 		{
 			float binVal = hist.at<float>(h, s);
 			int intensity = cvRound(binVal * 255 / maxVal);

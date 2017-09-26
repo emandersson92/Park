@@ -150,7 +150,7 @@ void Bin_MovingObj_MyTracker::track() {
 
 
 	///**************************************************
-	///postconstruction (add speed and link VehicleFrames)
+	///postconstruction (add speed and lastVehicleFrame to vehicleFrame)
 
 	///The speed will be -1 on the first iteration
 	double speed = -1;
@@ -158,47 +158,50 @@ void Bin_MovingObj_MyTracker::track() {
 	for (auto v_it = vehicles.begin(); v_it != vehicles.end(); v_it++) {
 		std::vector<VehicleFrame*> vehicleFrames = (*v_it)->getVehicleFrames();
 
-		auto lastVF  = --vehicleFrames.end();
+		VehicleFrame* lastVF = NULL;
+		for (auto vf_it = vehicleFrames.begin(); vf_it != vehicleFrames.end(); vf_it++) {
 
-		///@Only one VehicleFrame exists
-		if(vehicleFrames.size() == 1){
-			lastVF->PostConstruct(speed, NULL);///NULL: no VehicleFrame before first vehicleFrame
-		}
-		
-		///@Multiple VehicleFrame exists
-		else if (vehicleFrames.size() > 1 || lastVF != NULL){
+			///if speed and linking is not performed
+			if (!(*vf_it)->fullyConstructed()) {
+				
+				///Not first VF iteration
+				if (!lastVF == NULL){
+					cv::Point lastP = lastVF->getCentroid();
 
-			auto secLastVF = --lastVF;///Second last VehicleFrame
-			
-			//Debug, both shall always be true. (one condition above shall be enough to check) 
-			assertTrue(vehicleFrame.size());
-			assertTrue(lastVF != NULL);
-			//Debug
+					///distance
+					double distance = cv::norm(lastP - (*vf_it)->getCentroid());
+					double time = 1/fps;
+					speed = distance/time;
 
-			cv::Point lastP = lastVF->getCentroid();
-			cv::Point secLastP = (*secLastVF)->getCentroid();
+				}
 
-			///distance
-			double distance = cv::norm(lastP - secLastP);
-			double time = 1/fps;
-			speed = distance/time;
+				
+				///First iteration speed will be "-1" and lastVF will be "NULL"
+				(*vf_it)->postConstruct(speed, lastVF);
 
-			(*vf_it)->postConstruct(speed, lastVF);
+				///set lastVF for next iteration
+				lastVF = (*vf_it);
+
+			}
 		}
 	}
 
 
-
-	//Debug
-	for (auto v_it = vehicles.begin(); v_it != vehicles.end(); v_it++) {
-		std::vector<VehicleFrame*> vehicleFrames = (*v_it)->getVehicleFrames();
-		for (auto vf_it = vehicleFrames.begin(); vf_it != vehicleFrames.end(); vf_it++) {
-			if(!(*vf_it)->fullyConsted){
-				std::cout << "ERROR" << std::endl;
-				getchar();
-				
+	/*
+	for(Vehicle* v : vehicles){
+		//Set breakpoint here
+		
+		std::vector<VehicleFrame*> vfs = v->getVehicleFrames();
+		
+		for(VehicleFrame* v : vfs){
+			if(v->getFrameSpeed == 0){
+				//Set breakpoint here
+				__nop;
 			}
 		}
-	}	
+
+	}
+	*/
+
 }
 

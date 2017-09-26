@@ -43,7 +43,11 @@ void VehicleFrame::postConstruct(double arg_speed, VehicleFrame* previousVF){
 	speed = arg_speed;
   previousVehicleFrame = previousVF;
   //is this working?
-  previousVehicleFrame->setNextVehicleFrame(this);
+
+  ///Not First Vehicle Frame in Vehicle
+  if (!previousVF == NULL) {
+	  previousVehicleFrame->setNextVehicleFrame(this);
+  }
 
   VF_fullyConstructed = true;
 }
