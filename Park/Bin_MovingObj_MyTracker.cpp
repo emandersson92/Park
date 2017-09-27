@@ -2,9 +2,10 @@
 #include "Bin_MovingObj_MyTracker.h"
 
 
-Bin_MovingObj_MyTracker::Bin_MovingObj_MyTracker(VehicleDetector* d, int arg_minObjArea){
+Bin_MovingObj_MyTracker::Bin_MovingObj_MyTracker(VehicleDetector* d, int arg_minObjArea, VehicleList* list){
 	detector = d;
 	minObjArea = arg_minObjArea;
+	vehicleList = list;
 }
 
 
@@ -55,7 +56,7 @@ void Bin_MovingObj_MyTracker::paint() {
 
 
 void Bin_MovingObj_MyTracker::track() {
-  VehicleFrame* previousVF;
+	VehicleFrame* previousVF;
   
 	//Tracking by detection
 	detector->imgAquist(in_detect);
@@ -67,6 +68,7 @@ void Bin_MovingObj_MyTracker::track() {
 	std::vector<cv::Vec4i> hierarchy;
 
 	/// Find contours
+
 	findContours(out_detect, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 
 
@@ -112,7 +114,7 @@ void Bin_MovingObj_MyTracker::track() {
 
 			if (!vehicleFound) {
 				///No matching, create New Vehicle
-				Vehicle* v = new Vehicle(vf);
+				Vehicle* v = new Vehicle(vf, movList);
 				v->VF_found = true;
 				vehicles.push_back(v);
 			}

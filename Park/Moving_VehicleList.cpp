@@ -37,10 +37,6 @@ void Moving_VehicleList::forwardVehicle(Vehicle* v) {
 
 
 
-void Moving_VehicleList::connectTo(VehicleList* l) {
-
-}
-
 
 void Moving_VehicleList::checkListConditions() {
 	//

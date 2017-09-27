@@ -10,6 +10,8 @@ namespace Environment{
 	const double metersPerPixel = horisontalMetersCatched/imagePixelWidth;
 	const double fps = 30;
 	const double parkedVehicleSpeedThreshold = 400; ///under this speed the vehicle is considered as standing still
+	const int minObjArea = 5000;
+	const double parktimelimit = 1000.0;
 }
 
 

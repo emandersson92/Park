@@ -70,11 +70,11 @@ check----------------------------------------
 
 
 *Call event when vehicle stands still
-working
+soon
 
 
 *Make linking working (lists)
-soon
+working
 
 
 *Why is the vehicle speed sometimes -1 for a long time?
@@ -84,3 +84,21 @@ check--------------------------------------------------
 check--------------------------------------------------
 
 * make environment.h a namespace
+
+
+* make one list object which triggers a track() to all trackers in the connection
+
+
+* make possible to link to multiple lists in future
+
+
+* where shall the vehicles lists be initiated?
+soon
+
+
+*shall the list objects be in a static environment?
+
+
+*make stillobjmytracker able to handle multiple vehicles.
+working
+

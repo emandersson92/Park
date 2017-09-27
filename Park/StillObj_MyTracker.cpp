@@ -2,12 +2,14 @@
 #include "StillObj_MyTracker.h"
 
 
-StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
+StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d, VehicleList* list)
 {
 	///VehicleFrame
   VehicleFrame* vf = v->getLastVehicleFrame();
   cur_vehicleArea = vf->cloneBinROI();
   init_vehicleArea = vf->cloneBinROI();
+
+  vehicleList = list;
 
   vehicleFrame = vf;
 
@@ -17,7 +19,7 @@ StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
   ir_fg = percentage_foreground(init_vehicleArea);
 
 
-  timer = new SimpleTimer();
+  
 
   ALIVE = true;
   FIRST = true;
@@ -26,7 +28,7 @@ StillObj_MyTracker::StillObj_MyTracker(Vehicle* v, VehicleDetector* d)
 
 StillObj_MyTracker::~StillObj_MyTracker()
 {
-  delete(timer);
+  
 }
 
 /* TODO
@@ -35,19 +37,23 @@ Vehicle* StillObj_MyTracker::getVehicle() {
 }
 */
 void StillObj_MyTracker::track() {
-  if (FIRST){
-	FIRST = false;
-	timer->start();
-  }
+
+	for(std::vector<Vehicle*> v : vehicles){
+		if (!v->getTimer()->isCounting()){
+			v->getTimer()->start();
+		}
   
-  reduceVehicleArea();
-  surviveTest();
-  restoreVehicleArea();
-  
+		reduceVehicleArea();
+		surviveTest();
+		restoreVehicleArea();
+		
+		timer->increment();
 
 
-  timer->increment();
+	}
+
 }
+
 
 
 

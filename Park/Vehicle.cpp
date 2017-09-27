@@ -3,10 +3,13 @@
 #include "Vehicle.h"
 
 
-Vehicle::Vehicle(VehicleFrame* vf)
+Vehicle::Vehicle(VehicleFrame* vf, VehicleList* list)
 {
 	vehicleFrames.push_back(vf);
 	VF_found = false;
+	vehicleList = list;
+
+	timer = new SimpleTimer();
 }
 
 Vehicle::Vehicle()
@@ -22,7 +25,27 @@ Vehicle::~Vehicle()
 		vehicleFrames.pop_back();
 		delete(vf);
 	}
+
+	delete(timer);
 }
+
+Timer* getTimer(){
+	return timer;
+}
+
+
+void forwardToNextListIfBelong(){
+	if(vehicleList->nextList()->belongCheck(this)){
+		vehicleList = vehicleList->nextList;
+	}
+}
+
+
+VehicleList* getVehicleList(){
+	return vehicleList;
+
+}
+
 
 VehicleFrame* Vehicle::getLastVehicleFrame(){
 	return vehicleFrames.back();

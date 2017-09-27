@@ -1,11 +1,11 @@
 #pragma once
 #include "VehicleList.h"
 
-class Still_VehicleList : public VehicleList
+class Alarm_VehicleList : public VehicleList
 {
 public:
-	Still_VehicleList();
-	~Still_VehicleList();
+	Alarm_VehicleList();
+	~Alarm_VehicleList();
 
 	void forwardVehicle(Vehicle* v);			//send the vehicle to the next list
 	void checkListConditions();

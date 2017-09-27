@@ -4,13 +4,15 @@
 #include <iostream>
 #include <vector>
 #include "Environment.h"
+#include "VehicleList.h"
+#include "MyTimer.h"
 
 class VehicleFrame;
 
 class Vehicle
 {
  public:
-	Vehicle(VehicleFrame* vf);
+	Vehicle(VehicleFrame* vf, VehicleList* list);
 	Vehicle();
 	~Vehicle();
 	VehicleFrame* getLastVehicleFrame();
@@ -21,13 +23,20 @@ class Vehicle
 	double getVehicleSpeed();
 	cv::Point filterCentroid();
 	bool vehicleParked();
+	VehicleList* getVehicleList();
+
+	void forwardToNextListIfBelong();
+
+
 
 
  private:
-	 std::vector<VehicleFrame*> vehicleFrames;
-	 
-	 const int nVehicleFramesStillWhenParked = 5;
 
+	MyTimer* timer;///park time timer
+
+	VehicleList* vehicleList;
+	std::vector<VehicleFrame*> vehicleFrames;
+	const int nVehicleFramesStillWhenParked = 5;
 
 };
 

@@ -17,17 +17,17 @@ public:
 
 	virtual cv::Mat getLastImg() = 0;
 	virtual void paint() = 0;	
-	Vehicle* getVehicle();
 	//virtual std::vector<Vehicle*> getVehicles() = 0; TODO!
 
 	virtual double getLifeThresh() = 0;
 	virtual double getLifeLeft() = 0;
-
+	
+	std::vector<Vehicle*> getVehicles();
 
 
 private:
 
-	Vehicle* vehicle;
+	std::vector<Vehicle*> vehicles;
 	VehicleDetector* vehDetector;		//a detector the tracker uses to assign the vehicle frame to the vehicle
 	
 

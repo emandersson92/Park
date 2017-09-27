@@ -46,39 +46,62 @@ typedef std::vector<cv::Point> vecPoint;
 typedef std::vector<vecPoint> vecVecPoint;
 
 
-/*
+
 void trackMoving(vehicles){
-	int minObjArea = 5000;
-
-	VehicleDetector* detector = new BinDetect(traffic);
-	///moving object tracker
-
-	Bin_MovingObj_MyTracker* motracker = new Bin_MovingObj_MyTracker(detector, minObjArea);
-
-	cv::namedWindow("win");
-
-	while(true){
-		motracker->track();
-		
-		std::vector<Vehicle*> vehicles = motracker->getVehicles();
-
-		motracker->paint();
-		
-		for (Vehicle* v : vehicles) {
-			if (v->vehicleParked()) {
-				std::cout << "VEHICLE HAS STOPPED" << std::endl;
-				getchar();
-			}
-		}
-	}
 }
 
 
 void trackStill(){
 
+	Vehicle* vehicle = e.createVehicle(detector);
+
+	MyTracker* t = new StillObj_MyTracker(vehicle, detector);
+
+	///Validating timer principals
+	double parktimelimit = 1000.0;
+
+	cv::namedWindow("win");
+
+	while (true) {
+
+		//first call will start the timer
+		t->track();
+
+		double ptime = t->getParkTime();
+		double lifeThresh = t->getLifeThresh();
+		double lifeLeft = t->getLifeLeft();
+		
+		///Printing info in console
+		std::cout << "Parktime: " << ptime << " of " << parktimelimit << std::endl;
+		std::cout << "Life: " <<  lifeLeft << " of " << lifeThresh << " minimum " << std::endl << std::endl;
+
+	
+		if (!t->isAlive()) {
+			std::cout << "VEHICLE HAS LEFT PARKING LOT" << std::endl;
+			getchar();
+			exit(0);
+		}
+
+		else if (ptime > parktimelimit) {
+			std::cout << "VEHICLE HAS BEEN PARKING TO LONG!" << std::endl;
+			getchar();
+			exit(0);
+		}
+
+
+		//----------------------------------------
+		//* tracker is alive
+		//* parking time not to long
+
+		t->paint();
+
+		//display image
+		cv::imshow("win", t->getLastImg());
+		cv::waitKey(2);
+	}
 
 }
-*/
+
 
 
 int main(int argc, char** argv)
@@ -91,23 +114,25 @@ int main(int argc, char** argv)
 	//	cv::String video_name = parser.get<cv::String>(1);
 	//****************************************
 
-	/*
+	
 	vehicles* v;
 
 	while(true){
+
+		
 
 		trackMoving(v);
 		trackStill(v);
 	
 	}
-	*/
+	
 	
 
 
 
 	//#define opencvTracker
 	
-	#define myTrackerTest
+	//#define myTrackerTest
 	//#define timerTest
 
 
@@ -203,24 +228,14 @@ int main(int argc, char** argv)
 		}
 	}
 
+#endif
 
-	/*
+#ifdef list
 
-
-
-	//still tracker
-	//...
-	//...
-	//...
-
-	std::vector<MyTracker*> trackers;
-	
-	//trackers.push_back(simpleTracker);
-	//trackers.push_back(still tracker);
-	//...
-	//...
-	//...
-
+////////////////////////////////////////
+////////////////////////////////////////
+//List code
+////////////////////////////////////////
 
 
 	VehicleList* movList = new Moving_VehicleList();
@@ -231,6 +246,8 @@ int main(int argc, char** argv)
 	//vehicle lifecycle:
 	//
 	//   [movlist] --> [stillList] --> [alarmList]
+	//       |              |
+	//       -->-------------->-----[deadList]  
 	//
 	movList->connectTo(stillList);
 	stillList->connectTo(alarmList);
@@ -238,45 +255,114 @@ int main(int argc, char** argv)
 	//................................................
 
 
+	MyTracker* movTrack = new Bin_MovingObj_MyTracker(detector, Environment::minObjArea, movList);
+	movList->addTracker(movTrack);
+
+	MyTracker* stillTrack = new StillObj_MyTracker(vehicle, detector, stillList);
+	stillList->addTracker(stillTrack);
+
+	//MyTracker* alarmTrack = new ALARM_MyTracker(vehicle, detector);
+	//alarmList->addTracker(alarmTrack);
+
+	
+	std::vector<MyTracker*> trackers = new std::vector<MyTracker*>;
+	trackers->push_back(movTrack);
+	trackers->push_back(stillTrack);
+	//trackers->push_back(alarmTrack);
 
 
-	//Forward vehicles to next lists if condition is ok
-	for (MyTracker* t : trackers) {
-		Vehicle* v = t->getVehicle();
+	//Tracking
+	VehicleDetector* detector = new BinDetect(traffic);
+	//cv::namedWindow("win");
 
+	for(std::vector<Tracker*> t : trackers){
+		t->track();
+		t->paint();
 		
-		v->list->nextList.belongCheck(v);
 
 
-		if (v->list.nextList.belongCheck(*v)) {
 
-		v->list.forwVehicle();
-		}
-		else if (t.list.belongCheck(v)) {
+	Vehicle* vehicle = e.createVehicle(detector);
 
-		//toss vehicle and tracker();
-		}
 
+	///Validating timer principals
+
+
+
+
+	while (true) {
+
+		//first call will start the timer
+
+		double ptime = t->getParkTime();
+		double lifeThresh = t->getLifeThresh();
+		double lifeLeft = t->getLifeLeft();
 		
+		///Printing info in console
+		std::cout << "Parktime: " << ptime << " of " << parktimelimit << std::endl;
+		std::cout << "Life: " <<  lifeLeft << " of " << lifeThresh << " minimum " << std::endl << std::endl;
+
+	
+		if (!t->isAlive()) {
+			std::cout << "VEHICLE HAS LEFT PARKING LOT" << std::endl;
+			getchar();
+			exit(0);
+		}
+
+		else if (ptime > parktimelimit) {
+			std::cout << "VEHICLE HAS BEEN PARKING TO LONG!" << std::endl;
+			getchar();
+			exit(0);
+		}
+
+
+		//----------------------------------------
+		//* tracker is alive
+		//* parking time not to long
+
+		t->paint();
+
+		//display image
+		cv::imshow("win", t->getLastImg());
+		cv::waitKey(2);
+
+
+
+
+
+
+
+
 
 
 	}
 
+
+
+
+
+
+
+	//Forward vehicles to next lists if condition is ok
+	//Move vehicles between lists by accessing their lists from the vehicle object. No need to figure out in which order the lists shall be updated.
+	//
+
+	//Mostly one tracker only
+	for(std::vector<MyTracker*> t : trackers){
+		for(std::vector<Vehicle*> v : vt->getVehicles()){
+			v->forwardToNextListIfBelong();
+		}
+	}
 
 	//Alt 1: Add vehicles only to the first list
 	//Alt 2: Add vehicles in all lists
 	//
 	//Using Alt ?:
 
-	for each (MyTracker* t in trackers)
-	{
-		t->track();
-	}
-
-	*/
-
 
 #endif
+
+
 
 
 

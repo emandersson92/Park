@@ -22,6 +22,7 @@ Emil Andersson 2017-09-07
 #include "MyTimer.h"
 #include "SimpleTimer.h"
 #include "MyTracker.h"
+#include "VehicleList.h"
 
 //Test
 #include "MyAssert.h"
@@ -34,7 +35,7 @@ typedef std::vector<vecCont> vecVecCont;
 class StillObj_MyTracker : public MyTracker
 {
  public:
-  StillObj_MyTracker(Vehicle* v, VehicleDetector* d);
+	StillObj_MyTracker(Vehicle* v, VehicleDetector* d, VehicleList* list);
   ~StillObj_MyTracker();
 
 	void track();
@@ -55,8 +56,8 @@ private:
 	void surviveTest();
 	void restoreVehicleArea();
 
-	VehicleFrame* vehicleFrame;
 	VehicleDetector* detector;
+	VehicleList* vehicleList;
 	
 	cv::Mat raw;
 	cv::Mat in_detect;
@@ -64,7 +65,7 @@ private:
 	cv::Mat tmp2;
 	cv::Mat out_detect;//Mat after detection
 
-	MyTimer* timer;
+
 	
 	bool FIRST;
 

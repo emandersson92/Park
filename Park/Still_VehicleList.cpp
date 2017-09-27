@@ -11,7 +11,17 @@ Still_VehicleList::~Still_VehicleList()
 {
 }
 
-void Still_VehicleList::forwardVehicle(Vehicle* v) {}			//send the vehicle to the next list
-void Still_VehicleList::connectTo(VehicleList* l) {}
+//send the vehicle to the next list
+void Still_VehicleList::forwardVehicle(Vehicle* v) {
+	v->vehicleList = v->VehicleList->nextVehicleList();
+
+}			
+
+
 void Still_VehicleList::checkListConditions() {}
-bool Still_VehicleList::belongCheck(Vehicle* v) { return true; }
+bool Still_VehicleList::belongCheck(Vehicle* v) { 
+	if(v->vehicleParked()){
+		return true;
+	}
+	return false; 
+}

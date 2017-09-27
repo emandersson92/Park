@@ -13,7 +13,7 @@ public:
   void reset();
   double getTime();
   void increment();
-
+  void isCounting(){
 
 private:
 

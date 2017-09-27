@@ -19,6 +19,7 @@ MyTracker::~MyTracker()
 {
 }
 
-Vehicle* MyTracker::getVehicle() {
-	return vehicle;
+std::vector<Vehicle*> getVehicles(){
+	return vehicles;
+
 }

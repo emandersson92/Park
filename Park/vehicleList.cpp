@@ -12,3 +12,10 @@ VehicleList::VehicleList()
 VehicleList::~VehicleList()
 {
 }
+
+
+void connectTo(VehicleList* l){
+	nextList = l;
+
+}
+

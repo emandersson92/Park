@@ -37,6 +37,10 @@ void SimpleTimer::reset(){
 
 }
 
+void SimpleTimer::isCounting(){
+	return COUNTING;
+}
+
 double SimpleTimer::getTime(){
   return time;
 }

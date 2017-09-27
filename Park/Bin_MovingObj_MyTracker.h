@@ -9,14 +9,21 @@ Author: Emil Andersson
 #include "BinDetect.h"
 #include "MediaPaths.h"
 #include "tools.h"
+/*
+
+
+ */
+
 #include "environment.h"
 #include "MyAssert.h"
+#include "VehicleList.h"
+#include "MyTracker.h"
 
-class Bin_MovingObj_MyTracker{
+class Bin_MovingObj_MyTracker : MyTracker{
 
 public:
 	
-	Bin_MovingObj_MyTracker(VehicleDetector* d, int arg_minObjArea);
+	Bin_MovingObj_MyTracker(VehicleDetector* d, int arg_minObjArea, VehicleList* list);
 	~Bin_MovingObj_MyTracker();
 	std::vector<Vehicle*> Bin_MovingObj_MyTracker::getVehicles();
 	void Bin_MovingObj_MyTracker::paint();
@@ -31,7 +38,7 @@ private:
 	cv::Mat out_detect;
 
 	VehicleDetector* detector;
-	std::vector<Vehicle*> vehicles;
+	VehicleList* vehicleList;///Access to the list the vehicle is connected to for now
 	
 	std::vector<std::vector<cv::Point>>* contours;		//contours is updated from detectVehicles(); 
 
