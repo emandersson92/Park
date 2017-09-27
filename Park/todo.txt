@@ -72,6 +72,11 @@ check----------------------------------------
 *Call event when vehicle stands still
 working
 
+
+*Make linking working (lists)
+soon
+
+
 *Why is the vehicle speed sometimes -1 for a long time?
 check--------------------------------------------------
 

@@ -46,6 +46,41 @@ typedef std::vector<cv::Point> vecPoint;
 typedef std::vector<vecPoint> vecVecPoint;
 
 
+/*
+void trackMoving(vehicles){
+	int minObjArea = 5000;
+
+	VehicleDetector* detector = new BinDetect(traffic);
+	///moving object tracker
+
+	Bin_MovingObj_MyTracker* motracker = new Bin_MovingObj_MyTracker(detector, minObjArea);
+
+	cv::namedWindow("win");
+
+	while(true){
+		motracker->track();
+		
+		std::vector<Vehicle*> vehicles = motracker->getVehicles();
+
+		motracker->paint();
+		
+		for (Vehicle* v : vehicles) {
+			if (v->vehicleParked()) {
+				std::cout << "VEHICLE HAS STOPPED" << std::endl;
+				getchar();
+			}
+		}
+	}
+}
+
+
+void trackStill(){
+
+
+}
+*/
+
+
 int main(int argc, char** argv)
 {
 
@@ -56,60 +91,29 @@ int main(int argc, char** argv)
 	//	cv::String video_name = parser.get<cv::String>(1);
 	//****************************************
 
+	/*
+	vehicles* v;
 
+	while(true){
 
-	/*vehicles* v;
-	MyTracker(v);
-	MyTimer(v);
+		trackMoving(v);
+		trackStill(v);
+	
+	}
 	*/
+	
 
 
 
 	//#define opencvTracker
 	
-#define myTracker
-	//#define timer
-
-	//******************************************************************************************************************************************************
-#ifdef opencvTracker
-
-	cv::Mat raw, segmented, filtered, classified;
-	bool paused = false;
-
-	///Prepare Bindetect, 
-	///ImgAquisition can be vs15, vs17 or raspberry.
-	VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
-	vecVecPoint contours;
-
-	MyTrackerKCF myTrackerKcf;
-
-	while (true) {
-		if (!paused)
-		{
-			detector->imgAquist(raw);
-
-			//new detected objects must not intersect with tracking objects 
-			detector->segment(raw, segmented); //wrong background subtraction second time? todo
-			detector->filter(segmented, filtered);
-			detector->classify(filtered, contours);
-
-			myTrackerKcf.apply(raw, contours);
-
-			Show::showImg();
-
-			char c = (char)cv::waitKey(2);
-			if (c == 'q')exit(-1);///Quit on q
-			if (c == 'p')paused = !paused;///Pause on p
-			if (c == 27)exit(-1);///Quit on ESC-button
-		}
-	}
-
-#endif
+	#define myTrackerTest
+	//#define timerTest
 
 
 
 	//******************************************************************************************************************************************************
-#ifdef timer
+#ifdef timerTest
 
 	VehicleDetector* detector = new BinDetect(traffic);
 
@@ -173,7 +177,7 @@ int main(int argc, char** argv)
 	//******************************************************************************************************************************************************
 
 
-#ifdef myTracker
+#ifdef myTrackerTest
 
 	int minObjArea = 5000;
 
@@ -189,17 +193,14 @@ int main(int argc, char** argv)
 		
 		std::vector<Vehicle*> vehicles = motracker->getVehicles();
 
-		for(Vehicle* v : vehicles){
-			//todo: implement 0 speed for time function
-			double spd = v->getVehicleSpeed();
-			if(0 < spd && spd < 100){
+		motracker->paint();
+		
+		for (Vehicle* v : vehicles) {
+			if (v->vehicleParked()) {
 				std::cout << "VEHICLE HAS STOPPED" << std::endl;
 				getchar();
 			}
 		}
-
-		motracker->paint();
-
 	}
 
 
@@ -276,6 +277,46 @@ int main(int argc, char** argv)
 
 
 #endif
+
+
+
+	//******************************************************************************************************************************************************
+#ifdef opencvTracker
+
+	cv::Mat raw, segmented, filtered, classified;
+	bool paused = false;
+
+	///Prepare Bindetect, 
+	///ImgAquisition can be vs15, vs17 or raspberry.
+	VehicleDetector* detector = new BinDetect(BinDetect::VS_15);
+	vecVecPoint contours;
+
+	MyTrackerKCF myTrackerKcf;
+
+	while (true) {
+		if (!paused)
+		{
+			detector->imgAquist(raw);
+
+			//new detected objects must not intersect with tracking objects 
+			detector->segment(raw, segmented); //wrong background subtraction second time? todo
+			detector->filter(segmented, filtered);
+			detector->classify(filtered, contours);
+
+			myTrackerKcf.apply(raw, contours);
+
+			Show::showImg();
+
+			char c = (char)cv::waitKey(2);
+			if (c == 'q')exit(-1);///Quit on q
+			if (c == 'p')paused = !paused;///Pause on p
+			if (c == 27)exit(-1);///Quit on ESC-button
+		}
+	}
+
+#endif
+
+
 
 
 	return 0;

@@ -37,7 +37,6 @@ void Bin_MovingObj_MyTracker::paint() {
 		cv::putText(raw, text, cv::Point(p.x + 20, p.y), 0, 0.5, cv::Scalar(255, 255, 255));
 
 
-
 		///Paint filtered centroids
 		/*
 		std::vector<VehicleFrame*> vehicleFrames = v->getVehicleFrames();
@@ -179,7 +178,7 @@ void Bin_MovingObj_MyTracker::track() {
 
 			///distance
 			double distance = cv::norm(lastP - secLastP);
-			double time = 1/fps;
+			double time = 1/Environment::fps;
 			speed = distance/time;
 
 			(*lastVF)->postConstruct(speed, (*secLastVF));

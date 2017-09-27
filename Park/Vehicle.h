@@ -3,6 +3,7 @@
 #include "VehicleFrame.h"
 #include <iostream>
 #include <vector>
+#include "Environment.h"
 
 class VehicleFrame;
 
@@ -19,11 +20,13 @@ class Vehicle
 	bool VF_found;
 	double getVehicleSpeed();
 	cv::Point filterCentroid();
+	bool vehicleParked();
 
 
  private:
 	 std::vector<VehicleFrame*> vehicleFrames;
-
+	 
+	 const int nVehicleFramesStillWhenParked = 5;
 
 
 };

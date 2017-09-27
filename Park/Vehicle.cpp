@@ -1,3 +1,4 @@
+
 #include "stdafx.h"
 #include "Vehicle.h"
 
@@ -29,8 +30,35 @@ VehicleFrame* Vehicle::getLastVehicleFrame(){
 }
 
 double Vehicle::getVehicleSpeed() {
-	return -1;
+	return getLastVehicleFrame()->getFrameSpeed();
 }
+
+
+///The vehicle is parked if it's still for "nVehcielFramesStillWhenParked". 
+bool Vehicle::vehicleParked(){
+
+	int count = 0;
+	
+	///@Vehicle has not moved long enough
+	if(vehicleFrames.size() < nVehicleFramesStillWhenParked){
+		return false;
+	}
+
+	///Check vehicleframes in list from back if speed is considered as parked
+	auto vf = --vehicleFrames.end();
+	
+	while (count < nVehicleFramesStillWhenParked) {
+		if ((*vf)->getFrameSpeed() > Environment::parkedVehicleSpeedThreshold) {
+			return false;
+		}
+		--vf;
+		count++;
+	}
+	
+	return true;
+
+}
+
 
 
 cv::Point Vehicle::filterCentroid() {
