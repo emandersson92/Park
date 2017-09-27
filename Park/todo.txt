@@ -70,9 +70,12 @@ check----------------------------------------
 
 
 *Call event when vehicle stands still
+working
 
+*Why is the vehicle speed sometimes -1 for a long time?
+check--------------------------------------------------
 
 * calculate vehicle speed
-Wait---
+check--------------------------------------------------
 
 * make environment.h a namespace

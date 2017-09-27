@@ -36,7 +36,10 @@ void Bin_MovingObj_MyTracker::paint() {
 		cv::String text = "speed: " + std::to_string(vf->getFrameSpeed());
 		cv::putText(raw, text, cv::Point(p.x + 20, p.y), 0, 0.5, cv::Scalar(255, 255, 255));
 
+		if (vf->getFrameSpeed() < 0) {
+			std::cout << "sdf" << std::endl;
 
+		}
 
 		///Paint filtered centroids
 		/*
