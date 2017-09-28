@@ -102,3 +102,18 @@ soon
 *make stillobjmytracker able to handle multiple vehicles.
 working
 
+
+* MyTracker and VehicleList has a one one connection. Implement
+working
+
+
+----------------------------------------
+Lars conversation:
+
+* Use contour instead of ROI in vehicle object.
+* Rename still to stationary
+* Implement Conditions for each list
+* Vehicle as an abstract class? mov_vehicle, stat_vehicle to save memory?
+* Different detect for StationaryTracker and MovingTracker.
+* If bindetect is used of multiple trackers it shall not be updated each time. Use some static "updated"- variable.
+* get access to all vehicles in order to eliminate risk that vehicles are moved twice

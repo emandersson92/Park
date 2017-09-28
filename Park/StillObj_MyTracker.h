@@ -68,20 +68,5 @@ private:
 
 	
 	bool FIRST;
-
-	///percentage foreground (255) of init_vehicleArea
-	double ir_fg;
-
-
-	///Initially and Current vehicle area in white (255)  and background in black (0), one channel. 
-	cv::Mat init_vehicleArea; 
-	cv::Mat cur_vehicleArea;
-
-	cv::Mat movementArea;//Binary image with white (255) on area where movement appeared since last frame and black (0) where movement did not appear
-
-	///min life before tracker dies in % (cur_trackArea/init_trackArea). 
-	double lifeLeft;
-	const double _minLife = 30.0;
-	bool ALIVE; // lists with trackers can check i trackers are dead. If they are, they can be removed and later freed.
 };
 

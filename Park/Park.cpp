@@ -234,9 +234,8 @@ int main(int argc, char** argv)
 
 ////////////////////////////////////////
 ////////////////////////////////////////
-//List code
+//SETUP LIST STRUCTURE
 ////////////////////////////////////////
-
 
 	VehicleList* movList = new Moving_VehicleList();
 	VehicleList* stillList = new Still_VehicleList();
@@ -271,9 +270,32 @@ int main(int argc, char** argv)
 	//trackers->push_back(alarmTrack);
 
 
+
+////////////////////////////////////////
+//TRACKING CODE
+////////////////////////////////////////
+
+
+
+	std::vector<Vehicle*> allVehicles = new std::vector<Vehicle*>;
+
+
 	//Tracking
 	VehicleDetector* detector = new BinDetect(traffic);
 	//cv::namedWindow("win");
+
+	//Acquisition
+	std::vector newVehicles = detector.detect();
+
+	for(std::vector<Vehicle*> v : newVehicles){
+		///Feeding new vehicles in to first list
+		movlist->forwardVehicleIfBelong(v);
+	}
+	
+
+
+	
+
 
 	for(std::vector<Tracker*> t : trackers){
 		t->track();
@@ -326,22 +348,7 @@ int main(int argc, char** argv)
 		cv::imshow("win", t->getLastImg());
 		cv::waitKey(2);
 
-
-
-
-
-
-
-
-
-
 	}
-
-
-
-
-
-
 
 	//Forward vehicles to next lists if condition is ok
 	//Move vehicles between lists by accessing their lists from the vehicle object. No need to figure out in which order the lists shall be updated.
@@ -403,6 +410,115 @@ int main(int argc, char** argv)
 #endif
 
 
+
+
+
+
+	///Testing new structure after discussion with Lars:
+
+
+/*
+Structure:
+****************************************
+
+MyTracker - abstract
+Moving_MyTracker - child
+Stationary_MyTracker - child
+
+VehicleList - abstract
+Moving_VehicleList - child
+Stationary_VehicleList - child
+
+Detector - abstract
+Moving_Detector - child
+Stationary_Detector - child
+
+
+
+*one one connection:
+MyTracker has one VehicleList
+MyTracker has one Detector
+
+
+ ****************************************
+*/
+
+
+
+
+////////////////////////////////////////
+//SETUP LIST STRUCTURE
+////////////////////////////////////////
+
+	VehicleList* moving_VehicleList = new Moving_VehicleList();
+	VehicleList* stationary_VehicleList = new Still_VehicleList();
+	VehicleList* alarm_VehicleList = new Still_VehicleList();
+
+	//************************************************
+	//vehicle lifecycle:
+	//
+	//   [movlist] --> [stillList] --> [alarmList]
+	//       |              |
+	//       -->-------------->-----[deadList]  
+	//
+	movList->connectTo(stillList);
+	stillList->connectTo(alarmList);
+	//
+	//................................................
+
+
+	
+////////////////////////////////////////
+//SETUP DETECTORS
+////////////////////////////////////////
+
+
+	Detector* Moving_Detector = new Moving_Detector();
+	Detector* Stationary_Detector = new Stationary_Detector();
+
+
+
+////////////////////////////////////////
+//SETUP TRACKERS
+////////////////////////////////////////
+
+	
+	///(Work from the tracker object later)
+	MyTracker* movingTracker = new MovingTracker(Moving_VehicleList, Moving_detector);
+	MyTracker* stationaryTracker = new StationaryTracker(Stationary_VehicleList, Stationary_detector);
+
+
+
+	std::vector<MyTracker*> trackers = new std::vector<MyTracker*>;
+
+	trackers.push_back(movingTracker);
+	trackers.push_back(stationaryTracker);
+
+	std::vector<Vehicle*> allVehicles = new std::vector<Vehicle*>;
+	
+
+
+
+//
+//RUN PROGRAM
+//
+	while(true){
+
+		//Track
+		for(std::vector<MyTracker*> t : trackers){
+			///Apply Detection for new input this frame
+			///Match (track) the new input with the vehicle object
+			t->track();
+			///Paint the vehicle in a specific way
+			t->paint();
+
+
+			//Move vehicle to next list if it belongs there
+			for(std::vector<Vehicle*> v : t->getVehicles()){
+				v->UpdateVehicleList();
+			}
+		}
+	}
 
 
 	return 0;
